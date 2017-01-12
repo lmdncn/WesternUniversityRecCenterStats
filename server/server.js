@@ -20,6 +20,18 @@ var index = require('./routes/stats');
 app.use('/', index);
 app.use('/api/stats', stats);
 
+//Twitter API
+twitter = require('ntwitter');
+var twit = new twitter(config.twitter);
+
+//Socket
+var io = require('socket.io').listen(server);
+
+//Twitter Stream
+twit.stream('statuses/filter',{ track: 'scotch_io, #scotchio'}, function(stream){
+  streamHandler(stream,io);
+});
+
 // set up logger and parsers
 app.use(logger('dev'));
 app.use(bodyParser.json());
