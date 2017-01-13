@@ -3,6 +3,9 @@ var TwitterPackage = require('twitter');
 // importing my secret.json file
 // var secret = require("./secret");
 
+//This is what it searches tweet stream for
+searchReq = "#blessed"
+
 var secret = {
   consumer_key: '38M3f7C7pGdVky2l1K0RXRTVC',
   consumer_secret: 'N7OQnghFETxs1XTMULWVTdtGAeSteCBgLbiT8rwCz7y3MJ6koJ',
@@ -14,16 +17,15 @@ var secret = {
 var Twitter = new TwitterPackage(secret);
 
 // Call the stream function and pass in 'statuses/filter', our filter object, and our callback
-Twitter.stream('statuses/', {track: "#blessed"}, function(stream) {
+Twitter.stream('statuses/filter', {track: searchReq}, function(stream) {
 
   // ... when we get tweet data...
   stream.on('data', function(tweet) {
 
-	console.log(tweet.user.name);
+
 	
-	if(tweet.user.name == "Liam Duncan"){
     // print out the text of the tweet that came in
-  console.log(tweet.text);}
+	console.log(tweet.text);
 
     //build our reply object
     //var statusObj = {status: "Hi @" + tweet.user.screen_name + ", How are you?"}
@@ -44,5 +46,7 @@ Twitter.stream('statuses/', {track: "#blessed"}, function(stream) {
   });
   
   
-      console.log("Listening to tweets" );
+     
 });
+
+ console.log("Listening to tweets, filter by:", searchReq );
