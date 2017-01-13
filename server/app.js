@@ -18,7 +18,7 @@ var client = new Twitter({
 
 // WeightRoom Account Stream ---------------------------------------------------------------------
 var WRuserID;
-client.get('users/show', { screen_name: 'WesternWeightRm' },  function (error, data, response) {
+client.get('users/show', { screen_name: 'lmdncn' },  function (error, data, response) {
   if(!error){
     console.log(data);
     WRuserID = data.id_str;
@@ -34,9 +34,11 @@ client.get('users/show', { screen_name: 'WesternWeightRm' },  function (error, d
           
 		  //Log tweet for testing
           console.log(tweet.text); 
-		
+          console.log(tweet.created_at);
+
+       TweetDate = new Date(tweet.created_at);     
 			//Pulls nums and saves them
-			pullWRCM(tweet.text);
+			pullWRCM(tweet.text,TweetDate);
 		  
         }
       });
@@ -50,7 +52,7 @@ client.get('users/show', { screen_name: 'WesternWeightRm' },  function (error, d
 //TODO: DropIn Account Stream
 
 // SAVE Fucntion -------------------------------------------------------
-function saveStat(str, num){
+function saveStat(str, num, d){
 		
 		//Save to db
 		console.log('saving to db');
@@ -59,6 +61,7 @@ function saveStat(str, num){
     var stat = new Stat({ 
         loc: str,
         count: num,
+        date: d
     });
 
 
@@ -78,7 +81,7 @@ function saveStat(str, num){
 }
 
 // PARSE Function --------------------------------------------------------
-function pullWRCM(tweetText){
+function pullWRCM(tweetText, d){
 		var fullText=tweetText;
 		
 		//Divide to 2 strings
@@ -106,8 +109,8 @@ function pullWRCM(tweetText){
 		
 		console.log("WR:",WRnum, " CM:",CMnum);
 		
-		saveStat("WR", WRnum);
-		saveStat("CM", CMnum);
+		saveStat("WR", WRnum,d);
+		saveStat("CM", CMnum,d);
 }
 		
 function takeNum(str) { 

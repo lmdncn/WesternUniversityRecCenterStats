@@ -10,14 +10,9 @@ var StatSchema = new Schema({
 	
     date: //Day in format: MM/DD/YYYY
 	{
-        type: String,
-        default: "00/00/0000"
-    },
-	time: //Time in format: 24hour:min
-	{
-		type:String,
-		default: "No Time"
-	}
+        type: Date,
+        default: Date.now()
+    }
 });
 
 module.exports = mongoose.model('Stat', StatSchema);
