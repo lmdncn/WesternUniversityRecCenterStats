@@ -1,9 +1,9 @@
-/*
+
 //Database Set Up
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://main:mainpass@ds163758.mlab.com:63758/reccenterstats'); //connect to the db
 var Stat = require('../models/stat');
-*/
+
 
 //Twitter Stream
 var Twitter = require('twitter');
@@ -34,23 +34,22 @@ client.get('users/show', { screen_name: 'WesternWeightRm' },  function (error, d
           
 		  //Log tweet for testing
           console.log(tweet.text); 
-		var fullText=tweet.text;
 		
-		//Divide to 2 strings
-		var WRi = fullText.indexOf("WR");
-		var CMi = fullText.indexOf("CM");
-		if(WRi<CMi){
-			var WRtext = fullText.slice(WRi,CMi);
-			var CMtext = fullText.slice(CMi,CMi+5);
-		}
+			//Pulls nums and saves them
+			pullWRCM(tweet.text);
+		  
+        }
+      });
+      stream.on('error', function(error) {
+        console.log(error);
+      });
+    });
+  }
+});
+
+
+function saveStat(){
 		
-		//Parse String to numbers
-		var WRnum = takeNum(WRtext);
-		var CMnum = takeNum(CMtext);
-		
-		
-		console.log("WR: ",WRnum, " CM: ",CMnum);
-		/*
 		//Save to db
 		console.log('saving to db');
 
@@ -72,16 +71,38 @@ client.get('users/show', { screen_name: 'WesternWeightRm' },  function (error, d
 	}
         
     });
-	*/
-		  
-        }
-      });
-      stream.on('error', function(error) {
-        console.log(error);
-      });
-    });
-  }
-});
+	
+}
+
+function pullWRCM(tweetText){
+		var fullText=tweetText;
+		
+		//Divide to 2 strings
+		var WRi = fullText.indexOf("WR");
+		var CMi = fullText.indexOf("CM");
+		
+		console.log("WR Index:",WRi, " CM Index:",CMi);
+		
+		if(WRi > 2) //Probably in format ## WR ##CM
+		{
+			var WRtext = fullText.slice(0,WRi);
+			var CMtext = fullText.slice(WRi,CMi);
+		}else{
+		
+		if(WRi<CMi){
+			var WRtext = fullText.slice(WRi,CMi);
+			var CMtext = fullText.slice(CMi,CMi+6);
+		}
+		}
+		
+		//Parse String to numbers
+		var WRnum = takeNum(WRtext);
+		var CMnum = takeNum(CMtext);
+		
+		
+		console.log("WR:",WRnum, " CM:",CMnum);
+}
+		
 
 function takeNum(str) { 
     var num = str.replace(/[^0-9]/g, ''); 
