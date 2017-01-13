@@ -1,9 +1,5 @@
-
-//Database Set Up ---------------------------------------------------------------------------------
-var mongoose = require('mongoose');
-mongoose.connect('mongodb://main:mainpass@ds163758.mlab.com:63758/reccenterstats'); //connect to the db
-var Stat = require('./models/stat');
-
+// To Save
+var savejs = require('./save');
 
 // Twitter Stream ----------------------------------------------------------------------------------
 var Twitter = require('twitter');
@@ -17,8 +13,8 @@ var client = new Twitter({
 });
 
 // WeightRoom Account Stream ---------------------------------------------------------------------
-var WRuserID;
-client.get('users/show', { screen_name: 'WesternWeightRm' },  function (error, data, response) {
+var WRuserID;//WesternWeightRm
+client.get('users/show', { screen_name: 'lmdncn' },  function (error, data, response) {
   if(!error){
     console.log(data);
     WRuserID = data.id_str;
@@ -38,7 +34,7 @@ client.get('users/show', { screen_name: 'WesternWeightRm' },  function (error, d
 
        TweetDate = new Date(tweet.created_at);     
 			//Pulls nums and saves them
-			pullWRCM(tweet.text,TweetDate);
+			savejs.pullWRCM(tweet.text,TweetDate);
 		  
         }
       });
@@ -51,69 +47,3 @@ client.get('users/show', { screen_name: 'WesternWeightRm' },  function (error, d
 
 //TODO: DropIn Account Stream
 
-// SAVE Fucntion -------------------------------------------------------
-function saveStat(str, num, d){
-		
-		//Save to db
-		console.log('saving to db');
-
-// TODO: Figure out time formating and saving from Tweet format
-    var stat = new Stat({ 
-        loc: str,
-        count: num,
-        date: d
-    });
-
-
-    console.log('made stat' + JSON.stringify(stat));
-
-    stat.save(function (err) {
-        if (err) {
-
-            console.log(err);
-        }
-	else{
-		console.log("Stat saved");
-	}
-        
-    });
-	
-}
-
-// PARSE Function --------------------------------------------------------
-function pullWRCM(tweetText, d){
-		var fullText=tweetText;
-		
-		//Divide to 2 strings
-		var WRi = fullText.indexOf("WR");
-		var CMi = fullText.indexOf("CM");
-		
-		console.log("WR Index:",WRi, " CM Index:",CMi);
-		
-		if(WRi > 2) //Probably in format ## WR ##CM
-		{
-			var WRtext = fullText.slice(0,WRi);
-			var CMtext = fullText.slice(WRi,CMi);
-		}else{
-		
-		if(WRi<CMi){
-			var WRtext = fullText.slice(WRi,CMi);
-			var CMtext = fullText.slice(CMi,CMi+6);
-		}
-		}
-		
-		//Parse String to numbers
-		var WRnum = takeNum(WRtext);
-		var CMnum = takeNum(CMtext);
-		
-		
-		console.log("WR:",WRnum, " CM:",CMnum);
-		
-		saveStat("WR", WRnum,d);
-		saveStat("CM", CMnum,d);
-}
-		
-function takeNum(str) { 
-    var num = str.replace(/[^0-9]/g, ''); 
-    return num; 
-}
