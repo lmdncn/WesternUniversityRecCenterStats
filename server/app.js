@@ -1,8 +1,9 @@
+/*
 //Database Set Up
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost:27017/CampusRec'); //connect to the db
 var Stat = require('../models/stat');
-
+*/
 
 //Twitter Stream
 var Twitter = require('twitter');
@@ -33,8 +34,45 @@ client.get('users/show', { screen_name: 'WesternWeightRm' },  function (error, d
           
 		  //Log tweet for testing
           console.log(tweet.text); 
-		  
-		  //TODO: save to db
+		var fullText=tweet.text;
+		
+		//Divide to 2 strings
+		var WRi = fullText.indexOf("WR");
+		var CMi = fullText.indexOf("CM");
+		if(WRi<CMi){
+			var WRtext = fullText.slice(WRi,CMi);
+			var CMtext = fullText.slice(CMi,CMi+5);
+		}
+		
+		//Parse String to numbers
+		var WRnum = takeNum(WRtext);
+		var CMnum = takeNum(CMtext);
+		
+		
+		console.log("WR: ",WRnum, " CM: ",CMnum);
+		/*
+		//Save to db
+		console.log('saving to db');
+
+    var stat = new Stat({ 
+        loc: req.body.loc,
+        count: req.body.count,
+    });
+
+
+    console.log('made stat' + JSON.stringify(stat));
+
+    stat.save(function (err) {
+        if (err) {
+
+            console.log(err);
+        }
+	else{
+		console.log("Stat saved");
+	}
+        
+    });
+	*/
 		  
         }
       });
@@ -44,3 +82,8 @@ client.get('users/show', { screen_name: 'WesternWeightRm' },  function (error, d
     });
   }
 });
+
+function takeNum(str) { 
+    var num = str.replace(/[^0-9]/g, ''); 
+    return num; 
+}
