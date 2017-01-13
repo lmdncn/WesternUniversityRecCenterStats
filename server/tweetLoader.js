@@ -15,6 +15,8 @@ var tweets;
 
 //Get Tweets ------------------------------------------------------------------------------------------
 var params = {screen_name: 'WesternWeightRm'};
+
+//TODO: Close this connection after it runs
 client.get('statuses/user_timeline', params, function(error, tweets, response) {
 
   console.log("Loading ",tweets.length," tweets in database");	
@@ -25,6 +27,8 @@ client.get('statuses/user_timeline', params, function(error, tweets, response) {
   	
     if(tweets[i].text.includes("WR") && tweets[i].text.includes("CM")){
     //Log to users which tweets stored
+    console.log("Saving tweet ",i,"/",tweets.length);
+    console.log(" ");
     console.log("Tweet Text: ",tweets[i].text);
     console.log("Tweet Date: ",tweets[i].created_at);
     console.log(" ");
@@ -32,7 +36,8 @@ client.get('statuses/user_timeline', params, function(error, tweets, response) {
     //Store It
     savejs.pullWRCM(tweets[i].text,tweets[i].created_at); 
     console.log(" ");
-    
+    console.log("---------------------------------------------------");
+    console.log(" ");
 }
 }
   }

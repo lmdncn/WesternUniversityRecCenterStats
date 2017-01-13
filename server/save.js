@@ -63,7 +63,7 @@ function saveStat(str, num, d){
             console.log(err);
         }
 	else{
-		console.log("Stat saved");
+		console.log("Stat succ saved");
 	}
         
     });
