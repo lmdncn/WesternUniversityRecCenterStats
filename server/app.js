@@ -1,7 +1,7 @@
 /*
 //Database Set Up
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/CampusRec'); //connect to the db
+mongoose.connect('mongodb://main:mainpass@ds163758.mlab.com:63758/reccenterstats'); //connect to the db
 var Stat = require('../models/stat');
 */
 
