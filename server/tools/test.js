@@ -12,7 +12,7 @@ WR 113 CM 76
 pullWRCM("WR:113 CM76");
 pullWRCM("132 WR & 72 CM");
 pullWRCM("WR: 108 CM 634 Come join us for Cardio Kickbox at 1:05 until 1:55");
-pullRC("Bball 28 Vball: 0 Bnton 6 Futsal: 10");
+pullRC("Bball 28 Vball: 0 Badminton 6 Futsal: 10");
 
 
 
