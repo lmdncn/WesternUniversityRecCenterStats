@@ -1,34 +1,75 @@
 // This extension route will handle most of the API request to the data in DB
 
 // A "Stat" is a peice of data parsed from a Tweet that repesents 
-// loc (location of people) and count (number of people)
+// loc (location of people), count (number of people), date (date tweeted)
 // Tweets may contain multiple "stat"s
 
 var express = require('express');
 var router = express.Router();
 var Stat = require('../models/stat');
+var moment = require('moment');
+moment().format();
 
 
-router.get('/AvgWeek', function (req, res, next) {
 
+//TODO: No Idea is this works
+router.post('/lastweek', function (req, res, next) { 
 
-    console.log('get req to /AvgWeek');
+    console.log('req to /ThisWeek with loc:', req.body.loc);
 
-	
-	// TODO: Return ave date from times for 1 week
-	
+    //This uses moment.js
+    var today = moment().startOf('day')
+    var lastWeek = moment(today).subtract(7, 'days')
+    var twolastWeek = moment(lastWeek).subtract(7, 'days')
+
+    Stat.find({
+        loc: req.body.loc,
+        date: { //Find from last week till today
+            $gte: twolastWeek.toDate(),
+            $lt: lastWeek.toDate()
+        }
+    }, function (err, stats) {
+
+        if (err) {
+            res.send(err);
+        }
+
+        // console.log(JSON.stringify(tabs));
+
+        res.json(stats);
+
+    });
 
 });
 
-router.get('/ThisWeek', function (req, res, next) {
+
+//Returns loc = ____  data from this week
+router.post('/thisweek', function (req, res, next) {
+
+    console.log('req to /ThisWeek with loc:', req.body.loc);
+
+    //This uses moment.js
+    var today = moment().startOf('day')
+    var lastWeek = moment(today).subtract(7, 'days')
 
 
-    console.log('get req to /ThisWeek');
+    Stat.find({
+        loc: req.body.loc,
+        date: { //Find from last week till today
+            $gte: lastWeek.toDate(),
+            $lt: today.toDate()
+        }
+    }, function (err, stats) {
 
-	
-	// TODO: Return data from times from this week
-	
+        if (err) {
+            res.send(err);
+        }
 
+        // console.log(JSON.stringify(tabs));
+
+        res.json(stats);
+
+    });
 
 });
 
