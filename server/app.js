@@ -1,3 +1,10 @@
+//Database Set Up
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost:27017/CampusRec'); //connect to the db
+var Stat = require('../models/stat');
+
+
+//Twitter Stream
 var Twitter = require('twitter');
  
 var client = new Twitter({
@@ -23,8 +30,12 @@ client.get('users/show', { screen_name: 'WesternWeightRm' },  function (error, d
     client.stream('statuses/filter', idParams,  function(stream) {
       stream.on('data', function(tweet) {
         if(tweet.text.includes("WR") && tweet.text.includes("CM")){
-          //send tweet to front end here
+          
+		  //Log tweet for testing
           console.log(tweet.text); 
+		  
+		  //TODO: save to db
+		  
         }
       });
       stream.on('error', function(error) {
