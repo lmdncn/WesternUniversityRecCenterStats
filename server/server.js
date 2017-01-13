@@ -1,5 +1,5 @@
-//Welcome to the server for Campus Rec Web Application  -Liam Duncan
-
+//This server handles client get requests, pulling data from db
+//AKA main express server
 
 //Server Port
 var port = 8080;
@@ -13,23 +13,13 @@ var logger = require('morgan'); // helps log all requests
 var cookieParser = require('cookie-parser'); // for handling cookies
 var bodyParser = require('body-parser'); // for parsing request URL
 
-// Route file imports
-var index = require('./routes/index');
-var index = require('./routes/stats');
-//Set routes
-app.use('/', index);
-app.use('/api/stats', stats);
-
-//Socket
-var io = require('socket.io').listen(server);
-
 // set up logger and parsers
 app.use(logger('dev'));
-app.use(bodyParser.json());
+//app.use(bodyParser.json());
 
-// app.use(bodyParser.urlencoded({
-//     extended: false
-// }));
+ app.use(bodyParser.urlencoded({
+     extended: true
+ }));
 app.use(cookieParser());
 
 
@@ -48,6 +38,13 @@ app.use(express.static(path.join(__dirname, '/../client/dist')));
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://main:mainpass@ds163758.mlab.com:63758/reccenterstats'); //connect to the db
 var Stat = require('./models/stat');
+
+// Route file imports
+var index = require('./routes/index');
+var stats = require('./routes/stats');
+//Set routes
+app.use('/', index);
+app.use('/api/stats', stats);
 
 
 // Function to handle client errors(404)
