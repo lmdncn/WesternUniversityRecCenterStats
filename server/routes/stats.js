@@ -11,21 +11,41 @@ var moment = require('moment');
 moment().format();
 
 
-router.get('/AvgWeek', function (req, res, next) { //req should contain the string that suggests which loc they want
 
+//TODO: No Idea is this works
+router.post('/lastweek', function (req, res, next) { 
 
+    console.log('req to /ThisWeek with loc:', req.body.loc);
 
-    console.log('get req to /AvgWeek');
+    //This uses moment.js
+    var today = moment().startOf('day')
+    var lastWeek = moment(today).subtract(7, 'days')
+    var twolastWeek = moment(lastWeek).subtract(7, 'days')
 
+    Stat.find({
+        loc: req.body.loc,
+        date: { //Find from last week till today
+            $gte: twolastWeek.toDate(),
+            $lt: lastWeek.toDate()
+        }
+    }, function (err, stats) {
 
-    // TODO: Return ave date from times for 1 week
+        if (err) {
+            res.send(err);
+        }
 
+        // console.log(JSON.stringify(tabs));
+
+        res.json(stats);
+
+    });
 
 });
 
-router.post('/ThisWeek', function (req, res, next) {
 
-    console.log("Called");
+//Returns loc = ____  data from this week
+router.post('/thisweek', function (req, res, next) {
+
     console.log('req to /ThisWeek with loc:', req.body.loc);
 
     //This uses moment.js
@@ -50,10 +70,6 @@ router.post('/ThisWeek', function (req, res, next) {
         res.json(stats);
 
     });
-
-    // TODO: Return data from times from this week
-
-
 
 });
 
