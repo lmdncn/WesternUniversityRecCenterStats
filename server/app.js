@@ -18,7 +18,7 @@ var client = new Twitter({
 
 // WeightRoom Account Stream ---------------------------------------------------------------------
 var WRuserID;
-client.get('users/show', { screen_name: 'lmdncn' },  function (error, data, response) {
+client.get('users/show', { screen_name: 'WesternWeightRm' },  function (error, data, response) {
   if(!error){
     console.log(data);
     WRuserID = data.id_str;
