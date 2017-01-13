@@ -9,34 +9,26 @@ var router = express.Router();
 var Stat = require('../models/stat');
 
 
+router.get('/AvgWeek', function (req, res, next) {
 
-router.post('/tweet', function (req, res, next) {
 
-
-    console.log('posting tweet');
+    console.log('get req to /AvgWeek');
 
 	
-	// TODO: Parse tweet for each stat contained
+	// TODO: Return ave date from times for 1 week
 	
-	// TODO: Save each stat with loop
+
+});
+
+router.get('/ThisWeek', function (req, res, next) {
+
+
+    console.log('get req to /ThisWeek');
+
 	
-    var stat = new Stat({ 
-        loc: req.body.loc,
-        count: req.body.count
-		//date and time set by db to current when created
-    });
+	// TODO: Return data from times from this week
+	
 
-
-    // console.log('made stat' + JSON.stringify(stat));
-
-    stat.save(function (err) {
-        if (err) {
-
-            res.send(err);
-        }
-
-        res.json(201, stat);
-    });
 
 });
 
