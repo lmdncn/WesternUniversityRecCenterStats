@@ -20,17 +20,8 @@ var index = require('./routes/stats');
 app.use('/', index);
 app.use('/api/stats', stats);
 
-//Twitter API
-twitter = require('ntwitter');
-var twit = new twitter(config.twitter);
-
 //Socket
 var io = require('socket.io').listen(server);
-
-//Twitter Stream
-twit.stream('statuses/filter',{ track: 'scotch_io, #scotchio'}, function(stream){
-  streamHandler(stream,io);
-});
 
 // set up logger and parsers
 app.use(logger('dev'));
@@ -53,10 +44,10 @@ app.engine('html', require('ejs').renderFile)
 app.use(express.static(path.join(__dirname, '/../client/dist')));
 
 
-//For DataBase info parsing
+//Database Set Up
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/CampusRec); //connect to the db
-
+mongoose.connect('mongodb://main:mainpass@ds163758.mlab.com:63758/reccenterstats'); //connect to the db
+var Stat = require('./models/stat');
 
 
 // Function to handle client errors(404)
