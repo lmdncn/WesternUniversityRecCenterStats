@@ -14,7 +14,7 @@ var client = new Twitter({
 var tweets;
 
 //Get Tweets ------------------------------------------------------------------------------------------
-var params = {screen_name: 'WesternWeightRm'};
+var params = {screen_name: 'WesternWeightRm', count: "50"};
 
 //TODO: Close this connection after it runs
 client.get('statuses/user_timeline', params, function(error, tweets, response) {
