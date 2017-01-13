@@ -1,13 +1,14 @@
 
-//Database Set Up
+//Database Set Up ---------------------------------------------------------------------------------
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://main:mainpass@ds163758.mlab.com:63758/reccenterstats'); //connect to the db
 var Stat = require('./models/stat');
 
 
-//Twitter Stream
+// Twitter Stream ----------------------------------------------------------------------------------
 var Twitter = require('twitter');
  
+//Brandons twitter Info -> TODO: Eventually should change to Application's own account
 var client = new Twitter({
   consumer_key: '38M3f7C7pGdVky2l1K0RXRTVC',
   consumer_secret: 'N7OQnghFETxs1XTMULWVTdtGAeSteCBgLbiT8rwCz7y3MJ6koJ',
@@ -15,19 +16,18 @@ var client = new Twitter({
   access_token_secret: 'Pj4QVh6u2BFtTg5Ty0jwQNTlK6qNYKwnirE3WXLSaLJcl'
 });
 
-
-var userID;
-
+// WeightRoom Account Stream ---------------------------------------------------------------------
+var WRuserID;
 client.get('users/show', { screen_name: 'WesternWeightRm' },  function (error, data, response) {
   if(!error){
     console.log(data);
-    userID = data.id_str;
-    console.log(userID);
+    WRuserID = data.id_str;
+    console.log(WRuserID);
     console.log("TWEETS:");
 
-    //TODO figure out how to add two parameters (ie follow : userID, track : "CR WM") to reduce wasted bandwidth
+    //TODO: figure out how to add two parameters (ie follow : userID, track : "CR WM") to reduce wasted bandwidth
     //Twitter API only supoorts OR operation on stream params and AND is needed
-    var idParams = {follow : userID};
+    var idParams = {follow : WRuserID};
     client.stream('statuses/filter', idParams,  function(stream) {
       stream.on('data', function(tweet) {
         if(tweet.text.includes("WR") && tweet.text.includes("CM")){
@@ -47,12 +47,15 @@ client.get('users/show', { screen_name: 'WesternWeightRm' },  function (error, d
   }
 });
 
+//TODO: DropIn Account Stream
 
+// SAVE Fucntion -------------------------------------------------------
 function saveStat(str, num){
 		
 		//Save to db
 		console.log('saving to db');
 
+// TODO: Figure out time formating and saving from Tweet format
     var stat = new Stat({ 
         loc: str,
         count: num,
@@ -74,6 +77,7 @@ function saveStat(str, num){
 	
 }
 
+// PARSE Function --------------------------------------------------------
 function pullWRCM(tweetText){
 		var fullText=tweetText;
 		
@@ -106,7 +110,6 @@ function pullWRCM(tweetText){
 		saveStat("CM", CMnum);
 }
 		
-
 function takeNum(str) { 
     var num = str.replace(/[^0-9]/g, ''); 
     return num; 
