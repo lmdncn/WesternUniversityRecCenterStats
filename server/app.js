@@ -26,7 +26,8 @@ client.get('users/show', { screen_name: 'lmdncn' },  function (error, data, resp
     var idParams = {follow : WRuserID};
     client.stream('statuses/filter', idParams,  function(stream) {
       stream.on('data', function(tweet) {
-        if(tweet.text.includes("WR") && tweet.text.includes("CM")){
+        //TODO: account for "weight room" and "cardio machines"
+        if(tweet.text.toUpperCase().includes("WR") && tweet.text.toUpperCase().includes("CM")){
           
 		  //Log tweet for testing
           console.log(tweet.text); 
@@ -34,7 +35,7 @@ client.get('users/show', { screen_name: 'lmdncn' },  function (error, data, resp
 
        TweetDate = new Date(tweet.created_at);     
 			//Pulls nums and saves them
-			savejs.pullWRCM(tweet.text,TweetDate);
+			savejs.pullWRCM(tweet.text.toUpperCase(),TweetDate);
 		  
         }
       });
@@ -45,5 +46,35 @@ client.get('users/show', { screen_name: 'lmdncn' },  function (error, data, resp
   }
 });
 
-//TODO: DropIn Account Stream
+// Drop In Account Stream ---------------------------------------------------------------------
+var RCuserID;//WesternRecCenter
+client.get('users/show', { screen_name: 'Western_Rec' },  function (error, data, response) {
+  if(!error){
+    console.log(data);
+    RCuserID = data.id_str;
+    console.log(RCuserID);
+    console.log("TWEETS:");
 
+    //TODO: figure out how to add two parameters (ie follow : userID, track : "CR WM") to reduce wasted bandwidth
+    //Twitter API only supoorts OR operation on stream params and AND is needed
+    var idParams = {follow : RCuserID};
+    client.stream('statuses/filter', idParams,  function(stream) {
+      stream.on('data', function(tweet) {
+        if(tweet.text.toUpperCase().includes("BBALL") || tweet.text.toUpperCase().includes("VBALL") ||tweet.text.toUpperCase().includes("BDMT") || tweet.text.toUpperCase().includes("FUTS")tweet.text.toUpperCase().includes("BASKETBALL") || tweet.text.toUpperCase().includes("VOLLEYBALL")tweet.text.toUpperCase().includes("BADMINTON") || tweet.text.toUpperCase().includes("FUTSAL")){
+          
+      //Log tweet for testing
+          console.log(tweet.text); 
+          console.log(tweet.created_at);
+
+       TweetDate = new Date(tweet.created_at);     
+      //Pulls nums and saves them
+      savejs.pullRC(tweet.text.toUpperCase(),TweetDate);
+      
+        }
+      });
+      stream.on('error', function(error) {
+        console.log(error);
+      });
+    });
+  }
+});
