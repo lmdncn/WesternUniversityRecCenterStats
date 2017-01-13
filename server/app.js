@@ -1,4 +1,4 @@
-// To Save
+// To Import Save Functions
 var savejs = require('./save');
 
 // Twitter Stream ----------------------------------------------------------------------------------

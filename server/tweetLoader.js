@@ -1,11 +1,7 @@
 // This loads a set a existing tweets to database
 
-
-
-//Database Set Up ---------------------------------------------------------------------------------
-var mongoose = require('mongoose');
-mongoose.connect('mongodb://main:mainpass@ds163758.mlab.com:63758/reccenterstats'); //connect to the db
-var Stat = require('./models/stat')
+// To Import Save Functions
+var savejs = require('./save');
 
 //Twitter Set Up -------------------------------------------------------------------------------------
 var Twitter = require('twitter');
@@ -27,17 +23,17 @@ client.get('statuses/user_timeline', params, function(error, tweets, response) {
 
   	for(var i = 0; i < tweets.length; i++){ //For Each Tweet
   	
+    if(tweets[i].text.includes("WR") && tweets[i].text.includes("CM")){
     //Log to users which tweets stored
-    console.log(tweets[i].text);
-    console.log(tweets[i].created_at);
+    console.log("Tweet Text: ",tweets[i].text);
+    console.log("Tweet Date: ",tweets[i].created_at);
     console.log(" ");
 
     //Store It
+    savejs.pullWRCM(tweets[i].text,tweets[i].created_at); 
+    console.log(" ");
     
-
-
-
-    
-  	}
+}
+}
   }
 });

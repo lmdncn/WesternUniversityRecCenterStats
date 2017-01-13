@@ -1,3 +1,4 @@
+//This file handles all things storage into db
 
 //Database Set Up ---------------------------------------------------------------------------------
 var mongoose = require('mongoose');
