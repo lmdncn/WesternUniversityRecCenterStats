@@ -10,13 +10,13 @@ var StatSchema = new Schema({
 	
     date: //Day in format: MM/DD/YYYY
 	{
-        type: Date,
-        default: Date.now()
+        type: String,
+        default: "00/00/0000"
     },
 	time: //Time in format: 24hour:min
 	{
-		type:Time,
-		default: Time.now()
+		type:String,
+		default: "No Time"
 	}
 });
 

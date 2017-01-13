@@ -2,7 +2,7 @@
 //Database Set Up
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://main:mainpass@ds163758.mlab.com:63758/reccenterstats'); //connect to the db
-var Stat = require('../models/stat');
+var Stat = require('./models/stat');
 
 
 //Twitter Stream
@@ -48,14 +48,14 @@ client.get('users/show', { screen_name: 'WesternWeightRm' },  function (error, d
 });
 
 
-function saveStat(){
+function saveStat(str, num){
 		
 		//Save to db
 		console.log('saving to db');
 
     var stat = new Stat({ 
-        loc: req.body.loc,
-        count: req.body.count,
+        loc: str,
+        count: num,
     });
 
 
@@ -101,6 +101,9 @@ function pullWRCM(tweetText){
 		
 		
 		console.log("WR:",WRnum, " CM:",CMnum);
+		
+		saveStat("WR", WRnum);
+		saveStat("CM", CMnum);
 }
 		
 
