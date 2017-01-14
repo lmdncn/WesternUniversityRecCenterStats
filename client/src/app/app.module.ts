@@ -9,6 +9,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 //Component Import
 import { AppComponent } from './app.component';
+import { NavBarComponent } from './nav-bar/nav-bar.component';
+import { WrStatsComponent } from './wr-stats/wr-stats.component';
+import { FooterComponent } from './footer/footer.component';
+import { HeaderComponent } from './header/header.component';
 
 
 //Service Import
@@ -18,10 +22,10 @@ import { AppComponent } from './app.component';
 
 
 //Set Routes
-// const appRoutes: Routes = [
-//    { path: '', redirectTo: 'Home', pathMatch: 'full' },
-//    { path: 'Home', component: HomepageComponent },
-// ];
+const appRoutes: Routes = [
+   { path: '', redirectTo: 'WR', pathMatch: 'full' },
+   { path: 'WR', component: WrStatsComponent }
+];
 
 
 @NgModule({
@@ -29,6 +33,10 @@ import { AppComponent } from './app.component';
     declarations: [
 	//Components go here
         AppComponent,
+	NavBarComponent,
+	WrStatsComponent,
+	FooterComponent,
+	HeaderComponent,
     ],
 	
     imports: [
@@ -37,7 +45,7 @@ import { AppComponent } from './app.component';
         FormsModule,
         HttpModule,
         ReactiveFormsModule,
-        //RouterModule.forRoot(appRoutes)
+        RouterModule.forRoot(appRoutes)
     ],
 	
     providers: 
