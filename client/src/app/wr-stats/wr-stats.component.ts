@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {StatService} from '../services/stat.service';
+import {Stat} from '../models/stat';
 
 @Component({
   selector: 'app-wr-stats',
@@ -7,9 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class WrStatsComponent implements OnInit {
 
-  constructor() { }
+  todayStats: Stat[];
+
+  constructor(private statService: StatService) { }
 
   ngOnInit() {
+
+this.statService.getToday("WR")
+      .subscribe(
+      stats => { this.todayStats = stats; });
+
   }
 
 }
