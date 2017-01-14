@@ -16,6 +16,7 @@ import { HeaderComponent } from './header/header.component';
 
 
 //Service Import
+import { StatService} from './services/stat.service';
 
 
 
@@ -50,7 +51,9 @@ const appRoutes: Routes = [
 	
     providers: 
 	//Services go here
-	[],
+	[
+        StatService
+    ],
 	
     bootstrap: [AppComponent],
 })
