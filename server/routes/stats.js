@@ -13,7 +13,7 @@ moment().format();
 
 
 //TODO: No Idea is this works
-router.post('/lastweek', function (req, res, next) { 
+router.post('/lastweek', function (req, res, next) {
 
     console.log('req to /ThisWeek with loc:', req.body.loc);
 
