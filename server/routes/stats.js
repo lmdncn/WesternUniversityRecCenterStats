@@ -73,6 +73,36 @@ router.post('/thisweek', function (req, res, next) {
 
 });
 
+//Returns loc = ____  data from this week
+router.post('/today', function (req, res, next) {
+
+    console.log('req to /today with loc:', req.body.loc);
+
+    //This uses moment.js
+    var today = moment().startOf('day')
+    var lastWeek = moment(today).subtract(7, 'days')
+
+
+    Stat.find({
+        loc: req.body.loc,
+        date: { //Find from last week till today
+            $gte: lastWeek.toDate(),
+            $lt: today.toDate()
+        }
+    }, function (err, stats) {
+
+        if (err) {
+            res.send(err);
+        }
+
+        // console.log(JSON.stringify(tabs));
+
+        res.json(stats);
+
+    });
+
+});
+
 
 
 
