@@ -15,11 +15,12 @@ var bodyParser = require('body-parser'); // for parsing request URL
 
 // set up logger and parsers
 app.use(logger('dev'));
-//app.use(bodyParser.json());
 
-app.use(bodyParser.urlencoded({
-    extended: true
-}));
+app.use(bodyParser.json());
+
+// app.use(bodyParser.urlencoded({
+//     extended: true
+// }));
 app.use(cookieParser());
 
 

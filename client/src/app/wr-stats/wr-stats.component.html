@@ -2,10 +2,11 @@
   wr-stats works!
 </p>
 
+<h3 (click)='check()'>Data:</h3>
 <div *ngFor="let s of todayStats" >
 
 <h6>Loc: {{s.loc}}</h6>
-<h6>Num: {{s.num}}</h6>
+<h6>Num: {{s.count}}</h6>
 <h6>Date: {{s.date}}</h6>
 
 

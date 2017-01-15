@@ -10,6 +10,11 @@ router.get('/', function (req, res, next) {
 
 });
 
+router.get('/WR', function (req, res, next) {
+
+    res.render('index.html');
+
+});
 
 
 module.exports = router;

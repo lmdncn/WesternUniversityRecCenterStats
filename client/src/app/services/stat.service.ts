@@ -9,19 +9,11 @@ export class StatService {
 
   constructor(private http: Http) { }
 
-  getToday(loc: string): Observable<Stat[]> {
+  getWeek(loc: string): Observable<Stat[]> {
 
     console.log("Called Get Today");
 
-
-
-
-let headers: Headers = new Headers({ 'Content-Type': 'application/json' });
-    let options = new RequestOptions({ headers: headers });
-
-    // console.log("Posting to db" + JSON.stringify(t));
-
-    return this.http.post("http://localhost:8080/api/stats/today ", JSON.stringify(new Stat(null,loc,null,null)), options).map((res) => res.json()).catch(this.handleError);
+    return this.http.get("api/stats/thisweek").map((res) => res.json()).catch(this.handleError);
 
   }
 

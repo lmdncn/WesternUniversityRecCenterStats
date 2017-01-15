@@ -15,10 +15,13 @@ export class WrStatsComponent implements OnInit {
 
   ngOnInit() {
 
-this.statService.getToday("WR")
+this.statService.getWeek("WR")
       .subscribe(
       stats => { this.todayStats = stats; });
 
   }
 
+  check(){
+    console.log(JSON.stringify(this.todayStats));
+  }
 }
