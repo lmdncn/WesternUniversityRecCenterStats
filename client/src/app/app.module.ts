@@ -20,12 +20,10 @@ import { HeaderComponent } from './header/header.component';
 
 //Service Import
 import { StatService} from './services/stat.service';
-import { DateNiceDirective } from './date-nice.directive';
 
 
-
-
-
+//Pipe Import
+import {DateFormatPipe} from './pipes/date-format.pipe'
 
 //Set Routes
 const appRoutes: Routes = [
@@ -43,7 +41,7 @@ const appRoutes: Routes = [
 	WrStatsComponent,
 	FooterComponent,
 	HeaderComponent,
-	DateNiceDirective,
+	DateFormatPipe,
     ],
 	
     imports: [
