@@ -2,7 +2,7 @@
   "name": "rec-center-stats",
   "version": "1.0.0",
   "description": "Web application that pulls western campus rec center stats from twitter and displays them on a clean user interface",
-  "main": "server.js",
+  "main": "server/server.js",
   "scripts": {
     "start": "node server/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
