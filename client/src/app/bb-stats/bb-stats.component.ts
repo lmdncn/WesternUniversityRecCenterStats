@@ -21,11 +21,11 @@ export class BbStatsComponent implements OnInit {
       .subscribe(
       stats => { this.todayStats = stats; });
 
-    this.statService.getToday("BBALL")
+    this.statService.getThisWeek("BBALL")
       .subscribe(
       stats => { this.thisWeekStats = stats; });
 
-    this.statService.getToday("BBALL")
+    this.statService.getLastWeek("BBALL")
       .subscribe(
       stats => { this.lastWeekStats = stats; });
 
