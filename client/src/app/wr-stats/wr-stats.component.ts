@@ -15,7 +15,7 @@ export class WrStatsComponent implements OnInit {
 
   ngOnInit() {
 
-    this.statService.getThisWeek("WR")
+    this.statService.getToday("WR")
       .subscribe(
       stats => { this.todayStats = stats; });
 

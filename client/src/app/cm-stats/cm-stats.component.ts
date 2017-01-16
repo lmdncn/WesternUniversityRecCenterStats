@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {StatService} from '../services/stat.service';
-import {Stat} from '../models/stat';
+import { StatService } from '../services/stat.service';
+import { Stat } from '../models/stat';
 
 @Component({
   selector: 'app-cm-stats',
@@ -9,15 +9,15 @@ import {Stat} from '../models/stat';
 })
 export class CmStatsComponent implements OnInit {
 
-   thisWeekStats: Stat[];
+  todayStats: Stat[];
 
   constructor(private statService: StatService) { }
 
   ngOnInit() {
 
-this.statService.getThisWeek("CM")
+    this.statService.getToday("CM")
       .subscribe(
-      stats => { this.thisWeekStats = stats; });
+      stats => { this.todayStats = stats; });
 
   }
 

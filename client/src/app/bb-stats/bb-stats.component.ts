@@ -15,7 +15,7 @@ export class BbStatsComponent implements OnInit {
 
   ngOnInit() {
 
-    this.statService.getThisWeek("BBALL")
+    this.statService.getToday("BBALL")
       .subscribe(
       stats => { this.todayStats = stats; });
 
