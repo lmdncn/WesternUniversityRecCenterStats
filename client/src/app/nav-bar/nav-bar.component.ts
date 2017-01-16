@@ -13,10 +13,10 @@ export class NavBarComponent implements OnInit {
 
   WRCurrentCount: number;
   CMCurrentCount: number;
-  BBCurrentCount: number;
-  VBCurrentCount: number;
-  BDCurrentCount: number;
-  HKCurrentCount: number;
+  BBALLCurrentCount: number;
+  VBALLCurrentCount: number;
+  BDMTCurrentCount: number;
+  FUTSCurrentCount: number;
 
 
   constructor(private statService: StatService) { }
@@ -27,9 +27,22 @@ export class NavBarComponent implements OnInit {
       .subscribe(
       stat => { this.WRCurrentCount = stat.count; });
 
-       this.statService.getCurrentCount("CM")
+    this.statService.getCurrentCount("CM")
       .subscribe(
       stat => { this.CMCurrentCount = stat.count; });
+    this.statService.getCurrentCount("BBALL")
+      .subscribe(
+      stat => { this.BBALLCurrentCount = stat.count; });
+    this.statService.getCurrentCount("VBALL")
+      .subscribe(
+      stat => { this.VBALLCurrentCount = stat.count; });
+    this.statService.getCurrentCount("BDMT")
+      .subscribe(
+      stat => { this.BDMTCurrentCount = stat.count; });
+    this.statService.getCurrentCount("FUTS")
+      .subscribe(
+      stat => { this.FUTSCurrentCount = stat.count; });
+
 
   }
 
