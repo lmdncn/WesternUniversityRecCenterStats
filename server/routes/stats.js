@@ -14,10 +14,9 @@ moment().format();
 //Get current count data -> querying loc=var
 router.get('/count', function (req, res, next) {
 
-    Stat.find({
-        loc: req.query.loc,
-        date: {        }
-    }.sort('-date').limit(1),  
+    Stat.findOne({
+        loc: req.query.loc
+    },  
     function (err, stat) {
 
         if (err) {
@@ -76,7 +75,9 @@ router.get('/thisweek', function (req, res, next) {
             $gte: lastWeek.toDate(),
             $lt: today.toDate()
         }
-    }, function (err, stats) {
+    }).sort([['date', -1]]).exec(
+    
+     function (err, stats) {
 
         if (err) {
             res.send(err);
