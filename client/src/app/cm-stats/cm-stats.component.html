@@ -1,14 +1,13 @@
 <div *ngIf="todayStats!=null" class="today-util">
   <div class="ui statistic">
     <div class="label">
-      Current:
+      Current Headcount:
     </div>
     <div class="value">
       {{todayStats[0].count}}
     </div>
   </div>
 </div>
-<h3>Data:</h3>
 <div class="ui feed">
   <h1>Today's History</h1>
   <div *ngFor="let s of todayStats" class="event">
