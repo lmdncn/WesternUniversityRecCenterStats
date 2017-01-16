@@ -10,6 +10,8 @@ import { Stat } from '../models/stat';
 })
 export class BbStatsComponent implements OnInit {
   todayStats: Stat[];
+  thisWeekStats: Stat[];
+  lastWeekStats: Stat[];
 
   constructor(private statService: StatService) { }
 
@@ -19,10 +21,14 @@ export class BbStatsComponent implements OnInit {
       .subscribe(
       stats => { this.todayStats = stats; });
 
-  }
+    this.statService.getToday("BBALL")
+      .subscribe(
+      stats => { this.thisWeekStats = stats; });
 
-  check() {
-    console.log(JSON.stringify(this.todayStats));
+    this.statService.getToday("BBALL")
+      .subscribe(
+      stats => { this.lastWeekStats = stats; });
+
   }
 
 }

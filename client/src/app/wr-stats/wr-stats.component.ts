@@ -10,6 +10,8 @@ import { Stat } from '../models/stat';
 export class WrStatsComponent implements OnInit {
 
   todayStats: Stat[];
+  thisWeekStats: Stat[];
+  lastWeekStats: Stat[];
 
   constructor(private statService: StatService) { }
 
@@ -19,6 +21,13 @@ export class WrStatsComponent implements OnInit {
       .subscribe(
       stats => { this.todayStats = stats; });
 
+    this.statService.getThisWeek("WR")
+      .subscribe(
+      stats => { this.thisWeekStats = stats; });
+
+    this.statService.getLastWeek("WR")
+      .subscribe(
+      stats => { this.lastWeekStats = stats; });
   }
 
   check() {

@@ -10,7 +10,9 @@ import { Stat } from '../models/stat';
 export class CmStatsComponent implements OnInit {
 
   todayStats: Stat[];
-
+  thisWeekStats: Stat[];
+  lastWeekStats: Stat[];
+  
   constructor(private statService: StatService) { }
 
   ngOnInit() {
@@ -19,6 +21,13 @@ export class CmStatsComponent implements OnInit {
       .subscribe(
       stats => { this.todayStats = stats; });
 
+    this.statService.getThisWeek("CM")
+      .subscribe(
+      stats => { this.thisWeekStats = stats; });
+
+    this.statService.getLastWeek("CM")
+      .subscribe(
+      stats => { this.lastWeekStats = stats; });
   }
 
 }
