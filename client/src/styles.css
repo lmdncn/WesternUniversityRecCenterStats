@@ -1,0 +1,12 @@
+.today-util{
+    display: block;
+    margin: auto;
+    margin-bottom: 2%;
+    margin-top: 2%;
+    width: 40%;
+    text-align: center;
+}
+
+.today-util div.ui.statistics{
+    text-align: center;
+}

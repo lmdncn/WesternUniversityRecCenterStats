@@ -1,4 +1,16 @@
+<div *ngIf="todayStats!=null" class="today-util">
+  <div class="ui statistic">
+    <div class="label">
+      Current:
+    </div>
+    <div class="value">
+      {{todayStats[0].count}}
+    </div>
+  </div>
+</div>
+<h3>Data:</h3>
 <div class="ui feed">
+  <h1>Today</h1>
   <div *ngFor="let s of todayStats" class="event">
     <div class="label">
     </div>
@@ -9,6 +21,36 @@
         </a> {{s.count}}
         <div class="date">
           {{s.date | dateFormat}}
+        </div>
+      </div>
+    </div>
+  </div>
+  <h1>This Week</h1>
+  <div *ngFor="let s2 of thisWeekStats" class="event">
+    <div class="label">
+    </div>
+    <div class="content">
+      <div class="summary">
+        <a class="user">
+          {{s2.loc}}
+        </a> {{s2.count}}
+        <div class="date">
+          {{s2.date | dateFormat}}
+        </div>
+      </div>
+    </div>
+  </div>
+  <h1>Last Week</h1>
+  <div *ngFor="let s3 of lastWeekStats" class="event">
+    <div class="label">
+    </div>
+    <div class="content">
+      <div class="summary">
+        <a class="user">
+          {{s3.loc}}
+        </a> {{s3.count}}
+        <div class="date">
+          {{s3.date | dateFormat}}
         </div>
       </div>
     </div>
