@@ -16,7 +16,9 @@ router.get('/count', function (req, res, next) {
 
     Stat.findOne({
             loc: req.query.loc
-        },
+        }).sort([
+        ['date', -1]
+    ]).exec(
         function (err, stat) {
 
             if (err) {
