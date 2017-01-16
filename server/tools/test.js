@@ -14,6 +14,7 @@ pullWRCM("132 WR & 72 CM");
 pullWRCM("WR: 108 CM 634 Come join us for Cardio Kickbox at 1:05 until 1:55");
 pullRC("Bball 28 Vball: 0 Badminton 6 Futsal: 10");
 pullRC("Bball:31 Vball:0 Futsal:0 Badminton: 7");
+pullRC("6 Bball 0 Vball 2 Badminton 0 futsal");
 
 
 
@@ -54,31 +55,41 @@ function pullRC(tweetText) {
 	//Divide to 4 strings
 	var BBALLi = fullText.indexOf("BBALL");
 	if (BBALLi == -1) {
-		var BBALLi = fullText.indexOf("BASKETBALL");
+		BBALLi = fullText.indexOf("BASKETBALL");
 	}
 	var VBALLi = fullText.indexOf("VBALL");
 	if (VBALLi == -1) {
-		var VBALLi = fullText.indexOf("VOLLEYBALL");
+		VBALLi = fullText.indexOf("VOLLEYBALL");
 	}
 	var BDMTi = fullText.indexOf("BDMT");
 	if (BDMTi == -1) {
-		var BDMTi = fullText.indexOf("BADMINTON");
+		BDMTi = fullText.indexOf("BADMINTON");
 		//sometimes called BADM
 	}
 	var FUTSi = fullText.indexOf("FUTS");
 	if (FUTSi == -1) {
-		var FUTSi = fullText.indexOf("FUTSAL");
+		FUTSi = fullText.indexOf("FUTSAL");
 	}
 
 	console.log("BBALL Index:", BBALLi, " VBALL Index:", VBALLi, " BDMT Index:", BDMTi, " FUTS Index:", FUTSi);
 
 	//***********************************
 	//TODO: account for diff order
+	if (BBALLi >= 2) //Probably in format ## WR ##CM
+	{
+		var BBALLtext = fullText.slice(0, BBALLi);
+		var VBALLtext = fullText.slice(BBALLi, VBALLi);
+		var BDMTtext = fullText.slice(VBALLi, BDMTi);
+		var FUTStext = fullText.slice(BDMTi, FUTSi);
+	} else {
 
-	var BBALLtext = fullText.slice(BBALLi, VBALLi);
-	var VBALLtext = fullText.slice(VBALLi, BDMTi);
-	var BDMTtext = fullText.slice(BDMTi, FUTSi);
-	var FUTStext = fullText.slice(FUTSi, fullText.length);
+		//if (WRi < CMi) {
+		var BBALLtext = fullText.slice(BBALLi, VBALLi);
+		var VBALLtext = fullText.slice(VBALLi, BDMTi);
+		var BDMTtext = fullText.slice(BDMTi, FUTSi);
+		var FUTStext = fullText.slice(FUTSi, fullText.length);
+		//}
+	}
 	//***********************************
 
 	//Parse String to numbers

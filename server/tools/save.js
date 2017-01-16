@@ -51,30 +51,41 @@ module.exports = {
 		//Divide to 4 strings
 		var BBALLi = fullText.indexOf("BBALL");
 		if (BBALLi == -1) {
-			var BBALLi = fullText.indexOf("BASKETBALL");
+			BBALLi = fullText.indexOf("BASKETBALL");
 		}
 		var VBALLi = fullText.indexOf("VBALL");
 		if (VBALLi == -1) {
-			var VBALLi = fullText.indexOf("VOLLEYBALL");
+			VBALLi = fullText.indexOf("VOLLEYBALL");
 		}
 		var BDMTi = fullText.indexOf("BDMT");
 		if (BDMTi == -1) {
-			var BDMTi = fullText.indexOf("BADMINTON");
+			BDMTi = fullText.indexOf("BADMINTON");
 			//sometimes called BADM
 		}
 		var FUTSi = fullText.indexOf("FUTS");
 		if (FUTSi == -1) {
-			var FUTSi = fullText.indexOf("FUTSAL");
+			FUTSi = fullText.indexOf("FUTSAL");
 		}
 
 		console.log("BBALL Index:", BBALLi, " VBALL Index:", VBALLi, " BDMT Index:", BDMTi, " FUTS Index:", FUTSi);
 
 		//***********************************
 		//TODO: account for diff order
-		var BBALLtext = fullText.slice(BBALLi, VBALLi);
-		var VBALLtext = fullText.slice(VBALLi, BDMTi);
-		var BDMTtext = fullText.slice(BDMTi, FUTSi);
-		var FUTStext = fullText.slice(FUTSi, fullText.length);
+		if (BBALLi >= 2) //Probably in format ## WR ##CM
+		{
+			var BBALLtext = fullText.slice(0, BBALLi);
+			var VBALLtext = fullText.slice(BBALLi, VBALLi);
+			var BDMTtext = fullText.slice(VBALLi, BDMTi);
+			var FUTStext = fullText.slice(BDMTi, FUTSi);
+		} else {
+
+			//if (WRi < CMi) {
+			var BBALLtext = fullText.slice(BBALLi, VBALLi);
+			var VBALLtext = fullText.slice(VBALLi, BDMTi);
+			var BDMTtext = fullText.slice(BDMTi, FUTSi);
+			var FUTStext = fullText.slice(FUTSi, fullText.length);
+			//}
+		}
 		//***********************************
 
 		//Parse String to numbers

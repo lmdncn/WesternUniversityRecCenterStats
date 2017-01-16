@@ -14,31 +14,40 @@ var client = new Twitter({
 var tweets;
 
 //Get Tweets ------------------------------------------------------------------------------------------
-var params = {screen_name: 'WesternWeightRm', count: "50"};
+var params = {
+  screen_name: 'WesternWeightRm',
+  count: "50"
+};
+
+var paramsDropIn = {
+  screen_name: "Western_Rec",
+  count: "1"
+}
 
 //TODO: Close this connection after it runs
-client.get('statuses/user_timeline', params, function(error, tweets, response) {
+client.get('statuses/user_timeline', params, function (error, tweets, response) {
 
-  console.log("Loading ",tweets.length," tweets in database");	
+  console.log("Loading ", tweets.length, " tweets in database");
 
   if (!error) {
 
-  	for(var i = 0; i < tweets.length; i++){ //For Each Tweet
-  	
-    if(tweets[i].text.includes("WR") && tweets[i].text.includes("CM")){
-    //Log to users which tweets stored
-    console.log("Saving tweet ",i,"/",tweets.length);
-    console.log(" ");
-    console.log("Tweet Text: ",tweets[i].text);
-    console.log("Tweet Date: ",tweets[i].created_at);
-    console.log(" ");
 
-    //Store It
-    savejs.pullWRCM(tweets[i].text,tweets[i].created_at); 
-    console.log(" ");
-    console.log("---------------------------------------------------");
-    console.log(" ");
-}
-}
+    for (var i = 0; i < tweets.length; i++) { //For Each Tweet
+
+      if (tweets[i].text.includes("WR") && tweets[i].text.includes("CM")) {
+        //Log to users which tweets stored
+        console.log("Saving tweet ", i, "/", tweets.length);
+        console.log(" ");
+        console.log("Tweet Text: ", tweets[i].text);
+        console.log("Tweet Date: ", tweets[i].created_at);
+        console.log(" ");
+
+        //Store It
+        savejs.pullWRCM(tweets[i].text, tweets[i].created_at);
+        console.log(" ");
+        console.log("---------------------------------------------------");
+        console.log(" ");
+      }
+    }
   }
 });
