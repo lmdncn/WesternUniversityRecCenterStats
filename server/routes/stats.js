@@ -15,19 +15,19 @@ moment().format();
 router.get('/count', function (req, res, next) {
 
     Stat.findOne({
-        loc: req.query.loc
-    },  
-    function (err, stat) {
+            loc: req.query.loc
+        },
+        function (err, stat) {
 
-        if (err) {
-            res.send(err);
-        }
+            if (err) {
+                res.send(err);
+            }
 
-        // console.log(JSON.stringify(tabs));
+            // console.log(JSON.stringify(tabs));
 
-        res.json(stat);
+            res.json(stat);
 
-    });
+        });
 
 });
 
@@ -46,7 +46,9 @@ router.get('/lastweek', function (req, res, next) {
             $gte: twolastWeek.toDate(),
             $lt: lastWeek.toDate()
         }
-    }, function (err, stats) {
+    }).sort([
+        ['date', -1]
+    ]).exec(function (err, stats) {
 
         if (err) {
             res.send(err);
@@ -75,19 +77,21 @@ router.get('/thisweek', function (req, res, next) {
             $gte: lastWeek.toDate(),
             $lt: today.toDate()
         }
-    }).sort([['date', -1]]).exec(
-    
-     function (err, stats) {
+    }).sort([
+        ['date', -1]
+    ]).exec(
 
-        if (err) {
-            res.send(err);
-        }
+        function (err, stats) {
 
-        // console.log(JSON.stringify(tabs));
+            if (err) {
+                res.send(err);
+            }
 
-        res.json(stats);
+            // console.log(JSON.stringify(tabs));
 
-    });
+            res.json(stats);
+
+        });
 
 });
 
@@ -100,12 +104,14 @@ router.get('/today', function (req, res, next) {
 
 
     Stat.find({
-        loc: req.query.loc ,
+        loc: req.query.loc,
         date: { //Find from last week till today
             $gte: today.toDate(),
             $lt: tomorrow.toDate()
         }
-    }, function (err, stats) {
+    }).sort([
+        ['date', -1]
+    ]).exec(function (err, stats) {
 
         if (err) {
             res.send(err);
