@@ -21,7 +21,4 @@ this.statService.getThisWeek("WR")
 
   }
 
-  check(){
-    console.log(JSON.stringify(this.todayStats));
-  }
 }

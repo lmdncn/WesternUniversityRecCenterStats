@@ -16,5 +16,20 @@ router.get('/WR', function (req, res, next) {
 
 });
 
+router.get('/CM', function (req, res, next) {
+
+    res.render('index.html');
+
+});
+router.get('/BB', function (req, res, next) {
+
+    res.render('index.html');
+
+});
+router.get('/VB', function (req, res, next) {
+
+    res.render('index.html');
+
+});
 
 module.exports = router;
