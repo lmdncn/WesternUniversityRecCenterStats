@@ -1,23 +1,17 @@
 <h3>Data:</h3>
-
 <div class="ui feed">
-
   <div *ngFor="let s of todayStats" class="event">
     <div class="label">
-
     </div>
     <div class="content">
       <div class="summary">
         <a class="user">
           {{s.loc}}
-        </a> 
-        {{s.count}}
+        </a> {{s.count}}
         <div class="date">
-         {{s.date | dateFormat}}
+          {{s.date | dateFormat}}
         </div>
       </div>
     </div>
   </div>
-
-
 </div>
