@@ -34,10 +34,14 @@ import { FsStatsComponent } from './fs-stats/fs-stats.component';
 
 //Set Routes
 const appRoutes: Routes = [
-    { path: '', redirectTo: 'WR', pathMatch: 'full' },
-    { path: 'WR', component: WrStatsComponent },
-    { path: 'CM', component: CmStatsComponent },
-    { path: 'BB', component: BbStatsComponent }
+    { path: '', redirectTo: 'WeightRoom', pathMatch: 'full' },
+    { path: 'WeightRoom', component: WrStatsComponent },
+    { path: 'CardioMachines', component: CmStatsComponent },
+    { path: 'Basketball', component: BbStatsComponent },
+    { path: 'Volleyball', component: VbStatsComponent },
+    { path: 'Badminton', component: BmStatsComponent },
+    { path: 'Futsal', component: FsStatsComponent },
+
 ];
 
 
