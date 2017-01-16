@@ -10,23 +10,33 @@ router.get('/', function (req, res, next) {
 
 });
 
-router.get('/WR', function (req, res, next) {
+router.get('/WeightRoom', function (req, res, next) {
 
     res.render('index.html');
 
 });
 
-router.get('/CM', function (req, res, next) {
+router.get('/CardioMachines', function (req, res, next) {
 
     res.render('index.html');
 
 });
-router.get('/BB', function (req, res, next) {
+router.get('/Basketball', function (req, res, next) {
 
     res.render('index.html');
 
 });
-router.get('/VB', function (req, res, next) {
+router.get('/Volleyball', function (req, res, next) {
+
+    res.render('index.html');
+
+});
+router.get('/Badminton', function (req, res, next) {
+
+    res.render('index.html');
+
+});
+router.get('/Futsal', function (req, res, next) {
 
     res.render('index.html');
 

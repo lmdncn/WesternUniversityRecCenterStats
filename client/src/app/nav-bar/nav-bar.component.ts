@@ -26,7 +26,6 @@ export class NavBarComponent implements OnInit {
     this.statService.getCurrentCount("WR")
       .subscribe(
       stat => { this.WRCurrentCount = stat.count; });
-
     this.statService.getCurrentCount("CM")
       .subscribe(
       stat => { this.CMCurrentCount = stat.count; });
