@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { StatService } from '../services/stat.service';
 import { Stat } from '../models/stat';
+import * as moment from 'moment';
+import { XY } from '../models/xy'
+
 
 @Component({
   selector: 'app-wr-stats',
@@ -13,79 +16,75 @@ export class WrStatsComponent implements OnInit {
   thisWeekStats: Stat[];
   lastWeekStats: Stat[];
 
-  thisWeekCount: number[];
-  thisWeekDays: Date[];
-  lastWeekCount: number[];
-  lastWeekDays: Date[];
+
 
   type = 'line';
-  data = {
-    labels: this.thisWeekDays,
-    datasets: [
-      {
-        label: "Current Week",
-        data: this.thisWeekCount
-      }//,
-      // {
-      //   label: "Previous Week",
-      //   data: this.lastWeekCount
-      // }
 
-    ]
-  };
+  startDate: Date;
+
+  data = null;
+
   options = {
-    responsive: true,
-    maintainAspectRatio: false
+    scales: {
+      xAxes: [{
+        type: 'linear',
+        position: 'bottom'
+      }]
+    }
   };
 
   constructor(private statService: StatService) { }
 
+
+  setData() {
+
+    var temp = new Array<XY>();
+
+    for (var i = 0; i < this.thisWeekStats.length; i++) {
+      console.log(this.thisWeekStats[i]);
+      var t = new XY(new Date(this.thisWeekStats[i].date), this.thisWeekStats[i].count);
+      temp.push(t);
+    };
+
+    this.data = {
+      datasets: [{
+        label: 'Scatter Dataset',
+        data: temp
+      }]
+    };
+
+  }
+
+
+
+
   ngOnInit() {
+
 
     this.statService.getToday("WR")
       .subscribe(
       stats => { this.todayStats = stats; });
 
+
     this.statService.getThisWeek("WR")
       .subscribe(
-      stats => { 
-        this.thisWeekStats = stats; 
-        this.thisWeekCount = this.getCount(stats)
-        this.thisWeekDays = this.getDays(stats)
-        this.data.labels = this.getDays(stats);
-        this.data.datasets[0].data = this.getCount(stats);
-        console.log(this.thisWeekDays);
-        console.log(this.thisWeekCount);
+      stats => {
+        this.thisWeekStats = stats;
+
+        this.startDate = stats[0].date;
+        this.setData();
+        console.log("Set Data");
       });
 
     this.statService.getLastWeek("WR")
       .subscribe(
-      stats => { 
-        this.lastWeekStats = stats; 
-        this.lastWeekStats = this.getCount(stats)
-        //this.lastWeekDays = this.getDays(stats)
+      stats => {
+        this.lastWeekStats = stats;
       });
+
+
   }
 
-  check() {
-    console.log(JSON.stringify(this.todayStats));
-  }
 
-  // Gets the number of people from the stats
-  getCount(stats: Stat[]) {
-    let count = [];
-    for (var i = 0; i < stats.length; i++) {
-      count[i] = stats[i].count;
-    }
-    return count;
-  };
 
-  // Gets the number of people from the stats
-  getDays(stats: Stat[]) {
-    let days: Date[] = [];
-    for (var i = 0; i < stats.length; i++) {
-      days[i] = stats[i].date;
-    }
-    return days;
-  };
 }
