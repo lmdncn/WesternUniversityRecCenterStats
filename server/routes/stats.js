@@ -38,7 +38,7 @@ router.get('/count', function (req, res, next) {
 router.get('/lastweek', function (req, res, next) {
 
     //This uses moment.js
-    var today = moment().startOf('day')
+    var today = moment().endOf('day')
     var lastWeek = moment(today).subtract(7, 'days')
     var twolastWeek = moment(lastWeek).subtract(7, 'days')
 
@@ -69,7 +69,7 @@ router.get('/lastweek', function (req, res, next) {
 router.get('/thisweek', function (req, res, next) {
 
     //This uses moment.js
-    var today = moment().startOf('day')
+    var today = moment().endOf('day')
     var lastWeek = moment(today).subtract(7, 'days')
 
 
