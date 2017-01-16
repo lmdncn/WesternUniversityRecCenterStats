@@ -69,21 +69,26 @@ module.exports = {
 
 		console.log("BBALL Index:", BBALLi, " VBALL Index:", VBALLi, " BDMT Index:", BDMTi, " FUTS Index:", FUTSi);
 
+		var BBALLtext;
+		var VBALLtext;
+		var BDMTtext;
+		var FUTStext;
+
 		//***********************************
 		//TODO: account for diff order
 		if (BBALLi >= 2) //Probably in format ## WR ##CM
 		{
-			var BBALLtext = fullText.slice(0, BBALLi);
-			var VBALLtext = fullText.slice(BBALLi, VBALLi);
-			var BDMTtext = fullText.slice(VBALLi, BDMTi);
-			var FUTStext = fullText.slice(BDMTi, FUTSi);
+			BBALLtext = fullText.slice(0, BBALLi);
+			VBALLtext = fullText.slice(BBALLi, VBALLi);
+			BDMTtext = fullText.slice(VBALLi, BDMTi);
+			FUTStext = fullText.slice(BDMTi, FUTSi);
 		} else {
 
 			//if (WRi < CMi) {
-			var BBALLtext = fullText.slice(BBALLi, VBALLi);
-			var VBALLtext = fullText.slice(VBALLi, BDMTi);
-			var BDMTtext = fullText.slice(BDMTi, FUTSi);
-			var FUTStext = fullText.slice(FUTSi, fullText.length);
+			BBALLtext = fullText.slice(BBALLi, VBALLi);
+			VBALLtext = fullText.slice(VBALLi, BDMTi);
+			BDMTtext = fullText.slice(BDMTi, FUTSi);
+			FUTStext = fullText.slice(FUTSi, fullText.length);
 			//}
 		}
 		//***********************************
