@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import {StatService} from '../services/stat.service';
+import {Stat} from '../models/stat';
 
 @Component({
   selector: 'app-cm-stats',
@@ -7,9 +9,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CmStatsComponent implements OnInit {
 
-  constructor() { }
+   thisWeekStats: Stat[];
+
+  constructor(private statService: StatService) { }
 
   ngOnInit() {
+
+this.statService.getThisWeek("CM")
+      .subscribe(
+      stats => { this.thisWeekStats = stats; });
+
   }
 
 }
