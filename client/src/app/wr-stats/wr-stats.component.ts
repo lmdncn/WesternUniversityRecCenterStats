@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {StatService} from '../services/stat.service';
-import {Stat} from '../models/stat';
+import { StatService } from '../services/stat.service';
+import { Stat } from '../models/stat';
 
 @Component({
   selector: 'app-wr-stats',
@@ -15,13 +15,13 @@ export class WrStatsComponent implements OnInit {
 
   ngOnInit() {
 
-this.statService.getThisWeek("WR")
+    this.statService.getThisWeek("WR")
       .subscribe(
       stats => { this.todayStats = stats; });
 
   }
 
-  check(){
+  check() {
     console.log(JSON.stringify(this.todayStats));
   }
 }

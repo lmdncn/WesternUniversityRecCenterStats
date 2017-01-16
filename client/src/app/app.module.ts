@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { HttpModule } from '@angular/http';
 
 //SemanticUI
-import {SuiModule} from 'ng2-semantic-ui/ng2-semantic-ui';
+import { SuiModule } from 'ng2-semantic-ui/ng2-semantic-ui';
 
 //Tools Import
 import { RouterModule, Routes } from '@angular/router';
@@ -20,37 +20,37 @@ import { CmStatsComponent } from './cm-stats/cm-stats.component';
 import { BbStatsComponent } from './bb-stats/bb-stats.component'
 
 //Service Import
-import { StatService} from './services/stat.service';
+import { StatService } from './services/stat.service';
 
 
 //Pipe Import
-import {DateFormatPipe} from './pipes/date-format.pipe';
+import { DateFormatPipe } from './pipes/date-format.pipe';
 
 //Set Routes
 const appRoutes: Routes = [
-   { path: '', redirectTo: 'WR', pathMatch: 'full' },
-   { path: 'WR', component: WrStatsComponent },
-   { path: 'CM', component: CmStatsComponent },
-   { path: 'BB', component: BbStatsComponent }
+    { path: '', redirectTo: 'WR', pathMatch: 'full' },
+    { path: 'WR', component: WrStatsComponent },
+    { path: 'CM', component: CmStatsComponent },
+    { path: 'BB', component: BbStatsComponent }
 ];
 
 
 @NgModule({
-	
+
     declarations: [
-	//Components go here
+        //Components go here
         AppComponent,
-	NavBarComponent,
-	WrStatsComponent,
-	FooterComponent,
-	HeaderComponent,
-	DateFormatPipe,
-	CmStatsComponent,
-	BbStatsComponent,
+        NavBarComponent,
+        WrStatsComponent,
+        FooterComponent,
+        HeaderComponent,
+        DateFormatPipe,
+        CmStatsComponent,
+        BbStatsComponent,
     ],
-	
+
     imports: [
-	//Modules go here
+        //Modules go here
         BrowserModule,
         FormsModule,
         HttpModule,
@@ -58,13 +58,13 @@ const appRoutes: Routes = [
         RouterModule.forRoot(appRoutes),
         SuiModule
     ],
-	
-    providers: 
-	//Services go here
-	[
+
+    providers:
+    //Services go here
+    [
         StatService
     ],
-	
+
     bootstrap: [AppComponent],
 })
 
