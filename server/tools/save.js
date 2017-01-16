@@ -70,11 +70,11 @@ module.exports = {
 		console.log("BBALL Index:", BBALLi, " VBALL Index:", VBALLi, " BDMT Index:", BDMTi, " FUTS Index:", FUTSi);
 
 		//***********************************
-		//TODO URGENT: slice fullText here
-		var BBALLtext = fullText;
-		var VBALLtext = fullText;
-		var BDMTtext = fullText;
-		var FUTStext = fullText;
+		//TODO: account for diff order
+		var BBALLtext = fullText.slice(BBALLi, VBALLi);
+		var VBALLtext = fullText.slice(VBALLi, BDMTi);
+		var BDMTtext = fullText.slice(BDMTi, FUTSi);
+		var FUTStext = fullText.slice(FUTSi, fullText.length);
 		//***********************************
 
 		//Parse String to numbers
