@@ -28,6 +28,9 @@ import { StatService } from './services/stat.service';
 
 //Pipe Import
 import { DateFormatPipe } from './pipes/date-format.pipe';
+import { VbStatsComponent } from './vb-stats/vb-stats.component';
+import { BmStatsComponent } from './bm-stats/bm-stats.component';
+import { FsStatsComponent } from './fs-stats/fs-stats.component';
 
 //Set Routes
 const appRoutes: Routes = [
@@ -50,6 +53,9 @@ const appRoutes: Routes = [
         DateFormatPipe,
         CmStatsComponent,
         BbStatsComponent,
+        VbStatsComponent,
+        BmStatsComponent,
+        FsStatsComponent,
     ],
 
     imports: [
