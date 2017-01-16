@@ -1,15 +1,13 @@
 <div *ngIf="todayStats!=null" class="today-util">
-<div class="ui statistic">
-  <div class="label">
-    Current:
-  </div>
-  <div class="value">
-    {{todayStats[0].count}}
+  <div class="ui statistic">
+    <div class="label">
+      Current:
+    </div>
+    <div class="value">
+      {{todayStats[0].count}}
+    </div>
   </div>
 </div>
-</div>
-
-
 <h3>Data:</h3>
 <div class="ui feed">
   <h1>Today's History</h1>
@@ -19,11 +17,12 @@
     <div class="content">
       <div class="summary">
         <a class="user">
-          {{s.loc}}
+          Headcount: 
         </a> {{s.count}}
         <div class="date">
           {{s.date | dateFormat}}
         </div>
+        <br/>
       </div>
     </div>
   </div>
