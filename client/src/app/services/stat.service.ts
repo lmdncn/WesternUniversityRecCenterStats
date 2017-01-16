@@ -7,13 +7,7 @@ import { Stat } from '../models/stat';
 @Injectable()
 export class StatService {
 
-   WRCurrentCount: number;
-   CMCurrentCount: number;
-   BBCurrentCount: number;
-   VBCurrentCount: number;
-   BDCurrentCount: number;
-   HKCurrentCount: number;
-  
+ 
 
   constructor(private http: Http) { }
 
@@ -32,6 +26,12 @@ export class StatService {
   getToday(loc: string): Observable<Stat[]> {
 
     return this.http.get("api/stats/today?loc=" + loc).map((res) => res.json()).catch(this.handleError);
+
+  }
+
+  getCurrentCount(loc: string){
+ 
+  return this.http.get("api/stats/count?loc=" + loc).map((res) => res.json()).catch(this.handleError);
 
   }
 

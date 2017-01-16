@@ -11,6 +11,27 @@ var moment = require('moment');
 moment().format();
 
 
+//Get current count data -> querying loc=var
+router.get('/count', function (req, res, next) {
+
+    Stat.find({
+        loc: req.query.loc,
+        date: {        }
+    }.sort('-date').limit(1),  
+    function (err, stat) {
+
+        if (err) {
+            res.send(err);
+        }
+
+        // console.log(JSON.stringify(tabs));
+
+        res.json(stat);
+
+    });
+
+});
+
 
 //Get lastweek data -> querying loc=var
 router.get('/lastweek', function (req, res, next) {
@@ -78,7 +99,7 @@ router.get('/today', function (req, res, next) {
 
 
     Stat.find({
-        loc: req.query.loc,
+        loc: req.query.loc ,
         date: { //Find from last week till today
             $gte: today.toDate(),
             $lt: tomorrow.toDate()
