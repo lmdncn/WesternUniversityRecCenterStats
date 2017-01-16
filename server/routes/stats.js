@@ -35,12 +35,13 @@ router.get('/count', function (req, res, next) {
 
 
 //Get lastweek data -> querying loc=var
+//Last week is (range of 7 days) ending with today-4
 router.get('/lastweek', function (req, res, next) {
 
     //This uses moment.js
-    var today = moment().endOf('day')
-    var lastWeek = moment(today).subtract(7, 'days')
-    var twolastWeek = moment(lastWeek).subtract(7, 'days')
+    var today = moment().endOf('day');
+    var lastWeek = moment(today).subtract(4, 'days');
+    var twolastWeek = moment(lastWeek).subtract(7, 'days');
 
     Stat.find({
         loc: req.query.loc,
@@ -69,8 +70,8 @@ router.get('/lastweek', function (req, res, next) {
 router.get('/thisweek', function (req, res, next) {
 
     //This uses moment.js
-    var today = moment().endOf('day')
-    var lastWeek = moment(today).subtract(7, 'days')
+    var today = moment().endOf('day');
+    var lastWeek = moment(today).subtract(4, 'days');
 
 
     Stat.find({
@@ -101,8 +102,8 @@ router.get('/thisweek', function (req, res, next) {
 router.get('/today', function (req, res, next) {
 
     //This uses moment.js
-    var today = moment().startOf('day')
-    var tomorrow = moment(today).add(1, 'days')
+    var today = moment().startOf('day');
+    var tomorrow = moment().endOf('day');
 
 
     Stat.find({
