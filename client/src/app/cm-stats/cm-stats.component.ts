@@ -30,4 +30,8 @@ export class CmStatsComponent implements OnInit {
       stats => { this.lastWeekStats = stats; });
   }
 
+  getProjected(){
+    
+  }
+
 }
