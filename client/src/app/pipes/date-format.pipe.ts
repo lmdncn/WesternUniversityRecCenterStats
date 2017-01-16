@@ -9,7 +9,7 @@ import * as moment from 'moment';
 export class DateFormatPipe implements PipeTransform {
    transform(date: any, args?: any): any {
      let d = new Date(date)
-     return moment(d).format('ddd, MMM D,  h:m a')
+     return moment(d).format('ddd, MMM D,  h:mm a')
 
    }
 }

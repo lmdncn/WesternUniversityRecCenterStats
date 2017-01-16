@@ -12,10 +12,8 @@ moment().format();
 
 
 
-//TODO: No Idea if this works
+//Get lastweek data -> querying loc=var
 router.get('/lastweek', function (req, res, next) {
-
-    console.log('req to /ThisWeek with loc:', req.body.loc);
 
     //This uses moment.js
     var today = moment().startOf('day')
@@ -23,7 +21,7 @@ router.get('/lastweek', function (req, res, next) {
     var twolastWeek = moment(lastWeek).subtract(7, 'days')
 
     Stat.find({
-        loc: req.body.loc,
+        loc: req.query.loc,
         date: { //Find from last week till today
             $gte: twolastWeek.toDate(),
             $lt: lastWeek.toDate()
@@ -43,7 +41,7 @@ router.get('/lastweek', function (req, res, next) {
 });
 
 
-//Returns loc = ____  data from this week
+//Get thisweek data -> querying loc=var
 router.get('/thisweek', function (req, res, next) {
 
     //This uses moment.js
@@ -52,7 +50,7 @@ router.get('/thisweek', function (req, res, next) {
 
 
     Stat.find({
-        loc: "WR",
+        loc: req.query.loc,
         date: { //Find from last week till today
             $gte: lastWeek.toDate(),
             $lt: today.toDate()
@@ -71,7 +69,7 @@ router.get('/thisweek', function (req, res, next) {
 
 });
 
-//Returns loc = ____  data from this week
+//Get today data -> querying loc=var
 router.get('/today', function (req, res, next) {
 
     //This uses moment.js
@@ -80,7 +78,7 @@ router.get('/today', function (req, res, next) {
 
 
     Stat.find({
-        loc: "WR",
+        loc: req.query.loc,
         date: { //Find from last week till today
             $gte: today.toDate(),
             $lt: tomorrow.toDate()

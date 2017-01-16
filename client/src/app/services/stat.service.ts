@@ -7,13 +7,31 @@ import { Stat } from '../models/stat';
 @Injectable()
 export class StatService {
 
+   WRCurrentCount: number;
+   CMCurrentCount: number;
+   BBCurrentCount: number;
+   VBCurrentCount: number;
+   BDCurrentCount: number;
+   HKCurrentCount: number;
+  
+
   constructor(private http: Http) { }
 
-  getWeek(loc: string): Observable<Stat[]> {
+  getThisWeek(loc: string): Observable<Stat[]> {
 
-    console.log("Called Get Today");
+    return this.http.get("api/stats/thisweek?loc=" + loc).map((res) => res.json()).catch(this.handleError);
 
-    return this.http.get("api/stats/thisweek").map((res) => res.json()).catch(this.handleError);
+  }
+
+  getLastWeek(loc: string): Observable<Stat[]> {
+
+    return this.http.get("api/stats/lastweek?loc=" + loc).map((res) => res.json()).catch(this.handleError);
+
+  }
+
+  getToday(loc: string): Observable<Stat[]> {
+
+    return this.http.get("api/stats/today?loc=" + loc).map((res) => res.json()).catch(this.handleError);
 
   }
 
