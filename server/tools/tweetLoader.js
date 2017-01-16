@@ -16,12 +16,12 @@ var tweets;
 //Get Tweets ------------------------------------------------------------------------------------------
 var params = {
   screen_name: 'WesternWeightRm',
-  count: "50"
+  count: "500"
 };
 
 var paramsDropIn = {
     screen_name: "Western_Rec",
-    count: "9"
+    count: "11"
   }
   //TODO: Close this connection after it runs
 client.get('statuses/user_timeline', params, function (error, tweets, response) {

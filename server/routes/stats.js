@@ -50,7 +50,7 @@ router.get('/lastweek', function (req, res, next) {
             $lt: lastWeek.toDate()
         }
     }).sort([
-        ['date', -1]
+        ['date', 1]
     ]).exec(function (err, stats) {
 
         if (err) {
@@ -81,7 +81,7 @@ router.get('/thisweek', function (req, res, next) {
             $lt: today.toDate()
         }
     }).sort([
-        ['date', -1]
+        ['date', 1]
     ]).exec(
 
         function (err, stats) {
