@@ -11,12 +11,6 @@
     "type": "git",
     "url": "git+https://github.com/lmdncn/RecCenterStats.git"
   },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/lmdncn/RecCenterStats/issues"
-  },
-  "homepage": "https://github.com/lmdncn/RecCenterStats#readme",
   "dependencies": {
     "body-parser": "^1.15.2",
     "cookie-parser": "^1.4.3",
@@ -27,5 +21,11 @@
     "morgan": "^1.7.0",
     "node-restful": "^0.2.5",
     "twitter": "^1.7.0"
-  }
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lmdncn/RecCenterStats/issues"
+  },
+  "homepage": "https://github.com/lmdncn/RecCenterStats#readme"
 }
