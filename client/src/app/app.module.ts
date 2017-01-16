@@ -6,6 +6,9 @@ import { HttpModule } from '@angular/http';
 //SemanticUI
 import { SuiModule } from 'ng2-semantic-ui/ng2-semantic-ui';
 
+//ChartJS
+import { ChartModule } from 'angular2-chartjs';
+
 //Tools Import
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -56,7 +59,8 @@ const appRoutes: Routes = [
         HttpModule,
         ReactiveFormsModule,
         RouterModule.forRoot(appRoutes),
-        SuiModule
+        SuiModule,
+        ChartModule
     ],
 
     providers:
