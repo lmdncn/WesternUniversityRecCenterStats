@@ -1,22 +1,18 @@
-<h3>Data:</h3>
-Dummy Chart:
-
-<chart [type]="type" [data]='data' [options]="options"></chart>
-
-
-  <div class="ui feed">
-    <div *ngFor="let s of todayStats" class="event">
-      <div class="label">
-      </div>
-      <div class="content">
-        <div class="summary">
-          <a class="user">
+<div class="ui feed">
+  <h1>Today</h1>
+  <div *ngFor="let s of todayStats" class="event">
+    <div class="label">
+    </div>
+    <div class="content">
+      <div class="summary">
+        <a class="user">
           {{s.loc}}
         </a> {{s.count}}
-          <div class="date">
-            {{s.date | dateFormat}}
-          </div>
+        <div class="date">
+          {{s.date | dateFormat}}
         </div>
       </div>
     </div>
   </div>
+  <chart [type]="type" [data]='data' [options]="options"></chart>
+</div>
