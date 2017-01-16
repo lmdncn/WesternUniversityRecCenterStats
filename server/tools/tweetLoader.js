@@ -20,12 +20,41 @@ var params = {
 };
 
 var paramsDropIn = {
-  screen_name: "Western_Rec",
-  count: "1"
-}
+    screen_name: "Western_Rec",
+    count: "9"
+  }
+  /*
+  //TODO: Close this connection after it runs
+  client.get('statuses/user_timeline', params, function (error, tweets, response) {
 
-//TODO: Close this connection after it runs
-client.get('statuses/user_timeline', params, function (error, tweets, response) {
+    console.log("Loading ", tweets.length, " tweets in database");
+
+    if (!error) {
+
+
+      for (var i = 0; i < tweets.length; i++) { //For Each Tweet
+
+        if (tweets[i].text.includes("WR") && tweets[i].text.includes("CM")) {
+          //Log to users which tweets stored
+          console.log("Saving tweet ", i, "/", tweets.length);
+          console.log(" ");
+          console.log("Tweet Text: ", tweets[i].text);
+          console.log("Tweet Date: ", tweets[i].created_at);
+          console.log(" ");
+
+          //Store It
+          savejs.pullWRCM(tweets[i].text, tweets[i].created_at);
+          console.log(" ");
+          console.log("---------------------------------------------------");
+          console.log(" ");
+        }
+      }
+    }
+  });
+
+  */
+  //TODO: Close this connection after it runs
+client.get('statuses/user_timeline', paramsDropIn, function (error, tweets, response) {
 
   console.log("Loading ", tweets.length, " tweets in database");
 
@@ -34,7 +63,7 @@ client.get('statuses/user_timeline', params, function (error, tweets, response) 
 
     for (var i = 0; i < tweets.length; i++) { //For Each Tweet
 
-      if (tweets[i].text.includes("WR") && tweets[i].text.includes("CM")) {
+      if (tweets[i].text.toUpperCase().includes("BBALL") || tweets[i].text.toUpperCase().includes("VBALL") || tweets[i].text.toUpperCase().includes("BDMT") || tweets[i].text.toUpperCase().includes("FUTS") || tweets[i].text.toUpperCase().includes("BASKETBALL") || tweets[i].text.toUpperCase().includes("VOLLEYBALL") || tweets[i].text.toUpperCase().includes("BADMINTON") || tweets[i].text.toUpperCase().includes("FUTSAL")) {
         //Log to users which tweets stored
         console.log("Saving tweet ", i, "/", tweets.length);
         console.log(" ");
@@ -43,7 +72,7 @@ client.get('statuses/user_timeline', params, function (error, tweets, response) 
         console.log(" ");
 
         //Store It
-        savejs.pullWRCM(tweets[i].text, tweets[i].created_at);
+        savejs.pullRC(tweets[i].text.toUpperCase(), tweets[i].created_at);
         console.log(" ");
         console.log("---------------------------------------------------");
         console.log(" ");

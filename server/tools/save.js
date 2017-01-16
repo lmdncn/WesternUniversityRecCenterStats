@@ -3,7 +3,7 @@
 //Database Set Up ---------------------------------------------------------------------------------
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://main:mainpass@ds163758.mlab.com:63758/reccenterstats'); //connect to the db
-var Stat = require('./models/stat');
+var Stat = require('../models/stat');
 
 // SAVE Fucntion -------------------------------------------------------
 module.exports = {
@@ -104,7 +104,7 @@ module.exports = {
 
 		saveStat("BBALL", BBALLnum, d);
 		saveStat("VBALL", VBALLnum, d);
-		saveStat("BDMT", BADMTnum, d);
+		saveStat("BDMT", BDMTnum, d);
 		saveStat("FUTS", FUTSnum, d);
 	}
 };
