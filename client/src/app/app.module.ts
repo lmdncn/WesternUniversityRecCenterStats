@@ -3,6 +3,9 @@ import { NgModule } from '@angular/core';
 
 import { HttpModule } from '@angular/http';
 
+//SemanticUI
+import {SuiModule} from 'ng2-semantic-ui/ng2-semantic-ui';
+
 //Tools Import
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -17,6 +20,8 @@ import { HeaderComponent } from './header/header.component';
 
 //Service Import
 import { StatService} from './services/stat.service';
+import { DateNiceDirective } from './date-nice.directive';
+
 
 
 
@@ -38,6 +43,7 @@ const appRoutes: Routes = [
 	WrStatsComponent,
 	FooterComponent,
 	HeaderComponent,
+	DateNiceDirective,
     ],
 	
     imports: [
@@ -46,7 +52,8 @@ const appRoutes: Routes = [
         FormsModule,
         HttpModule,
         ReactiveFormsModule,
-        RouterModule.forRoot(appRoutes)
+        RouterModule.forRoot(appRoutes),
+        SuiModule
     ],
 	
     providers: 
