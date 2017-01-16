@@ -56,7 +56,7 @@ app.use(function (req, res, next) {
 });
 
 // start the server
-app.listen(port, function () {
+app.listen(process.env.PORT || port, function () {
     console.log('Server listening on port ' + port + " !");
 });
 
