@@ -13,9 +13,15 @@ import { XY } from '../models/xy'
 export class WrStatsComponent implements OnInit {
 
   todayStats: Stat[];
+  todayStatsR: Stat[];
   thisWeekStats: Stat[];
   lastWeekStats: Stat[];
+  thisTimeLastWeek: Stat[];
 
+
+  daydata = null;
+
+  dayoptions = null;
 
 
   type = 'line';
@@ -28,14 +34,93 @@ export class WrStatsComponent implements OnInit {
 
   constructor(private statService: StatService) { }
 
-  setData(){
-    this.buildWeek();
-    this.buildDay();
-  }
+   buildDay() {
 
-  buildDay(){
+    var TD = new Array<XY>();
 
-    
+    for (var i = 0; i < this.todayStats.length; i++) {
+      console.log("Today: ", this.todayStats[i]);
+      var t = new XY(new Date(this.todayStats[i].date), this.todayStats[i].count);
+      TD.push(t);
+    };
+
+
+    var LD = new Array<XY>();
+
+    for (var i = 0; i < this.thisTimeLastWeek.length; i++) {
+      console.log("TTLW: ", this.thisTimeLastWeek[i]);
+      LD.push(new XY(new Date(moment(this.thisTimeLastWeek[i].date).add(7, "days").toDate()), this.thisTimeLastWeek[i].count));
+
+    };
+
+
+    this.daydata = {
+      datasets: [{
+        label: 'Today',
+        data: TD,
+        backgroundColor: "rgba(81, 44, 115,0.8)",
+        lineTension: 0,
+        radius: 2.5,
+        spanGaps: false,
+      },
+      {
+        label: 'Last Week',
+        data: LD,
+        backgroundColor: "rgba(93, 90, 96,0.2)",
+        //lineTension:0.2,
+        radius: 2.5,
+        spanGaps: false,
+      }
+
+      ]
+    };
+
+    this.dayoptions = {
+      scales: {
+
+        xAxes: [{
+          type: 'time',
+          time: {
+            round: "minute",
+            displayFormats: {
+              hour: 'h:mm a',
+            },
+            isoWeekday: true,
+
+            max: moment(this.todayStats[0].date).endOf("day"),
+            min: moment(this.todayStats[0].date).startOf("day"),
+
+            tooltipFormat: "ddd, MMM D, h:mm a",
+            unit: "hour"
+          },
+          ticks: {
+            labelOffset: 80,
+            maxRotation: 0,
+
+          },
+          gridLines: {
+            lineWidth: 4,
+          }
+        }],
+
+        yAxes: [{
+          ticks: {
+            min: 0,
+            max: 300
+          },
+          scaleLabel:
+          {
+            display: true,
+            labelString: "HeadCount",
+          }
+        }]
+
+      },
+      responsive: true,
+
+
+    };
+
   }
 
 
@@ -47,11 +132,11 @@ export class WrStatsComponent implements OnInit {
     for (var i = 0; i < this.thisWeekStats.length; i++) {
       console.log("This Week: ", this.thisWeekStats[i]);
 
-          while(moment(this.thisWeekStats[i].date)>lastMoment.add(4, 'hours'))//Gym Probably Closed
+      while (moment(this.thisWeekStats[i].date) > lastMoment.add(4, 'hours'))//Gym Probably Closed
       {
         console.log("Adding Close");
-        TW.push( new XY(new Date(moment(lastMoment).subtract(2,"hours").toDate()),-1));
-        TW.push( new XY(new Date(lastMoment.toDate()),-1));
+        TW.push(new XY(new Date(moment(lastMoment).subtract(2, "hours").toDate()), -1));
+        TW.push(new XY(new Date(lastMoment.toDate()), -1));
       }
 
       lastMoment = moment(this.thisWeekStats[i].date);
@@ -68,19 +153,19 @@ export class WrStatsComponent implements OnInit {
     for (var i = 0; i < this.lastWeekStats.length; i++) {
 
       console.log("Last Week: ", this.lastWeekStats[i]);
-      if(moment(this.lastWeekStats[i].date).add(7, "days")>moment(lastMoment).add(4, 'hours')){
-      
-      while(moment(this.lastWeekStats[i].date).add(7, "days")>lastMoment.add(1, 'hours'))   //Gym Probably Closed
-      {
-        LW.push( new XY(new Date(lastMoment.toDate()),-1));
-        lastMoment.add(1,"hours");
-      }
+      if (moment(this.lastWeekStats[i].date).add(7, "days") > moment(lastMoment).add(4, 'hours')) {
+
+        while (moment(this.lastWeekStats[i].date).add(7, "days") > lastMoment.add(1, 'hours'))   //Gym Probably Closed
+        {
+          LW.push(new XY(new Date(lastMoment.toDate()), -1));
+          lastMoment.add(1, "hours");
+        }
       }
 
       lastMoment = moment(this.lastWeekStats[i].date).add(7, "days");
 
-      LW.push( new XY(new Date(moment(this.lastWeekStats[i].date).add(7, "days").toDate()), this.lastWeekStats[i].count));
-      
+      LW.push(new XY(new Date(moment(this.lastWeekStats[i].date).add(7, "days").toDate()), this.lastWeekStats[i].count));
+
     };
 
 
@@ -89,17 +174,17 @@ export class WrStatsComponent implements OnInit {
         label: 'This Week',
         data: TW,
         backgroundColor: "rgba(81, 44, 115,0.8)",
-        lineTension:0,
-        radius:2.5,
-        spanGaps:false,
+        lineTension: 0,
+        radius: 2.5,
+        spanGaps: false,
       },
       {
         label: 'Last Week',
         data: LW,
         backgroundColor: "rgba(93, 90, 96,0.2)",
         //lineTension:0.2,
-        radius:2.5,
-        spanGaps:false,
+        radius: 2.5,
+        spanGaps: false,
       }
 
       ]
@@ -117,11 +202,11 @@ export class WrStatsComponent implements OnInit {
             },
             isoWeekday: true,
 
-           // max: moment(this.lastWeekStats[this.lastWeekStats.length - 1].date).add(7, "days"),
-           // min: moment(this.thisWeekStats[0].date),
+            // max: moment(this.lastWeekStats[this.lastWeekStats.length - 1].date).add(7, "days"),
+            // min: moment(this.thisWeekStats[0].date),
 
-           max: moment().endOf("day").add(3, "days"),
-           min: moment().startOf("day").subtract(3,"days"),
+            max: moment().endOf("day").add(3, "days"),
+            min: moment().startOf("day").subtract(3, "days"),
 
             tooltipFormat: "ddd, MMM D, h:mm a",
             unit: "day"
@@ -150,8 +235,8 @@ export class WrStatsComponent implements OnInit {
 
       },
       responsive: true,
-      
-      
+
+
     };
 
   }
@@ -166,12 +251,22 @@ export class WrStatsComponent implements OnInit {
       .subscribe(
       stats => {
         this.todayStats = stats;
+        this.todayStatsR = stats;
+        this.todayStatsR.reverse();
 
-        if (this.todayStats.length < 1) {
+        if (this.todayStats != null && this.todayStats.length < 1) {
           console.log("Morning Of = Closed");
           this.todayStats.push(new Stat(null, "CM", -1, new Date(Date.now())));
         }
+        
 
+      });
+
+    this.statService.getTTLW("WR")
+      .subscribe(
+      stats => {
+        this.thisTimeLastWeek = stats;
+        this.buildDay();
       });
 
 
@@ -189,10 +284,9 @@ export class WrStatsComponent implements OnInit {
       stats => {
         this.lastWeekStats = stats;
         console.log("Set Data");
-        this.setData();
-
+        this.buildWeek();
+    
       });
-
 
   }
 

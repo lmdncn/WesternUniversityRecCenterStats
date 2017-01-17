@@ -33,6 +33,33 @@ router.get('/count', function (req, res, next) {
 
 });
 
+router.get('/ttlw', function (req, res, next) {
+
+    //This uses moment.js
+    var ttlw = moment().subtract(7,"days");
+
+    Stat.find({
+        loc: req.query.loc,
+        date: { //Find from last week till today
+            $gte: ttlw.startOf("day").toDate(),
+            $lt: ttlw.endOf("day").toDate()
+        }
+    }).sort([
+        ['date', 1]
+    ]).exec(function (err, stats) {
+
+        if (err) {
+            res.send(err);
+        }
+
+        // console.log(JSON.stringify(tabs));
+
+        res.json(stats);
+
+    });
+
+});
+
 
 //Get lastweek data -> querying loc=var
 //Last week is (range of 7 days) ending with today-4
@@ -113,7 +140,7 @@ router.get('/today', function (req, res, next) {
             $lt: tomorrow.toDate()
         }
     }).sort([
-        ['date', -1]
+        ['date', 1]
     ]).exec(function (err, stats) {
 
         if (err) {

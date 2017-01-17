@@ -29,6 +29,12 @@ export class StatService {
 
   }
 
+  getTTLW(loc: string): Observable<Stat[]> {
+
+    return this.http.get("api/stats/ttlw?loc=" + loc).map((res) => res.json()).catch(this.handleError);
+
+  }
+
   getCurrentCount(loc: string){
  
   return this.http.get("api/stats/count?loc=" + loc).map((res) => res.json()).catch(this.handleError);
