@@ -28,8 +28,18 @@ export class WrStatsComponent implements OnInit {
 
   constructor(private statService: StatService) { }
 
+  setData(){
+    this.buildWeek();
+    this.buildDay();
+  }
 
-  setData() {
+  buildDay(){
+
+    
+  }
+
+
+  buildWeek() {
 
     var TW = new Array<XY>();
     var lastMoment = moment(this.thisWeekStats[0].date)
@@ -110,8 +120,8 @@ export class WrStatsComponent implements OnInit {
            // max: moment(this.lastWeekStats[this.lastWeekStats.length - 1].date).add(7, "days"),
            // min: moment(this.thisWeekStats[0].date),
 
-           max: moment().add(4, "days"),
-           min: moment().subtract(3,"days"),
+           max: moment().endOf("day").add(3, "days"),
+           min: moment().startOf("day").subtract(3,"days"),
 
             tooltipFormat: "ddd, MMM D, h:mm a",
             unit: "day"
