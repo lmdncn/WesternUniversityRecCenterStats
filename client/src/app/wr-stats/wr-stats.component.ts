@@ -52,7 +52,7 @@ export class WrStatsComponent implements OnInit {
 
     for (var i = 0; i < this.lastWeekStats.length; i++) {
       console.log("Last Week: ",this.lastWeekStats[i]);
-      var t = new XY(new Date(this.lastWeekStats[i].date), this.lastWeekStats[i].count);
+      var t = new XY(new Date(moment(this.lastWeekStats[i].date).add(7,"days").toDate()), this.lastWeekStats[i].count);
       LW.push(t);
     };
 
