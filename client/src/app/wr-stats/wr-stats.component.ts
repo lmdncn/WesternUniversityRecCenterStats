@@ -58,7 +58,7 @@ export class WrStatsComponent implements OnInit {
       datasets: [{
         label: 'Today',
         data: TD,
-        backgroundColor: "rgba(81, 44, 115,0.8)",
+        backgroundColor: "rgba(81, 44, 115,0.6)",
         lineTension: 0,
         radius: 2.5,
         spanGaps: false,
@@ -66,7 +66,7 @@ export class WrStatsComponent implements OnInit {
       {
         label: 'Last Week Today',
         data: LD,
-        backgroundColor: "rgba(93, 90, 96,0.2)",
+        backgroundColor: "rgba(93, 90, 96,0.4)",
         //lineTension:0.2,
         radius: 2.5,
         spanGaps: false,
@@ -172,17 +172,17 @@ export class WrStatsComponent implements OnInit {
       datasets: [{
         label: 'This Week',
         data: TW,
-        backgroundColor: "rgba(81, 44, 115,0.8)",
+        backgroundColor: "rgba(81, 44, 115,0.6)",
         lineTension: 0,
-        radius: 2.5,
+        radius: 2,
         spanGaps: false,
       },
       {
         label: 'Last Week',
         data: LW,
-        backgroundColor: "rgba(93, 90, 96,0.2)",
+        backgroundColor: "rgba(93, 90, 96,0.4)",
         //lineTension:0.2,
-        radius: 2.5,
+        radius: 2,
         spanGaps: false,
       }
 
