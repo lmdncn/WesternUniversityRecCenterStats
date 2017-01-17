@@ -5,8 +5,7 @@ chart {
 
 .scrollX {
     display: block;
-    overflow-x: scroll;
-    overflow-y: hidden;
+    overflow-x: hidden;
     height: 120px;
     white-space: nowrap;
      

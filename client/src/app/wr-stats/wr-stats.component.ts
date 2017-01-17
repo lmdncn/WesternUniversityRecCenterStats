@@ -256,21 +256,20 @@ export class WrStatsComponent implements OnInit {
         this.todayStatsR = stats.slice();
         this.todayStatsR.reverse();
 
+        
+
+
+      },null,()=>{
+
         if (this.todayStats != null && this.todayStats.length < 1) {
           console.log("Morning Of = Closed");
           this.todayStats.push(new Stat(null, "CM", -1, new Date(Date.now())));
         }
-
+        this.getTTLW();
 
       });
 
-    this.statService.getTTLW("WR")
-      .subscribe(
-      stats => {
-        this.thisTimeLastWeek = stats;
-      },null,()=> {
-        this.buildDay();
-      });
+    
 
 
     this.statService.getThisWeek("WR")
@@ -297,5 +296,15 @@ export class WrStatsComponent implements OnInit {
         this.buildWeek();
       });
       }
+
+    getTTLW(){
+      this.statService.getTTLW("WR")
+      .subscribe(
+      stats => {
+        this.thisTimeLastWeek = stats;
+      },null,()=> {
+        this.buildDay();
+      });
+    }
 
 }
