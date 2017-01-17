@@ -4,6 +4,22 @@ var updater = require('../tools/tweetUpdater');
 var moment = require('moment');
 var lastUpdate = Date.now();
 
+
+
+
+
+
+var timeout = function(){
+	
+setInterval(function() {
+	console.log("Schedual Update")
+	updater.updateData();
+	
+}, 4* 24 * 60 * 60 * 1000);	//Every 4 days
+};
+
+timeout();
+
 // Get Home Page
 router.get('/', function (req, res, next) {
 
