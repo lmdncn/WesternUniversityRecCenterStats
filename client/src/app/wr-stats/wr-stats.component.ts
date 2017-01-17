@@ -30,7 +30,8 @@ export class WrStatsComponent implements OnInit {
         type: 'linear',
         position: 'bottom'
       }]
-    }
+    },
+    defaultFontColor: '#666'
   };
 
   constructor(private statService: StatService) { }
@@ -38,19 +39,37 @@ export class WrStatsComponent implements OnInit {
 
   setData() {
 
-    var temp = new Array<XY>();
+    var TW = new Array<XY>();
 
     for (var i = 0; i < this.thisWeekStats.length; i++) {
-      console.log(this.thisWeekStats[i]);
+      console.log("This Week: ",this.thisWeekStats[i]);
       var t = new XY(new Date(this.thisWeekStats[i].date), this.thisWeekStats[i].count);
-      temp.push(t);
+      TW.push(t);
     };
+
+
+     var LW = new Array<XY>();
+
+    for (var i = 0; i < this.lastWeekStats.length; i++) {
+      console.log("Last Week: ",this.lastWeekStats[i]);
+      var t = new XY(new Date(this.lastWeekStats[i].date), this.lastWeekStats[i].count);
+      LW.push(t);
+    };
+
 
     this.data = {
       datasets: [{
-        label: 'Scatter Dataset',
-        data: temp
-      }]
+        label: 'This Week',
+        data: TW,
+        backgroundColor: "rgba(153,255,51,0.6)"
+      },
+      {
+        label: 'Last Week',
+        data: LW,
+        backgroundColor: "rgba(255,153,0,0.6)"
+      }
+      
+      ]
     };
 
   }
@@ -72,14 +91,16 @@ export class WrStatsComponent implements OnInit {
         this.thisWeekStats = stats;
 
         this.startDate = stats[0].date;
-        this.setData();
-        console.log("Set Data");
+       
       });
 
     this.statService.getLastWeek("WR")
       .subscribe(
       stats => {
         this.lastWeekStats = stats;
+
+         this.setData();
+        console.log("Set Data");
       });
 
 

@@ -28,7 +28,7 @@
     </div>
   </div>
   <div class="thirteen wide column">
-    <chart *ngIf="thisWeekStats!=null"  [type]="type" [data]='data' [options]="options"></chart>
+    <chart *ngIf="thisWeekStats!=null && lastWeekStats!=null  "  [type]="type" [data]='data' [options]="options"></chart>
   </div>
 
 </div>
