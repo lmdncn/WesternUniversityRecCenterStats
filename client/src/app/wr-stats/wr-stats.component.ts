@@ -29,9 +29,15 @@ export class WrStatsComponent implements OnInit {
       xAxes: [{
         type: 'linear',
         position: 'bottom'
+      }],
+      yAxes: [{
+        ticks: {
+          min:0,
+          max:300
+        }
       }]
-    },
-    defaultFontColor: '#666'
+
+    }
   };
 
   constructor(private statService: StatService) { }
@@ -42,17 +48,17 @@ export class WrStatsComponent implements OnInit {
     var TW = new Array<XY>();
 
     for (var i = 0; i < this.thisWeekStats.length; i++) {
-      console.log("This Week: ",this.thisWeekStats[i]);
+      console.log("This Week: ", this.thisWeekStats[i]);
       var t = new XY(new Date(this.thisWeekStats[i].date), this.thisWeekStats[i].count);
       TW.push(t);
     };
 
 
-     var LW = new Array<XY>();
+    var LW = new Array<XY>();
 
     for (var i = 0; i < this.lastWeekStats.length; i++) {
-      console.log("Last Week: ",this.lastWeekStats[i]);
-      var t = new XY(new Date(moment(this.lastWeekStats[i].date).add(7,"days").toDate()), this.lastWeekStats[i].count);
+      console.log("Last Week: ", this.lastWeekStats[i]);
+      var t = new XY(new Date(moment(this.lastWeekStats[i].date).add(7, "days").toDate()), this.lastWeekStats[i].count);
       LW.push(t);
     };
 
@@ -68,7 +74,7 @@ export class WrStatsComponent implements OnInit {
         data: LW,
         backgroundColor: "rgba(255,153,0,0.6)"
       }
-      
+
       ]
     };
 
@@ -91,7 +97,7 @@ export class WrStatsComponent implements OnInit {
         this.thisWeekStats = stats;
 
         this.startDate = stats[0].date;
-       
+
       });
 
     this.statService.getLastWeek("WR")
@@ -99,7 +105,7 @@ export class WrStatsComponent implements OnInit {
       stats => {
         this.lastWeekStats = stats;
 
-         this.setData();
+        this.setData();
         console.log("Set Data");
       });
 
