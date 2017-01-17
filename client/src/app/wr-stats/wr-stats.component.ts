@@ -37,9 +37,10 @@ export class WrStatsComponent implements OnInit {
     for (var i = 0; i < this.thisWeekStats.length; i++) {
       console.log("This Week: ", this.thisWeekStats[i]);
 
-          while(moment(this.thisWeekStats[i].date)>lastMoment.add(2, 'hours'))//Gym Probably Closed
+          while(moment(this.thisWeekStats[i].date)>lastMoment.add(4, 'hours'))//Gym Probably Closed
       {
         console.log("Adding Close");
+        TW.push( new XY(new Date(moment(lastMoment).subtract(2,"hours").toDate()),-1));
         TW.push( new XY(new Date(lastMoment.toDate()),-1));
       }
 
@@ -57,10 +58,13 @@ export class WrStatsComponent implements OnInit {
     for (var i = 0; i < this.lastWeekStats.length; i++) {
 
       console.log("Last Week: ", this.lastWeekStats[i]);
-
-      while(moment(this.lastWeekStats[i].date).add(7, "days")>lastMoment.add(2, 'hours'))//Gym Probably Closed
+      if(moment(this.lastWeekStats[i].date).add(7, "days")>moment(lastMoment).add(4, 'hours')){
+      
+      while(moment(this.lastWeekStats[i].date).add(7, "days")>lastMoment.add(1, 'hours'))   //Gym Probably Closed
       {
         LW.push( new XY(new Date(lastMoment.toDate()),-1));
+        lastMoment.add(1,"hours");
+      }
       }
 
       lastMoment = moment(this.lastWeekStats[i].date).add(7, "days");
