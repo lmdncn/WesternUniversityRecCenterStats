@@ -80,11 +80,11 @@ export class WrStatsComponent implements OnInit {
             tooltipFormat: "ddd, MMM D, h:mm a",
             unit: "day"
           },
-          ticks:{
-            labelOffset:75,
+          ticks: {
+            labelOffset: 75,
           },
-          gridLines:{
-            lineWidth:4,
+          gridLines: {
+            lineWidth: 4,
           }
         }],
 
@@ -114,7 +114,15 @@ export class WrStatsComponent implements OnInit {
 
     this.statService.getToday("WR")
       .subscribe(
-      stats => { this.todayStats = stats; });
+      stats => {
+        this.todayStats = stats;
+
+        if (this.todayStats.length < 1) {
+          console.log("Morning Of = Closed");
+          this.todayStats.push(new Stat(null, "CM", -1, new Date(Date.now())));
+        }
+
+      });
 
 
     this.statService.getThisWeek("WR")
@@ -132,7 +140,7 @@ export class WrStatsComponent implements OnInit {
         this.lastWeekStats = stats;
         console.log("Set Data");
         this.setData();
-        
+
       });
 
 
