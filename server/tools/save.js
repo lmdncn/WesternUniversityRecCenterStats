@@ -116,6 +116,10 @@ module.exports = {
 
 		console.log("BBALL Index:", BBALLi, " VBALL Index:", VBALLi, " BDMT Index:", BDMTi, " FUTS Index:", FUTSi);
 
+		if(BBALLi == -1 || VBALLi == -1 || BDMTi == -1 || FUTSi == -1){
+			return;
+		}
+		
 		var curI;
 
 		//Oder ## BBall etc...
