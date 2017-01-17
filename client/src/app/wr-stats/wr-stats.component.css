@@ -1,6 +1,20 @@
 chart {
     width: 90%;
     margin: auto;
+    padding-bottom: 15px;
+}
+
+.graph-header {
+    text-align: center;
+}
+
+.today-info {
+    background-color: #f1f1f1;
+}
+
+#today-info-text {
+    background-color: #e4e4e4;
+    padding: 10px;
 }
 
 .scrollX {
@@ -8,9 +22,9 @@ chart {
     overflow-x: hidden;
     height: 120px;
     white-space: nowrap;
-     
 }
 
-.scrollX h1, .scrollX div {
+.scrollX h1,
+.scrollX div {
     display: inline-block;
 }
