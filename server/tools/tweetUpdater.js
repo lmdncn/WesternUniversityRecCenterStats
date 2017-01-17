@@ -22,11 +22,11 @@ console.log("Last Loaded Tweet at Date Time : ", ltWRCM);
 //Get Tweets -----------------------------------------------------------------------------------------
 var params = {
   screen_name: 'WesternWeightRm',
-  count: "500"
+  count: "200"
 };
 
   
-  //TODO: Close this connection after it runs
+  //TODO: Make it recursively load tweets
 client.get('statuses/user_timeline', params, function (error, tweets, response) {
 
   console.log("Loading ", tweets.length, " tweets in database");

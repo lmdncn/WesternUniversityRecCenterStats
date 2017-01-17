@@ -1,5 +1,15 @@
-h1{ 
+h1 {
     text-align: center;
     color: rebeccapurple;
     margin: 10px;
+}
+
+h2 {
+    text-align: center;
+    color: #696969;
+    margin: 10px;
+}
+
+#header-text {
+    padding: 10px;
 }
