@@ -24,27 +24,7 @@ export class WrStatsComponent implements OnInit {
 
   data = null;
 
-  options = {
-    scales: {
-      xAxes: [{
-        type: 'linear',
-        position: 'bottom',
-        ticks:{
-          callback:(v)=> moment(v).format('ddd, MMM D,  h:mm a')
-        }
-          
-        
-      }],
-      yAxes: [{
-        ticks: {
-          min: 0,
-          max: 300
-        }
-      }]
-
-    },
-    responsive: true,
-  };
+  options = null;
 
   constructor(private statService: StatService) { }
 
@@ -84,6 +64,46 @@ export class WrStatsComponent implements OnInit {
       ]
     };
 
+    this.options = {
+      scales: {
+
+        xAxes: [{
+          type: 'time',
+          time: {
+            round: "minute",
+            displayFormats: {
+              day: 'dddd, MMM D',
+            },
+            isoWeekday: true,
+            max: moment(this.lastWeekStats[this.lastWeekStats.length - 1].date).add(7, "days"),
+            min: moment(this.thisWeekStats[0].date),
+            tooltipFormat: "ddd, MMM D, h:mm a",
+            unit: "day"
+          },
+          ticks:{
+            labelOffset:75,
+          },
+          gridLines:{
+            lineWidth:4,
+          }
+        }],
+
+        yAxes: [{
+          ticks: {
+            min: 0,
+            max: 300
+          },
+          scaleLabel:
+          {
+            display: true,
+            labelString: "HeadCount",
+          }
+        }]
+
+      },
+      responsive: true,
+    };
+
   }
 
 
@@ -110,9 +130,9 @@ export class WrStatsComponent implements OnInit {
       .subscribe(
       stats => {
         this.lastWeekStats = stats;
-
-        this.setData();
         console.log("Set Data");
+        this.setData();
+        
       });
 
 
