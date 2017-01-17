@@ -1,4 +1,9 @@
-chart{
+chart {
     width: 90%;
     margin: auto;
+}
+
+.scrollable {
+    overflow-y: scroll;
+    height: 400px;
 }

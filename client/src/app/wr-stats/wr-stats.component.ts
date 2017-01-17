@@ -34,7 +34,7 @@ export class WrStatsComponent implements OnInit {
 
   constructor(private statService: StatService) { }
 
-   buildDay() {
+  buildDay() {
 
     var TD = new Array<XY>();
 
@@ -64,7 +64,7 @@ export class WrStatsComponent implements OnInit {
         spanGaps: false,
       },
       {
-        label: 'Last Week',
+        label: 'Last Week Today',
         data: LD,
         backgroundColor: "rgba(93, 90, 96,0.2)",
         //lineTension:0.2,
@@ -85,7 +85,7 @@ export class WrStatsComponent implements OnInit {
             displayFormats: {
               hour: 'h a',
             },
-            unitStepSize:2,
+            unitStepSize: 2,
             isoWeekday: true,
 
             max: moment(this.todayStats[0].date).endOf("day"),
@@ -258,7 +258,7 @@ export class WrStatsComponent implements OnInit {
           console.log("Morning Of = Closed");
           this.todayStats.push(new Stat(null, "CM", -1, new Date(Date.now())));
         }
-        
+
 
       });
 
@@ -285,7 +285,7 @@ export class WrStatsComponent implements OnInit {
         this.lastWeekStats = stats;
         console.log("Set Data");
         this.buildWeek();
-    
+
       });
 
   }
