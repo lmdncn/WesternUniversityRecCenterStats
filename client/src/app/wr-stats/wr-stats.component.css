@@ -1,9 +1,23 @@
 chart {
     width: 90%;
     margin: auto;
+    padding-bottom: 15px;
+}
+
+.graph-header {
+    text-align: center;
 }
 
 .scrollable {
     overflow-y: scroll;
-    height: 400px;
+    height: 600px;
+}
+
+.today-info {
+    background-color: #f1f1f1;
+}
+
+#today-info-text {
+    background-color: #e4e4e4;
+    padding: 10px;
 }
