@@ -83,8 +83,9 @@ export class WrStatsComponent implements OnInit {
           time: {
             round: "minute",
             displayFormats: {
-              hour: 'h:mm a',
+              hour: 'h a',
             },
+            unitStepSize:2,
             isoWeekday: true,
 
             max: moment(this.todayStats[0].date).endOf("day"),
@@ -94,9 +95,7 @@ export class WrStatsComponent implements OnInit {
             unit: "hour"
           },
           ticks: {
-            labelOffset: 80,
             maxRotation: 0,
-
           },
           gridLines: {
             lineWidth: 4,
@@ -250,8 +249,9 @@ export class WrStatsComponent implements OnInit {
     this.statService.getToday("WR")
       .subscribe(
       stats => {
+        //TODO: Dont reverse whole array
         this.todayStats = stats;
-        this.todayStatsR = stats;
+        this.todayStatsR = stats.slice();
         this.todayStatsR.reverse();
 
         if (this.todayStats != null && this.todayStats.length < 1) {
