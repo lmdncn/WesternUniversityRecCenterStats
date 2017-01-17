@@ -11,8 +11,8 @@
       <h2>Currently Closed</h2>
   </div>
 </div>
-<div  class="ui feed two column doubling stackable grid">
-  <div *ngIf="todayStats!=null && todayStats[0].count>=0" class="three wide column">
+<div  *ngIf="todayStats!=null && todayStats[0].count>=0" class="ui feed two column doubling stackable grid">
+  <div class="three wide column">
     <h1>Today's History</h1>
     <div *ngFor="let s of todayStats" class="event">
       <div class="label">
@@ -35,3 +35,9 @@
   </div>
 
 </div>
+
+<!-- Closed View -->
+<div *ngIf="todayStats!=null && todayStats[0].count==-1" class="sixteen wide column">
+ <chart *ngIf="thisWeekStats!=null && lastWeekStats!=null"  [type]="type" [data]='data' [options]="options"></chart>
+</div>
+
