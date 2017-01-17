@@ -1,5 +1,5 @@
 chart {
-    width: 90%;
+    width: 100%;
     margin: auto;
     padding-bottom: 15px;
 }
@@ -18,13 +18,10 @@ chart {
 }
 
 .scrollX {
-    display: block;
-    overflow-x: hidden;
-    height: 120px;
-    white-space: nowrap;
+    height: 600px;
+    overflow-y: scroll;
+    
 }
-
-.scrollX h1,
-.scrollX div {
-    display: inline-block;
+.scrollX div{
+    display: block;
 }

@@ -45,8 +45,8 @@
 <!-- merge 1 -->
 <!-- merge 2 -->
 <div class="today-info">
-  <div *ngIf="todayStats!=null && todayStats[0].count>=0">
-    <div class="scrollX">
+  <div *ngIf="todayStats!=null && todayStats[0].count>=0" class="ui two column row doubling stackable grid">
+    <div class="scrollX three wide column">
       <h1>Today's History</h1>
       <div id="today-info-text">
         <div *ngFor="let s of todayStatsR" class="ui statistic">
@@ -59,7 +59,7 @@
         </div>
       </div>
     </div>
-    <div class="">
+    <div class="thirteen wide column">
       <h2 class="graph-header">Day View</h2>
       <chart *ngIf="thisTimeLastWeek!=null && todayStats!=null" [type]="type" [data]='daydata' [options]="dayoptions"></chart>
     </div>
