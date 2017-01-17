@@ -28,16 +28,22 @@ export class WrStatsComponent implements OnInit {
     scales: {
       xAxes: [{
         type: 'linear',
-        position: 'bottom'
+        position: 'bottom',
+        ticks:{
+          callback:(v)=> moment(v).format('ddd, MMM D,  h:mm a')
+        }
+          
+        
       }],
       yAxes: [{
         ticks: {
-          min:0,
-          max:300
+          min: 0,
+          max: 300
         }
       }]
 
-    }
+    },
+    responsive: true,
   };
 
   constructor(private statService: StatService) { }
@@ -67,12 +73,12 @@ export class WrStatsComponent implements OnInit {
       datasets: [{
         label: 'This Week',
         data: TW,
-        backgroundColor: "rgba(153,255,51,0.6)"
+        backgroundColor: "rgba(81, 44, 115,0.8)"
       },
       {
         label: 'Last Week',
         data: LW,
-        backgroundColor: "rgba(255,153,0,0.6)"
+        backgroundColor: "rgba(93, 90, 96,0.2)"
       }
 
       ]
