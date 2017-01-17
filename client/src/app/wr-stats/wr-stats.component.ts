@@ -28,16 +28,22 @@ export class WrStatsComponent implements OnInit {
     scales: {
       xAxes: [{
         type: 'linear',
-        position: 'bottom'
+        position: 'bottom',
+        ticks:{
+          callback:(v)=> moment(v).format('ddd, MMM D,  h:mm a')
+        }
+          
+        
       }],
       yAxes: [{
         ticks: {
-          min:0,
-          max:300
+          min: 0,
+          max: 300
         }
       }]
 
-    }
+    },
+    responsive: true,
   };
 
   constructor(private statService: StatService) { }
