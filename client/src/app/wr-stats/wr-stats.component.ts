@@ -20,11 +20,11 @@ export class WrStatsComponent implements OnInit {
 
   type = 'line';
 
-  startDate: Date;
+  weekstartDate: Date;
 
-  data = null;
+  weekdata = null;
 
-  options = null;
+  weekoptions = null;
 
   constructor(private statService: StatService) { }
 
@@ -74,28 +74,28 @@ export class WrStatsComponent implements OnInit {
     };
 
 
-    this.data = {
+    this.weekdata = {
       datasets: [{
         label: 'This Week',
         data: TW,
         backgroundColor: "rgba(81, 44, 115,0.8)",
-        lineTension:0.2,
-        radius:4,
+        lineTension:0,
+        radius:2.5,
         spanGaps:false,
       },
       {
         label: 'Last Week',
         data: LW,
         backgroundColor: "rgba(93, 90, 96,0.2)",
-        lineTension:0.2,
-        radius:4,
+        //lineTension:0.2,
+        radius:2.5,
         spanGaps:false,
       }
 
       ]
     };
 
-    this.options = {
+    this.weekoptions = {
       scales: {
 
         xAxes: [{
@@ -170,7 +170,7 @@ export class WrStatsComponent implements OnInit {
       stats => {
         this.thisWeekStats = stats;
 
-        this.startDate = stats[0].date;
+        this.weekstartDate = stats[0].date;
 
       });
 
