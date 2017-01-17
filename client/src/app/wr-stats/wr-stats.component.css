@@ -8,11 +8,6 @@ chart {
     text-align: center;
 }
 
-.scrollable {
-    overflow-y: scroll;
-    height: 600px;
-}
-
 .today-info {
     background-color: #f1f1f1;
 }
@@ -20,4 +15,17 @@ chart {
 #today-info-text {
     background-color: #e4e4e4;
     padding: 10px;
+}
+
+.scrollX {
+    display: block;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    height: 120px;
+    white-space: nowrap;
+}
+
+.scrollX h1,
+.scrollX div {
+    display: inline-block;
 }

@@ -88,8 +88,8 @@ export class WrStatsComponent implements OnInit {
             unitStepSize: 2,
             isoWeekday: true,
 
-            max: moment(this.todayStats[0].date).endOf("day"),
-            min: moment(this.todayStats[0].date).startOf("day"),
+            max: moment().endOf("day"),
+            min: moment().startOf("day"),
 
             tooltipFormat: "ddd, MMM D, h:mm a",
             unit: "hour"
@@ -126,7 +126,9 @@ export class WrStatsComponent implements OnInit {
   buildWeek() {
 
     var TW = new Array<XY>();
-    var lastMoment = moment(this.thisWeekStats[0].date)
+
+    
+    var lastMoment = moment(this.thisWeekStats[0].date);
 
     for (var i = 0; i < this.thisWeekStats.length; i++) {
       console.log("This Week: ", this.thisWeekStats[i]);
@@ -266,6 +268,7 @@ export class WrStatsComponent implements OnInit {
       .subscribe(
       stats => {
         this.thisTimeLastWeek = stats;
+      },null,()=> {
         this.buildDay();
       });
 
@@ -274,22 +277,25 @@ export class WrStatsComponent implements OnInit {
       .subscribe(
       stats => {
         this.thisWeekStats = stats;
-
         this.weekstartDate = stats[0].date;
-
+      },null,()=> {
+        this.getLastWeekNext();
       });
 
+   
+
+  }
+
+//Called after getThisWeek
+ getLastWeekNext(){
     this.statService.getLastWeek("WR")
       .subscribe(
       stats => {
         this.lastWeekStats = stats;
         console.log("Set Data");
+      },null,()=> {
         this.buildWeek();
-
       });
-
-  }
-
-
+      }
 
 }
