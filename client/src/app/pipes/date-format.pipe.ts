@@ -4,9 +4,10 @@ import { Pipe, PipeTransform } from '@angular/core';
 import * as moment from 'moment';
 
 @Pipe({
-   name: 'dateFormat'
+  name: 'dateFormat'
 })
 export class DateFormatPipe implements PipeTransform {
+
    transform(date: any, format: string): any {
      let d = new Date(date)
      
@@ -19,7 +20,7 @@ export class DateFormatPipe implements PipeTransform {
      if(format != null){
       return moment(d).format(format); 
      }
+    return moment(d).format('ddd, MMM D,  h:mm a');
 
-     return moment(d).format('ddd, MMM D,  h:mm a');
-
+  }
 }

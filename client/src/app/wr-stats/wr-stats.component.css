@@ -1,29 +1,36 @@
 chart {
     width: 100%;
     margin: auto;
-    padding-bottom: 15px;
+    padding: 15px;
 }
 
 .graph-header {
     text-align: center;
 }
 
-.today-info {
+#today-info {
     background-color: #f1f1f1;
+    padding: 20px;
+    margin-bottom: 20px;
 }
 
 #today-info-text {
     background-color: #e4e4e4;
-    padding: 10px;
+    padding: 15px;
+}
+
+#week-info {
+    padding: 20px;
 }
 
 .scrollX {
     height: 600px;
     overflow-y: scroll;
-    
 }
-.scrollX div{
+
+.scrollX div {
     display: block;
+
 }
 
 

@@ -69,43 +69,39 @@
         </div>
       </div>
     </div>
-    <div class="thirteen wide column">
-      <h2 class="graph-header">Day View</h2>
-      <chart *ngIf="thisTimeLastWeek!=null && todayStats!=null" [type]="type" [data]='daydata' [options]="dayoptions"></chart>
-    </div>
-  </div>
-</div>
 -->
 <!-- merge 1 -->
 <!-- merge 2 -->
-<div class="today-info">
-  <div *ngIf="todayStats!=null && todayStats[0].count>=0" class="ui two column row doubling stackable grid">
-    <div class="scrollX three wide column">
-      <h1>Today's History</h1>
-      <div id="today-info-text">
-        <div *ngFor="let s of todayStatsR" class="ui statistic">
-          <div class="value">
-            {{s.count}}
-          </div>
-          <div class="label">
-            {{s.date | dateFormat:"h:mm a"}}
+<div id="today-info">
+  <div *ngIf="todayStats!=null && todayStats[0].count>=0">
+    <div class="ui two column row doubling stackable grid">
+      <div class="three wide column">
+        <h1>Today's History</h1>
+        <div id="today-info-text" class="scrollX">
+          <div *ngFor="let s of todayStatsR" class="ui statistic">
+            <div>
+              <strong>{{s.count}} - </strong>{{s.date | dateFormat}}
+            </div>
+            <br/>
           </div>
         </div>
       </div>
-    </div>
-    <div class="thirteen wide column">
-      <h2 class="graph-header">Day View</h2>
-      <chart *ngIf="thisTimeLastWeek!=null && todayStats!=null" [type]="type" [data]='daydata' [options]="dayoptions"></chart>
+      <!-- merge 2 -->
+      <div class="thirteen wide column">
+        <h2 class="graph-header">Day View</h2>
+        <chart *ngIf="thisTimeLastWeek!=null && todayStats!=null" [type]="type" [data]='daydata' [options]="dayoptions"></chart>
+      </div>
     </div>
   </div>
 </div>
-<!-- merge 2 -->
-<div *ngIf="todayStats!=null && todayStats[0].count>0">
-  <h2 class="graph-header">Week View</h2>
-  <chart *ngIf="thisWeekStats!=null && lastWeekStats!=null" [type]="type" [data]='weekdata' [options]="weekoptions"></chart>
-</div>
-<!-- Closed View -->
-<div *ngIf="todayStats!=null && todayStats[0].count==-1" class="sixteen wide column">
-  <h2 class="graph-header">Week View</h2>
-  <chart *ngIf="thisWeekStats!=null && lastWeekStats!=null" [type]="type" [data]='weekdata' [options]="weekoptions"></chart>
+<div id="week-info" *ngIf="todayStats!=null">
+  <div *ngIf="todayStats[0].count>0">
+    <h2 class="graph-header">Week View</h2>
+    <chart *ngIf="thisWeekStats!=null && lastWeekStats!=null" [type]="type" [data]='weekdata' [options]="weekoptions"></chart>
+  </div>
+  <!-- Closed View -->
+  <div *ngIf="todayStats[0].count==-1" class="sixteen wide column">
+    <h2 class="graph-header">Week View</h2>
+    <chart *ngIf="thisWeekStats!=null && lastWeekStats!=null" [type]="type" [data]='weekdata' [options]="weekoptions"></chart>
+  </div>
 </div>
