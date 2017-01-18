@@ -56,13 +56,12 @@
     color: darkslateblue;
 }
 
-
-#closed{
-padding-top: 2%;
-padding-bottom: 1.5%;
+#closed {
+    padding-top: 2%;
+    padding-bottom: 1.5%;
 }
 
-#closed div{
+#closed div {
     color: #4E2583;
     border-style: solid;
     border-color: #e1e1e1;
@@ -73,11 +72,11 @@ padding-bottom: 1.5%;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.3);
 }
 
-#closed div h2{
-margin: 0;
+#closed div h2 {
+    margin: 0;
 }
 
-i{
+i {
     font-size: 4rem;
     position: relative;
     top: 20px;
@@ -111,6 +110,10 @@ chart {
     background-color: #f1f1f1;
     padding: 20px;
     margin-bottom: 2%;
+     border-style: solid;
+    border-color: #e1e1e1;
+    border-width: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.3);
 }
 
 #today-info-text {
@@ -130,40 +133,40 @@ chart {
 
 /* ---------------------------------- Week Section -------------------------------------------------- */
 
+
 /*Legend*/
 
-
-.lBox{
+.lBox {
     margin: auto;
     text-align: center;
 }
 
-div.legend{
+div.legend {
     height: 10px;
     border: 1pt solid black;
     margin: auto;
 }
 
-.lBox h3{
- margin-bottom: 0;
+.lBox h3 {
+    margin-bottom: 0;
 }
 
-.lBox h5{
- margin-bottom: 0;
+.lBox h5 {
+    margin-bottom: 0;
 }
 
-#box1{
-     width: 80px;
- background-color: #937CA7;
+#box1 {
+    width: 80px;
+    background-color: #937CA7;
 }
 
-#box2{
-     width: 60px;
-background-color: #B7B6B8;
+#box2 {
+    width: 60px;
+    background-color: #B7B6B8;
 }
+
 
 /* END */
-
 
 #week-info {
     border-style: solid;

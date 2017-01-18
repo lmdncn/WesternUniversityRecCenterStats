@@ -20,7 +20,7 @@ module.exports = {
 
 			if (WRi < CMi) // (## WR ## CM), (WR ## CM ##), (WR ## ## CM), (## WR CM ##), 
 			{
-				if (WRi > 2) // (## WR ## CM), (## WR CM ##)
+				if (WRi > 2 && WRi <7) // (## WR ## CM), (## WR CM ##)
 				{
 					var WRtext = fullText.slice(0, WRi); //Covering the ## WR
 
