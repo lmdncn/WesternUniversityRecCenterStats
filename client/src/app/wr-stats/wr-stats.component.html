@@ -1,3 +1,4 @@
+<!-- CURRENT -->
 <div *ngIf="todayStats!=null && lastWeekStats!=null" class="today-util">
   <div id="today-bar" *ngIf="todayStats[0].count>=0" class="ui">
     <div class="ui tiny statistic beforeFact">
@@ -19,8 +20,8 @@
     <div class="ui violet statistic fact">
       <div class="mysize">
         {{todayStats[todayStats.length-1].count}}
-      </div>      
-     <div class="label">
+      </div>
+      <div class="label">
         {{todayStats[todayStats.length-1].date | dateFormat:"fromNow"}}
       </div>
     </div>
@@ -45,7 +46,7 @@
     <h2>Currently Closed</h2>
   </div>
 </div>
-<!-- STATS -->
+<!-- HISTORY -->
 <div id="today-info">
   <div *ngIf="todayStats!=null && todayStats[0].count>=0">
     <div class="ui two column row doubling stackable grid">
