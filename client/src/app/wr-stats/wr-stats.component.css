@@ -104,6 +104,9 @@ chart {
 /* ---------------------------------- Week Section -------------------------------------------------- */
 
 #week-info {
+    border-style: solid;
+    border-color: #e1e1e1;
+    border-width: 10px;
     background-color: #f1f1f1;
     padding: 20px;
     margin-bottom: 20px;
