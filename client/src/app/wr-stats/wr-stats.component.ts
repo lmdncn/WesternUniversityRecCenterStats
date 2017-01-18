@@ -64,6 +64,16 @@ export class WrStatsComponent implements OnInit {
     };
 
     this.dayoptions = {
+      legend:{
+        labels:{
+          boxWidth:100,
+          fontSize:30,
+          // fontStyle: ,
+          // fontColor: ,
+          // fontFamily: ,
+          padding:15,
+        },
+      },
       title: {
         display: false,
       },
@@ -172,6 +182,16 @@ export class WrStatsComponent implements OnInit {
     };
 
     this.weekoptions = {
+      legend:{
+        labels:{
+          boxWidth:100,
+          fontSize:30,
+          // fontStyle: ,
+          // fontColor: ,
+          // fontFamily: ,
+          padding:15,
+        },
+      },
       title: {
         display: false,
       },

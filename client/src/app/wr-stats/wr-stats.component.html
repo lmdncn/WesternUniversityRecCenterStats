@@ -42,16 +42,16 @@
       </div>
     </div>
   </div>
-  <div *ngIf="todayStats!=null && todayStats[0].count==-1">
-    <h2>Currently Closed</h2>
+  <div id="closed" *ngIf="todayStats==null || todayStats[0].count==-1">
+    <div>
+      <i class="remove circle icon"></i>
+      <h2>Currently Closed</h2>
+    </div>
   </div>
 </div>
 <!-- Today Chart ========================================================================================= -->
-<!--<div class="title-bar">
-  Today
-</div>-->
-<div id="today-info">
-  <div *ngIf="todayStats!=null && todayStats[0].count>=0">
+<div *ngIf="todayStats!=null && todayStats[0].count>=0" id="today-info">
+  <div >
     <div class="ui two column row doubling stackable grid">
       <div class="three wide column">
         <h1>Today's History</h1>
@@ -75,19 +75,7 @@
     </div>
   </div>
 </div>
-<!--
-<div class="title-bar">
-  This Week
-</div>
--->
-<div id="week-info" *ngIf="todayStats!=null">
-  <div *ngIf="todayStats[0].count>0">
-    <h1 class="graph-header">Week View</h1>
-    <chart *ngIf="thisWeekStats!=null && lastWeekStats!=null" [type]="type" [data]='weekdata' [options]="weekoptions"></chart>
-  </div>
-  <!-- Closed View -->
-  <div *ngIf="todayStats[0].count==-1" class="sixteen wide column">
-    <h1 class="graph-header">Week View</h1>
-    <chart *ngIf="thisWeekStats!=null && lastWeekStats!=null" [type]="type" [data]='weekdata' [options]="weekoptions"></chart>
-  </div>
+<div id="week-info" *ngIf="thisWeekStats!=null && lastWeekStats!=null">
+  <div class="sixteen wide column"></div>
+  <chart [type]="type" [data]='weekdata' [options]="weekoptions"></chart>
 </div>
