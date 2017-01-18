@@ -154,16 +154,16 @@ export class WrStatsComponent implements OnInit {
     for (var i = 0; i < this.lastWeekStats.length; i++) {
 
       console.log("Last Week: ", this.lastWeekStats[i]);
-      if (moment(this.lastWeekStats[i].date).add(7, "days") > moment(lastMoment).add(4, 'hours')) {
+      if (moment(this.lastWeekStats[i].date)> moment(lastMoment).add(4, 'hours')) {
 
-        while (moment(this.lastWeekStats[i].date).add(7, "days") > lastMoment.add(1, 'hours'))   //Gym Probably Closed
+        while (moment(this.lastWeekStats[i].date) > lastMoment.add(1, 'hours'))   //Gym Probably Closed
         {
           LW.push(new XY(new Date(lastMoment.toDate()), -1));
           lastMoment.add(1, "hours");
         }
       }
 
-      lastMoment = moment(this.lastWeekStats[i].date).add(7, "days");
+      lastMoment = moment(this.lastWeekStats[i].date);
 
       LW.push(new XY(new Date(moment(this.lastWeekStats[i].date).add(7, "days").toDate()), this.lastWeekStats[i].count));
 
@@ -293,6 +293,10 @@ export class WrStatsComponent implements OnInit {
         this.lastWeekStats = stats;
         console.log("Set Data");
       },null,()=> {
+
+        this.lastWeekStats.forEach(element => {
+          element.date = moment(element.date).add(7,"days").toDate();
+        });
         this.buildWeek();
       });
       }

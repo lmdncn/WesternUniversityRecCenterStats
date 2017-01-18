@@ -30,4 +30,102 @@ chart {
 
 .scrollX div {
     display: block;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.afterFact .value, .afterFact {
+    color: gray;
+}
+
+.ui div.ui.statistic.tiny .mysize{
+font-size: 2rem;
+}
+
+.tiny .label{
+font-size: 0.4rem;
+margin-top: 5px;
+ }
+
+.ui .ui.statistic.small .mysize{
+font-size: 3rem;
+}
+
+.small .label{
+font-size: 0.6rem;
+margin-top: 10px;
+}
+
+.ui .ui.statistic{
+    margin: 10px;
+}
+
+
+#today-bar{
+    text-align: center;
+    margin: auto;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.today-util{
+    display: block;
+    width: 60%;
+    margin: auto;
+    text-align: center;
+}
+
+.fact .mysize{
+    font-size: 4rem;
+    color: rebeccapurple;
+}
+
+.fact .label{
+font-size: 1rem;
+margin-top: 20px;
+color: darkslateblue
 }

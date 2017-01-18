@@ -7,16 +7,19 @@ import * as moment from 'moment';
   name: 'dateFormat'
 })
 export class DateFormatPipe implements PipeTransform {
-  transform(date: any, format: string): any {
-    let d = new Date(date)
 
-    if (format == "fromNov") {
-      return moment(d).fromNow();;
-    }
-    if (format != null) {
-      return moment(d).format(format);
-    }
-
+   transform(date: any, format: string): any {
+     let d = new Date(date)
+     
+     if(format == "fromNow"){
+       return moment(d).fromNow();
+     }
+     if(format == "fromNowT"){
+       return moment(d).fromNow(true);
+     }
+     if(format != null){
+      return moment(d).format(format); 
+     }
     return moment(d).format('ddd, MMM D,  h:mm a');
 
   }
