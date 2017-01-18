@@ -12,48 +12,38 @@ import { XY } from '../models/xy'
 })
 export class WrStatsComponent implements OnInit {
 
+  //Stat Data
   todayStats: Stat[];
   todayStatsR: Stat[];
   thisWeekStats: Stat[];
   lastWeekStats: Stat[];
   thisTimeLastWeek: Stat[];
 
-
+  //Graph Data
+  nameTag = "WR"
   daydata = null;
-
   dayoptions = null;
-
-
   type = 'line';
-
   weekstartDate: Date;
-
   weekdata = null;
-
   weekoptions = null;
 
   constructor(private statService: StatService) { }
 
   buildDay() {
-
     var TD = new Array<XY>();
-
     for (var i = 0; i < this.todayStats.length; i++) {
-      console.log("Today: ", this.todayStats[i]);
-      var t = new XY(new Date(this.todayStats[i].date), this.todayStats[i].count);
-      TD.push(t);
+      // console.log("Today: ", this.todayStats[i]);
+      TD.push(new XY(new Date(this.todayStats[i].date), this.todayStats[i].count));
     };
-
 
     var LD = new Array<XY>();
-
     for (var i = 0; i < this.thisTimeLastWeek.length; i++) {
-      console.log("TTLW: ", this.thisTimeLastWeek[i]);
+      // console.log("TTLW: ", this.thisTimeLastWeek[i]);
       LD.push(new XY(new Date(moment(this.thisTimeLastWeek[i].date).add(7, "days").toDate()), this.thisTimeLastWeek[i].count));
-
     };
 
-
+    // -------------------------------- Today Graph Data ---------------------------------------------
     this.daydata = {
       datasets: [{
         label: 'Today',
@@ -64,20 +54,20 @@ export class WrStatsComponent implements OnInit {
         spanGaps: false,
       },
       {
-        label: 'Last Week Today',
+        label: 'Last ' + moment().format("dddd"),
         data: LD,
         backgroundColor: "rgba(93, 90, 96,0.4)",
         //lineTension:0.2,
         radius: 2.5,
         spanGaps: false,
-      }
-
-      ]
+      }]
     };
 
     this.dayoptions = {
+      title: {
+        display: false,
+      },
       scales: {
-
         xAxes: [{
           type: 'time',
           time: {
@@ -87,10 +77,8 @@ export class WrStatsComponent implements OnInit {
             },
             unitStepSize: 2,
             isoWeekday: true,
-
             max: moment().endOf("day"),
             min: moment(this.todayStats[0].date).startOf("hour"),
-
             tooltipFormat: "ddd, MMM D, h:mm a",
             unit: "hour"
           },
@@ -101,7 +89,6 @@ export class WrStatsComponent implements OnInit {
             lineWidth: 4,
           }
         }],
-
         yAxes: [{
           ticks: {
             min: 0,
@@ -109,25 +96,18 @@ export class WrStatsComponent implements OnInit {
           },
           scaleLabel:
           {
-            display: true,
+            display: false,
             labelString: "HeadCount",
           }
         }]
-
       },
       responsive: true,
-
-
     };
-
   }
 
-
+  // Once all data arrives build the week graph
   buildWeek() {
-
     var TW = new Array<XY>();
-
-    
     var lastMoment = moment(this.thisWeekStats[0].date);
 
     for (var i = 0; i < this.thisWeekStats.length; i++) {
@@ -154,7 +134,7 @@ export class WrStatsComponent implements OnInit {
     for (var i = 0; i < this.lastWeekStats.length; i++) {
 
       console.log("Last Week: ", this.lastWeekStats[i]);
-      if (moment(this.lastWeekStats[i].date)> moment(lastMoment).add(4, 'hours')) {
+      if (moment(this.lastWeekStats[i].date) > moment(lastMoment).add(4, 'hours')) {
 
         while (moment(this.lastWeekStats[i].date) > lastMoment.add(1, 'hours'))   //Gym Probably Closed
         {
@@ -169,10 +149,10 @@ export class WrStatsComponent implements OnInit {
 
     };
 
-
+    // --------------------------------- Week Graph Building ---------------------------------------------------
     this.weekdata = {
       datasets: [{
-        label: 'This Week',
+        label: "This Week",
         data: TW,
         backgroundColor: "rgba(81, 44, 115,0.6)",
         lineTension: 0,
@@ -192,8 +172,10 @@ export class WrStatsComponent implements OnInit {
     };
 
     this.weekoptions = {
+      title: {
+        display: false,
+      },
       scales: {
-
         xAxes: [{
           type: 'time',
           time: {
@@ -202,13 +184,8 @@ export class WrStatsComponent implements OnInit {
               day: 'dddd, MMM D',
             },
             isoWeekday: true,
-
-            // max: moment(this.lastWeekStats[this.lastWeekStats.length - 1].date).add(7, "days"),
-            // min: moment(this.thisWeekStats[0].date),
-
             max: moment().endOf("day").add(3, "days"),
             min: moment().startOf("day").subtract(3, "days"),
-
             tooltipFormat: "ddd, MMM D, h:mm a",
             unit: "day"
           },
@@ -221,7 +198,6 @@ export class WrStatsComponent implements OnInit {
             lineWidth: 4,
           }
         }],
-
         yAxes: [{
           ticks: {
             min: 0,
@@ -229,86 +205,62 @@ export class WrStatsComponent implements OnInit {
           },
           scaleLabel:
           {
-            display: true,
+            display: false,
             labelString: "HeadCount",
           }
         }]
-
       },
       responsive: true,
-
-
     };
-
   }
 
-
-
-
+  // ------------------------------------- Stat Service Get Calls --------------------------------
   ngOnInit() {
-
-
-    this.statService.getToday("WR")
+    this.statService.getToday(this.nameTag)
       .subscribe(
       stats => {
-        //TODO: Dont reverse whole array
         this.todayStats = stats;
         this.todayStatsR = stats.slice();
         this.todayStatsR.reverse();
-
-        
-
-
-      },null,()=>{
-
+      }, null, () => {
         if (this.todayStats != null && this.todayStats.length < 1) {
           console.log("Morning Of = Closed");
-          this.todayStats.push(new Stat(null, "CM", -1, new Date(Date.now())));
+          this.todayStats.push(new Stat(null, this.nameTag, -1, new Date(Date.now())));
         }
         this.getTTLW();
-
       });
-
-    
-
-
-    this.statService.getThisWeek("WR")
+    this.statService.getThisWeek(this.nameTag)
       .subscribe(
       stats => {
         this.thisWeekStats = stats;
         this.weekstartDate = stats[0].date;
-      },null,()=> {
+      }, null, () => {
         this.getLastWeekNext();
       });
-
-   
-
   }
-
-//Called after getThisWeek
- getLastWeekNext(){
-    this.statService.getLastWeek("WR")
+  //Called after getThisWeek
+  getLastWeekNext() {
+    this.statService.getLastWeek(this.nameTag)
       .subscribe(
       stats => {
         this.lastWeekStats = stats;
         console.log("Set Data");
-      },null,()=> {
+      }, null, () => {
 
         this.lastWeekStats.forEach(element => {
-          element.date = moment(element.date).add(7,"days").toDate();
+          element.date = moment(element.date).add(7, "days").toDate();
         });
-        this.buildWeek();
+        this.buildWeek(); //Can finally build chart since data will be there
       });
-      }
-
-    getTTLW(){
-      this.statService.getTTLW("WR")
+  }
+  getTTLW() {
+    this.statService.getTTLW(this.nameTag)
       .subscribe(
       stats => {
         this.thisTimeLastWeek = stats;
-      },null,()=> {
-        this.buildDay();
+      }, null, () => {
+        this.buildDay(); //Can finally build chart since data will be there
       });
-    }
+  }
 
 }

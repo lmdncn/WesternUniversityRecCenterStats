@@ -1,83 +1,6 @@
-chart {
-    width: 100%;
-    margin: auto;
-    padding: 15px;
-}
-
-.graph-header {
-    text-align: center;
-}
-
-#today-info {
-    background-color: #f1f1f1;
-    padding: 20px;
-    margin-bottom: 20px;
-}
-
-#today-info-text {
-    background-color: #e4e4e4;
-    padding: 15px;
-}
-
-#week-info {
-    padding: 20px;
-}
-
-.scrollX {
-    height: 600px;
-    overflow-y: scroll;
-}
-
-.scrollX div {
-    display: block;
-
-}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/*  --------------------------------- Top Today Details Bar -------------------------------------------------------------- */
 .afterFact .value, .afterFact {
     color: gray;
 }
@@ -108,15 +31,20 @@ margin-top: 10px;
 #today-bar{
     text-align: center;
     margin: auto;
-    margin-bottom: 20px;
-    margin-top: 20px;
+    margin-bottom: 0px;
+    margin-top: 0px;
+    padding-bottom: 0.5%;
+    padding-top: 2%;
 }
 
 .today-util{
     display: block;
-    width: 60%;
+    width: 100%;
     margin: auto;
+    margin-top: 0;
+    margin-bottom: 0;
     text-align: center;
+    background-color: lightgrey;
 }
 
 .fact .mysize{
@@ -128,4 +56,52 @@ margin-top: 10px;
 font-size: 1rem;
 margin-top: 20px;
 color: darkslateblue
+}
+ /* ---------------------------------- Today Section -------------------------------------------------- */
+
+ .title-bar{
+     width: 100%;
+     font-size: 2rem;
+     text-align: center;
+     padding: 1%;
+     background-color: #E5E5E5;
+ }
+
+ chart {
+    width: 100%;
+    margin: auto;
+    padding: 0;
+}
+.graph-header {
+    text-align: center;
+}
+
+#today-info {
+    background-color: #f1f1f1;
+    padding: 20px;
+    margin-bottom: 0px;
+}
+
+#today-info-text {
+    background-color: #e4e4e4;
+    padding: 15px;
+}
+
+
+.scrollX {
+    height: 600px;
+    overflow-y: scroll;
+}
+
+.scrollX div {
+    display: block;
+
+}
+
+
+
+ /* ---------------------------------- Week Section -------------------------------------------------- */
+
+#week-info {
+    padding: 20px;
 }

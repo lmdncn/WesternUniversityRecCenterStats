@@ -1,3 +1,4 @@
+<!-- Today Bar ===============================================================================-->
 <div *ngIf="todayStats!=null && lastWeekStats!=null" class="today-util">
   <div id="today-bar" *ngIf="todayStats[0].count>=0" class="ui">
     <div class="ui tiny statistic beforeFact">
@@ -45,12 +46,15 @@
     <h2>Currently Closed</h2>
   </div>
 </div>
-<!-- STATS -->
+<!-- Today Chart ========================================================================================== -->
+<div class="title-bar">
+    Today
+  </div>
 <div id="today-info">
   <div *ngIf="todayStats!=null && todayStats[0].count>=0">
     <div class="ui two column row doubling stackable grid">
       <div class="three wide column">
-        <h1>Today's History</h1>
+        <h1>History</h1>
         <div id="today-info-text" class="scrollX">
           <div *ngFor="let s of todayStatsR" class="ui">
             <div>
@@ -65,20 +69,20 @@
         </div>
       </div>
       <div class="thirteen wide column">
-        <h2 class="graph-header">Day View</h2>
         <chart *ngIf="thisTimeLastWeek!=null && todayStats!=null" [type]="type" [data]='daydata' [options]="dayoptions"></chart>
       </div>
     </div>
   </div>
 </div>
+<div class="title-bar">
+    This Week
+  </div>
 <div id="week-info" *ngIf="todayStats!=null">
   <div *ngIf="todayStats[0].count>0">
-    <h2 class="graph-header">Week View</h2>
     <chart *ngIf="thisWeekStats!=null && lastWeekStats!=null" [type]="type" [data]='weekdata' [options]="weekoptions"></chart>
   </div>
   <!-- Closed View -->
   <div *ngIf="todayStats[0].count==-1" class="sixteen wide column">
-    <h2 class="graph-header">Week View</h2>
     <chart *ngIf="thisWeekStats!=null && lastWeekStats!=null" [type]="type" [data]='weekdata' [options]="weekoptions"></chart>
   </div>
 </div>
