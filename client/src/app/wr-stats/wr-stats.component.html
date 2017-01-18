@@ -51,7 +51,7 @@
 </div>
 <!-- Today Chart ========================================================================================= -->
 <div *ngIf="todayStats!=null && todayStats[0].count>=0" id="today-info">
-  <div >
+  <div>
     <div class="ui two column row doubling stackable grid">
       <div class="three wide column">
         <h1>Today's History</h1>
@@ -76,6 +76,19 @@
   </div>
 </div>
 <div id="week-info" *ngIf="thisWeekStats!=null && lastWeekStats!=null">
-  <div class="sixteen wide column"></div>
+
+    <div class="lBox">
+      <h3>
+        This Week 
+        
+      </h3>
+      <div id="box1" class="legend"></div>
+
+      <h5>
+         Projected 
+      
+      </h5>
+      <div id="box2" class="legend"></div>
+    </div>
   <chart [type]="type" [data]='weekdata' [options]="weekoptions"></chart>
 </div>

@@ -65,6 +65,7 @@ export class WrStatsComponent implements OnInit {
 
     this.dayoptions = {
       legend:{
+        display:false,
         labels:{
           boxWidth:100,
           fontSize:30,
@@ -183,6 +184,8 @@ export class WrStatsComponent implements OnInit {
 
     this.weekoptions = {
       legend:{
+        
+        display:false,
         labels:{
           boxWidth:100,
           fontSize:30,
