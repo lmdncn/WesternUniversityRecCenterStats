@@ -10,8 +10,11 @@ export class DateFormatPipe implements PipeTransform {
    transform(date: any, format: string): any {
      let d = new Date(date)
      
-     if(format == "fromNov"){
-       return moment(d).fromNow();;
+     if(format == "fromNow"){
+       return moment(d).fromNow();
+     }
+     if(format == "fromNowT"){
+       return moment(d).fromNow(true);
      }
      if(format != null){
       return moment(d).format(format); 
