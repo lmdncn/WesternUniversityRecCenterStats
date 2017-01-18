@@ -2,12 +2,14 @@ h1 {
     text-align: center;
     color: #4E2583;
     margin: 10px;
+    font-size: 3rem;
 }
 
 h2 {
     text-align: center;
     color: #696969;
     margin: 10px;
+    font-size: 2rem;
 }
 
 #header-text {
