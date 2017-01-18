@@ -1,27 +1,27 @@
 <!-- TODO: change style attributes to css. Not working for some reason??? -->
-<div class="ui stackable fluid six item menu">
+<div id="navbar" class="ui stackable fluid six item menu">
   <a routerLink="WeightRoom" [routerLinkActive]="['active']" class="item active">
-    Weight Room
-    <div class="ui label" style = "background-color: rebeccapurple">{{WRCurrentCount}}</div>
+    <span class="nav-text">Weight Room</span>
+    <div class="ui label" style="background-color: rebeccapurple">{{WRCurrentCount}}</div>
   </a>
   <a routerLink="CardioMachines" [routerLinkActive]="['active']" class="item">
-    Cardio Machines
-    <div class="ui label" style = "background-color: rebeccapurple">{{CMCurrentCount}}</div>
+    <span class="nav-text">Cardio Machines</span>
+    <div class="ui label" style="background-color: rebeccapurple">{{CMCurrentCount}}</div>
   </a>
   <a routerLink="Basketball" [routerLinkActive]="['active']" class="item">
-    Basketball
-    <div class="ui label" style = "background-color: rebeccapurple">{{BBALLCurrentCount}}</div>
+    <span class="nav-text">Basketball</span>
+    <div class="ui label" style="background-color: rebeccapurple">{{BBALLCurrentCount}}</div>
   </a>
   <a routerLink="Volleyball" [routerLinkActive]="['active']" class="item">
-    Volleyball
-    <div class="ui label" style = "background-color: rebeccapurple">{{VBALLCurrentCount}}</div>
+    <span class="nav-text">Volleyball</span>
+    <div class="ui label" style="background-color: rebeccapurple">{{VBALLCurrentCount}}</div>
   </a>
   <a routerLink="Badminton" [routerLinkActive]="['active']" class="item">
-    Badminton
-    <div class="ui label" style = "background-color: rebeccapurple">{{BDMTCurrentCount}}</div>
+    <span class="nav-text">Badminton</span>
+    <div class="ui label" style="background-color: rebeccapurple">{{BDMTCurrentCount}}</div>
   </a>
   <a routerLink="Futsal" [routerLinkActive]="['active']" class="item">
-    Futsal
-    <div class="ui label" style = "background-color: rebeccapurple">{{FUTSCurrentCount}}</div>
+    <span class="nav-text">Futsal</span>
+    <div class="ui label" style="background-color: rebeccapurple">{{FUTSCurrentCount}}</div>
   </a>
 </div>

@@ -1,6 +1,6 @@
 h1 {
     text-align: center;
-    color: rebeccapurple;
+    color: #4E2583;
     margin: 10px;
 }
 
@@ -12,6 +12,5 @@ h2 {
 
 #header-text {
     padding: 10px;
-    background-color: lightgray;
+    background-color: #f1f1f1;
 }
-

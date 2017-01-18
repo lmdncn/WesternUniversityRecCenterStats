@@ -1,34 +1,33 @@
-
-
 /*  --------------------------------- Top Today Details Bar -------------------------------------------------------------- */
-.afterFact .value, .afterFact {
+
+.afterFact .value,
+.afterFact {
     color: gray;
 }
 
-.ui div.ui.statistic.tiny .mysize{
-font-size: 2rem;
+.ui div.ui.statistic.tiny .mysize {
+    font-size: 2rem;
 }
 
-.tiny .label{
-font-size: 0.4rem;
-margin-top: 5px;
- }
-
-.ui .ui.statistic.small .mysize{
-font-size: 3rem;
+.tiny .label {
+    font-size: 0.4rem;
+    margin-top: 5px;
 }
 
-.small .label{
-font-size: 0.6rem;
-margin-top: 10px;
+.ui .ui.statistic.small .mysize {
+    font-size: 3rem;
 }
 
-.ui .ui.statistic{
+.small .label {
+    font-size: 0.6rem;
+    margin-top: 10px;
+}
+
+.ui .ui.statistic {
     margin: 10px;
 }
 
-
-#today-bar{
+#today-bar {
     text-align: center;
     margin: auto;
     margin-bottom: 0px;
@@ -37,28 +36,31 @@ margin-top: 10px;
     padding-top: 2%;
 }
 
-.today-util{
+.today-util {
     display: block;
     width: 100%;
     margin: auto;
     margin-top: 0;
     margin-bottom: 0;
     text-align: center;
-    background-color: lightgrey;
 }
 
-.fact .mysize{
+.fact .mysize {
     font-size: 4rem;
-    color: rebeccapurple;
+    color: #4E2583;
 }
 
-.fact .label{
-font-size: 1rem;
-margin-top: 20px;
-color: darkslateblue
+.fact .label {
+    font-size: 1rem;
+    margin-top: 20px;
+    color: darkslateblue
 }
- /* ---------------------------------- Today Section -------------------------------------------------- */
 
+
+/* ---------------------------------- Today Section -------------------------------------------------- */
+
+
+/*
  .title-bar{
      width: 100%;
      font-size: 2rem;
@@ -66,27 +68,30 @@ color: darkslateblue
      padding: 1%;
      background-color: #E5E5E5;
  }
+ */
 
- chart {
+chart {
     width: 100%;
     margin: auto;
-    padding: 0;
+    padding: 15px;
 }
+
 .graph-header {
     text-align: center;
 }
 
 #today-info {
+    border-style: solid;
+    border-color: #4E2583;
     background-color: #f1f1f1;
     padding: 20px;
-    margin-bottom: 0px;
+    margin-bottom: 20px;
 }
 
 #today-info-text {
     background-color: #e4e4e4;
     padding: 15px;
 }
-
 
 .scrollX {
     height: 600px;
@@ -95,13 +100,13 @@ color: darkslateblue
 
 .scrollX div {
     display: block;
-
 }
 
 
-
- /* ---------------------------------- Week Section -------------------------------------------------- */
+/* ---------------------------------- Week Section -------------------------------------------------- */
 
 #week-info {
+    background-color: #f1f1f1;
     padding: 20px;
+    margin-bottom: 20px;
 }
