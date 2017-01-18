@@ -165,7 +165,7 @@ export class WrStatsComponent implements OnInit {
 
       lastMoment = moment(this.lastWeekStats[i].date);
 
-      LW.push(new XY(new Date(moment(this.lastWeekStats[i].date).add(7, "days").toDate()), this.lastWeekStats[i].count));
+      LW.push(new XY(new Date(moment(this.lastWeekStats[i].date).toDate()), this.lastWeekStats[i].count));
 
     };
 
