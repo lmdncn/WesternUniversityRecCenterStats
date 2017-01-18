@@ -89,7 +89,7 @@ export class WrStatsComponent implements OnInit {
             isoWeekday: true,
 
             max: moment().endOf("day"),
-            min: moment().startOf("day"),
+            min: moment(this.todayStats[0].date).startOf("hour"),
 
             tooltipFormat: "ddd, MMM D, h:mm a",
             unit: "hour"
