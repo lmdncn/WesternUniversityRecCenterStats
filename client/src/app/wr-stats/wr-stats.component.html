@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 <!-- Today Bar ===============================================================================-->
-=======
-<!-- CURRENT -->
->>>>>>> 2b5893ad9086dfa137a7dfc7a7d9469050132085
 <div *ngIf="todayStats!=null && lastWeekStats!=null" class="today-util">
   <div id="today-bar" *ngIf="todayStats[0].count>=0" class="ui">
     <div class="ui tiny statistic beforeFact">
@@ -50,11 +46,10 @@
     <h2>Currently Closed</h2>
   </div>
 </div>
-
 <!-- Today Chart ========================================================================================== -->
 <div class="title-bar">
-    Today
-  </div>
+  Today
+</div>
 <div id="today-info">
   <div *ngIf="todayStats!=null && todayStats[0].count>=0">
     <div class="ui two column row doubling stackable grid">
@@ -80,8 +75,8 @@
   </div>
 </div>
 <div class="title-bar">
-    This Week
-  </div>
+  This Week
+</div>
 <div id="week-info" *ngIf="todayStats!=null">
   <div *ngIf="todayStats[0].count>0">
     <chart *ngIf="thisWeekStats!=null && lastWeekStats!=null" [type]="type" [data]='weekdata' [options]="weekoptions"></chart>
