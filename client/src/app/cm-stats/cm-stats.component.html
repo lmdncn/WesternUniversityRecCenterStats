@@ -25,20 +25,20 @@
         {{todayStats[todayStats.length-1].date | dateFormat:"fromNow"}}
       </div>
     </div>
-    <div class="ui small statistic afterFact">
+    <div *ngIf="nxtProject!=null" class="ui small statistic afterFact">
       <div class="mysize">
-        {{lastWeekStats[0].count}}
+        {{nxtProject[0].count}}
       </div>
       <div class="label">
-        In {{lastWeekStats[0].date | dateFormat:"fromNowT"}}
+        In {{nxtProject[0].date | dateFormat:"fromNowT"}}
       </div>
     </div>
-    <div class="ui tiny statistic afterFact">
+    <div *ngIf="nxtProject!=null"  class="ui tiny statistic afterFact">
       <div class="mysize">
-        {{lastWeekStats[1].count}}
+        {{nxtProject[1].count}}
       </div>
       <div class="label">
-        In {{lastWeekStats[1].date | dateFormat:"fromNowT"}}
+        In {{nxtProject[1].date | dateFormat:"fromNowT"}}
       </div>
     </div>
   </div>

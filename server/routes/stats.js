@@ -15,11 +15,11 @@ moment().format();
 router.get('/count', function (req, res, next) {
 
     Stat.findOne({
-            loc: req.query.loc,
-            date: { //Find from start of today
+        loc: req.query.loc,
+        date: { //Find from start of today
             $gte: moment().startOf("day").toDate()
         }
-        }).sort([
+    }).sort([
         ['date', -1]
     ]).exec(
         function (err, stat) {
@@ -40,31 +40,58 @@ router.get('/count', function (req, res, next) {
 router.get('/projected', function (req, res, next) {
 
     Stat.find({
-            loc: req.query.loc,
-            date: { //Find from start of today
-            $gte: moment().subtract(7,"days").toDate()
+        loc: req.query.loc,
+        date: { //Find from start of today
+            $gte: moment().subtract(7, "days").toDate()
         }
-        }).sort([
+    }).sort([
         ['date', 1]
     ]).limit(2).exec(
-        function (err, stats) {
-
+        function (err, stats1) {
             if (err) {
                 res.send(err);
             }
-
             // console.log(JSON.stringify(tabs));
-
-            res.json(stats);
-
+            if (stats1 == null) {
+                Stat.find({
+                    loc: req.query.loc,
+                    date: { //Find from start of today
+                        $gte: moment().subtract(6, "days").startOf("day").toDate()
+                    }
+                }).sort([
+                    ['date', 1]
+                ]).limit(2).exec(
+                    function (err, stats2) {
+                        if (err) {
+                            res.send(err);
+                        }
+                        res.json(stats2);
+                    });
+            }
+            if (stats1.length == 1) {
+                Stat.find({
+                    loc: req.query.loc,
+                    date: { //Find from start of today
+                        $gte: moment().subtract(6, "days").startOf("day").toDate()
+                    }
+                }).sort([
+                    ['date', 1]
+                ]).limit(1).exec(
+                    function (err, stat3) {
+                        if (err) {
+                            res.send(err);
+                        }
+                        stats1.push(stat3);
+                    });
+            }
+            res.json(stats1);
         });
-
 });
 
 router.get('/ttlw', function (req, res, next) {
 
     //This uses moment.js
-    var ttlw = moment().subtract(7,"days");
+    var ttlw = moment().subtract(7, "days");
 
     Stat.find({
         loc: req.query.loc,

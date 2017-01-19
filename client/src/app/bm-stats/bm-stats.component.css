@@ -1,0 +1,219 @@
+/*  --------------------------------- Top Today Details Bar -------------------------------------------------------------- */
+
+.afterFact .value,
+.afterFact {
+    color: gray;
+}
+
+.ui div.ui.statistic.tiny .mysize {
+    font-size: 2rem;
+}
+
+.tiny .label {
+    font-size: 0.4rem;
+    margin-top: 5px;
+}
+
+.ui .ui.statistic.small .mysize {
+    font-size: 3rem;
+}
+
+.small .label {
+    font-size: 0.6rem;
+    margin-top: 10px;
+}
+
+.ui .ui.statistic {
+    margin: 10px;
+}
+
+#today-bar {
+    text-align: center;
+    margin: auto;
+    margin-bottom: 0px;
+    margin-top: 0px;
+    padding-bottom: 1%;
+    padding-top: 3%;
+}
+
+.today-util {
+    display: block;
+    width: 100%;
+    margin: auto;
+    margin-top: 0;
+    margin-bottom: 0;
+    text-align: center;
+}
+
+.fact .mysize {
+    font-size: 4rem;
+    color: #4E2583;
+}
+
+.fact .label {
+    font-size: 1rem;
+    margin-top: 20px;
+    color: darkslateblue;
+}
+
+#closed {
+    padding-top: 2%;
+    padding-bottom: 1.5%;
+}
+
+#closed div {
+    color: #4E2583;
+    border-style: solid;
+    border-color: #e1e1e1;
+    border-width: 5px;
+    background-color: #f4f4f4;
+    padding: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.3);
+}
+
+#closed div h2 {
+    margin: 0;
+}
+
+i {
+    font-size: 4rem;
+    position: relative;
+    top: 20px;
+}
+
+
+/* ---------------------------------- Today Section -------------------------------------------------- */
+
+/* Title */
+ .title-bar{ 
+     font-size: 2rem;
+     text-align: center;
+     padding: 1%;
+     margin-left: 20px;
+     margin-right: 20px;
+     background-color: #4F2D82;
+     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.3);
+     color: white;
+ }
+
+ /* History */
+ .topper {
+     text-align: center;    
+     background-color:  #4F2D82;
+     margin: 0;
+     padding: 10px;
+     color: white;
+ }
+
+ .scrollX div div {
+      text-align: center;
+       border: 2pt solid rgba(81, 44, 115,0.1);
+       padding: 10px; 
+ }
+ .hbox{
+     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.3);
+     margin: 20px;
+ }
+ .count{
+     font-size: 2rem;
+ }
+ .count.under100{
+     margin-left: 16px;
+ }
+
+ .at{
+     display: inline;
+     font-size: 2rem;
+     color: #4F2D82;
+     font-weight: bolder;
+ }
+.date{
+    display: inline;
+    font-size: 1.5rem;
+}
+
+.scrollX {
+    height: 480px;
+    overflow-y: scroll;
+}
+
+/* Chart */
+
+chart {
+    width: 100%;
+    margin: auto;
+    padding: 15px;
+}
+
+.graph-header {
+    text-align: center;
+}
+
+#today-info {
+    background-color: #f1f1f1;
+    padding: 20px;
+    margin-bottom: 2%;
+     border-style: solid;
+    border-color: #e1e1e1;
+    border-width: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.3);
+}
+
+#today-info-text {
+    background-color: #e4e4e4;
+}
+
+
+
+/*Legend*/
+
+.lBox {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.3);
+    margin: 20px;
+    text-align: center;
+}
+
+.lBox div.lline{
+    padding: 10px;
+    margin: auto;
+}
+
+.lline strong{
+    font-size: 1.2rem;
+}
+
+div.legend {
+    display: inline-block;
+    height: 10px;
+    border: 1pt solid black;
+    padding: 0;
+    margin: 0;
+    margin-left: 5px;
+}
+
+#box1 {
+    width: 80px;
+    background-color: #937CA7;
+}
+
+#box2 {
+    width: 80px;
+    background-color: #B7B6B8;
+}
+
+
+
+/* ---------------------------------- Week Section -------------------------------------------------- */
+
+
+
+#week-info {
+    border-style: solid;
+    border-color: #e1e1e1;
+    border-width: 10px;
+    background-color: #f4f4f4;
+    padding: 20px;
+    margin-bottom: 4%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.3);
+}

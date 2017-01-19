@@ -19,6 +19,8 @@ export class VbStatsComponent implements OnInit {
   lastWeekStats: Stat[];
   thisTimeLastWeek: Stat[];
 
+  nxtProject: Stat[];
+
   //Graph Data
   nameTag = "VBALL"
   daydata = null;
@@ -27,7 +29,7 @@ export class VbStatsComponent implements OnInit {
   weekstartDate: Date;
   weekdata = null;
   weekoptions = null;
-  graphHeight = 50;
+  graphMax = 40;
 
   constructor(private statService: StatService) { }
 
@@ -90,7 +92,8 @@ export class VbStatsComponent implements OnInit {
             unitStepSize: 2,
             isoWeekday: true,
             max: moment().endOf("day"),
-            min: moment.min(moment(this.todayStats[0].date).startOf("hour"),moment(this.thisTimeLastWeek[0].date).add(7,"days").startOf("hour")),
+            //min: moment.min(moment(this.todayStats[0].date).startOf("hour"),moment(this.thisTimeLastWeek[0].date).add(7,"days").startOf("hour")),
+            min: moment().startOf("day").add(6,"hours"),
             tooltipFormat: "ddd, MMM D, h:mm a",
             unit: "hour"
           },
@@ -104,7 +107,7 @@ export class VbStatsComponent implements OnInit {
         yAxes: [{
           ticks: {
             min: 0,
-            max: this.graphHeight,
+            max: this.graphMax
           },
           scaleLabel:
           {
@@ -123,19 +126,22 @@ export class VbStatsComponent implements OnInit {
     var lastMoment = moment(this.thisWeekStats[0].date);
 
     for (var i = 0; i < this.thisWeekStats.length; i++) {
-      console.log("This Week: ", this.thisWeekStats[i]);
+      //console.log("This Week: ", this.thisWeekStats[i]);
 
       while (moment(this.thisWeekStats[i].date) > lastMoment.add(4, 'hours'))//Gym Probably Closed
       {
         console.log("Adding Close");
-        TW.push(new XY(new Date(moment(lastMoment).subtract(2, "hours").toDate()), -1));
-        TW.push(new XY(new Date(lastMoment.toDate()), -1));
+        TW.push(new XY(new Date(moment(lastMoment).subtract(2, "hours").toDate()), null));
       }
 
       lastMoment = moment(this.thisWeekStats[i].date);
 
-
+      if(this.thisWeekStats[i].count == -2)//IMS
+      {
+        var t = new XY(new Date(this.thisWeekStats[i].date), null);
+      }else{
       var t = new XY(new Date(this.thisWeekStats[i].date), this.thisWeekStats[i].count);
+    }
       TW.push(t);
     };
 
@@ -145,12 +151,12 @@ export class VbStatsComponent implements OnInit {
 
     for (var i = 0; i < this.lastWeekStats.length; i++) {
 
-      console.log("Last Week: ", this.lastWeekStats[i]);
+     // console.log("Last Week: ", this.lastWeekStats[i]);
       if (moment(this.lastWeekStats[i].date) > moment(lastMoment).add(4, 'hours')) {
 
         while (moment(this.lastWeekStats[i].date) > lastMoment.add(1, 'hours'))   //Gym Probably Closed
         {
-          LW.push(new XY(new Date(lastMoment.toDate()), -1));
+          LW.push(new XY(new Date(lastMoment.toDate()), null));
           lastMoment.add(1, "hours");
         }
       }
@@ -225,7 +231,7 @@ export class VbStatsComponent implements OnInit {
         yAxes: [{
           ticks: {
             min: 0,
-            max: this.graphHeight,
+            max: this.graphMax
           },
           scaleLabel:
           {
@@ -240,6 +246,7 @@ export class VbStatsComponent implements OnInit {
 
   // ------------------------------------- Stat Service Get Calls --------------------------------
   ngOnInit() {
+    this.getProject();
     this.statService.getToday(this.nameTag)
       .subscribe(
       stats => {
@@ -251,13 +258,14 @@ export class VbStatsComponent implements OnInit {
           console.log("Morning Of = Closed");
           this.todayStats.push(new Stat(null, this.nameTag, -1, new Date(Date.now())));
         }
+        
         this.getTTLW();
       });
     this.statService.getThisWeek(this.nameTag)
       .subscribe(
       stats => {
         this.thisWeekStats = stats;
-          this.weekstartDate = stats[0].date;        
+        this.weekstartDate = stats[0].date;
       }, null, () => {
         this.getLastWeekNext();
       });
@@ -268,7 +276,7 @@ export class VbStatsComponent implements OnInit {
       .subscribe(
       stats => {
         this.lastWeekStats = stats;
-        console.log("Set Data");
+       // console.log("Set Data");
       }, null, () => {
 
         this.lastWeekStats.forEach(element => {
@@ -283,7 +291,20 @@ export class VbStatsComponent implements OnInit {
       stats => {
         this.thisTimeLastWeek = stats;
       }, null, () => {
-        if(this.todayStats[0].count!=-1){this.buildDay(); } //Can finally build chart since data will be there
+        this.buildDay(); //Can finally build chart since data will be there
+      });
+  }
+
+  getProject(){
+    this.statService.getProjected(this.nameTag)
+      .subscribe(
+      stats => {
+        this.nxtProject = stats;
+        console.log("Projected! : ",stats);
+      }, null, () => {
+        this.nxtProject.forEach(element => {
+          element.date = moment(element.date).add(7, "days").toDate();
+        });
       });
   }
 
