@@ -41,6 +41,13 @@ export class StatService {
 
   }
 
+  getProjected(loc: string){
+ 
+  return this.http.get("api/stats/projected?loc=" + loc).map((res) => res.json()).catch(this.handleError);
+
+  }
+
+
   private handleError(error: Response | any) {
     // In a real world app, we might use a remote logging infrastructure
 

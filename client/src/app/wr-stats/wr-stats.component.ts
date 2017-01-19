@@ -19,6 +19,8 @@ export class WrStatsComponent implements OnInit {
   lastWeekStats: Stat[];
   thisTimeLastWeek: Stat[];
 
+  nxtProject: Stat[];
+
   //Graph Data
   nameTag = "WR"
   daydata = null;
@@ -123,7 +125,7 @@ export class WrStatsComponent implements OnInit {
     var lastMoment = moment(this.thisWeekStats[0].date);
 
     for (var i = 0; i < this.thisWeekStats.length; i++) {
-      console.log("This Week: ", this.thisWeekStats[i]);
+      //console.log("This Week: ", this.thisWeekStats[i]);
 
       while (moment(this.thisWeekStats[i].date) > lastMoment.add(4, 'hours'))//Gym Probably Closed
       {
@@ -148,7 +150,7 @@ export class WrStatsComponent implements OnInit {
 
     for (var i = 0; i < this.lastWeekStats.length; i++) {
 
-      console.log("Last Week: ", this.lastWeekStats[i]);
+     // console.log("Last Week: ", this.lastWeekStats[i]);
       if (moment(this.lastWeekStats[i].date) > moment(lastMoment).add(4, 'hours')) {
 
         while (moment(this.lastWeekStats[i].date) > lastMoment.add(1, 'hours'))   //Gym Probably Closed
@@ -243,6 +245,7 @@ export class WrStatsComponent implements OnInit {
 
   // ------------------------------------- Stat Service Get Calls --------------------------------
   ngOnInit() {
+    this.getProject();
     this.statService.getToday(this.nameTag)
       .subscribe(
       stats => {
@@ -254,6 +257,7 @@ export class WrStatsComponent implements OnInit {
           console.log("Morning Of = Closed");
           this.todayStats.push(new Stat(null, this.nameTag, -1, new Date(Date.now())));
         }
+        
         this.getTTLW();
       });
     this.statService.getThisWeek(this.nameTag)
@@ -271,7 +275,7 @@ export class WrStatsComponent implements OnInit {
       .subscribe(
       stats => {
         this.lastWeekStats = stats;
-        console.log("Set Data");
+       // console.log("Set Data");
       }, null, () => {
 
         this.lastWeekStats.forEach(element => {
@@ -287,6 +291,19 @@ export class WrStatsComponent implements OnInit {
         this.thisTimeLastWeek = stats;
       }, null, () => {
         this.buildDay(); //Can finally build chart since data will be there
+      });
+  }
+
+  getProject(){
+    this.statService.getProjected(this.nameTag)
+      .subscribe(
+      stats => {
+        this.nxtProject = stats;
+        console.log("Projected! : ",stats);
+      }, null, () => {
+        this.nxtProject.forEach(element => {
+          element.date = moment(element.date).add(7, "days").toDate();
+        });
       });
   }
 
