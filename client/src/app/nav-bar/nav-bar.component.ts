@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
+import * as moment from 'moment';
 import { StatService } from '../services/stat.service';
 
 @Component({
@@ -17,12 +17,15 @@ export class NavBarComponent implements OnInit {
   VBALLCurrentCount: number;
   BDMTCurrentCount: number;
   FUTSCurrentCount: number;
-
+  closed: boolean;
+  close: number;
+  open: number;
 
   constructor(private statService: StatService) { }
 
   ngOnInit() {
-
+    this.closed = this.closedCheck();
+    if(!this.closed){
     this.statService.getCurrentCount("WR")
       .subscribe(
       stat => { this.WRCurrentCount = stat.count; });
@@ -41,8 +44,16 @@ export class NavBarComponent implements OnInit {
     this.statService.getCurrentCount("FUTS")
       .subscribe(
       stat => { this.FUTSCurrentCount = stat.count; });
+    }
+  }
 
-
+  closedCheck() {
+    if (moment().isBetween(moment().startOf("day").add(this.open, "hours"), moment().startOf("day").add(this.close, "hours"))) {
+      //rec center is open
+      return false;
+    }
+    //rec center closed
+    return true;
   }
 
 }

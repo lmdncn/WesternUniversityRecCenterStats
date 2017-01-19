@@ -56,7 +56,6 @@
     <div class="ui two column row doubling stackable grid">
       <!-- Histoty List -->
       <div class="three wide column">
-        
         <div class="hbox">
           <h3 class="topper">History</h3>
           <div id="today-info-text" class="scrollX">
@@ -90,7 +89,35 @@
     </div>
   </div>
 </div>
-<div id="week-info" *ngIf="thisWeekStats!=null && lastWeekStats!=null">
+<div *ngIf="todayStats!=null && todayStats[0].count>=0 && thisWeekStats!=null && lastWeekStats!=null" id="week-info">
   <h2 class="title-bar">This Week</h2>
   <chart [type]="type" [data]='weekdata' [options]="weekoptions"></chart>
+</div>
+
+  <!-- Last Week Graph When Closed List -->
+<div *ngIf="(todayStats==null || todayStats[0].count==-1) && thisWeekStats!=null && lastWeekStats!=null" id="week-info">
+  <h2 class="title-bar">This Week</h2>
+
+
+
+<div class="ui two column row doubling stackable grid">
+  <div class="three wide column">
+    <div class="lBox">
+      <h3 class="topper">Legend</h3>
+      <div class="lline">
+        <strong>Current</strong>
+        <div id="box1" class="legend"></div>
+      </div>
+      <div class="lline">
+        <strong>Projected</strong>
+        <div id="box2" class="legend"></div>
+      </div>
+    </div>
+  </div>
+  <!-- This Week Graph -->
+  <div class="thirteen wide column">
+    <chart [type]="type" [data]='weekdata' [options]="weekoptions"></chart>
+  </div>
+</div>
+
 </div>
