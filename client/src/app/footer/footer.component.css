@@ -1,11 +1,33 @@
 #footer {
     background-color: #4F2D82;
-    width: 100%;
-    text-align: center;
     padding: 20px;
+    text-align: center;
     color: white;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.3);
 }
-.link-text{
-    color:white;
+
+.link-text {
+    color: white;
+    font-weight: bolder;
+}
+
+#by {
+    text-align: right;
+}
+
+#feedbk {
+    text-align: left;
+}
+
+#footer p {
+    padding: 10px;
+    margin: 0;
+}
+i{
+    font-size: 1.5rem;
+    position: relative;
+    top: 2px;
+}
+a{
+    color: white;
 }
