@@ -37,6 +37,7 @@ app.use(express.static(path.join(__dirname, '/../client/dist')));
 
 //Database Set Up
 var mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://main:mainpass@ds163758.mlab.com:63758/reccenterstats'); //connect to the db
 var Stat = require('./models/stat');
 
