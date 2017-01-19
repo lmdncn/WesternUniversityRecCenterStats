@@ -2,32 +2,42 @@
 <div id="navbar" class="ui stackable fluid six item menu">
   <a routerLink="WeightRoom" [routerLinkActive]="['active']" class="item">
     <span class="nav-text">Weight Room</span>
-    <div *ngIf="!closed"  class="ui label">{{WRCurrentCount}}</div>
+    <div *ngIf="!closed && WRCurrentCount >= 0"  class="ui label">{{WRCurrentCount}}</div>
     <div *ngIf="closed"  class="ui label">Closed</div>
+    <div *ngIf="WRCurrentCount == -1"  class="ui label">Closed</div>
   </a>
   <a routerLink="CardioMachines" [routerLinkActive]="['active']" class="item">
     <span class="nav-text">Cardio Machines</span>
-    <div *ngIf="!closed" class="ui label">{{CMCurrentCount}}</div>
+    <div *ngIf="!closed && CMCurrentCount >= 0" class="ui label">{{CMCurrentCount}}</div>
     <div *ngIf="closed"  class="ui label">Closed</div>
+    <div *ngIf="CMCurrentCount == -1"  class="ui label">N/A</div>
   </a>
   <a routerLink="Basketball" [routerLinkActive]="['active']" class="item">
     <span class="nav-text">Basketball</span>
-    <div *ngIf="!closed" class="ui label">{{BBALLCurrentCount}}</div>
+    <div *ngIf="!closed && BBALLCurrentCount >= 0" class="ui label">{{BBALLCurrentCount}}</div>
     <div *ngIf="closed"  class="ui label">Closed</div>
+    <div *ngIf="BBALLCurrentCount == -1"  class="ui label">Opening</div>
+    <div *ngIf="BBALLCurrentCount == -2 && !closed"  class="ui label">IMS</div>
   </a>
   <a routerLink="Volleyball" [routerLinkActive]="['active']" class="item">
     <span class="nav-text">Volleyball</span>
-    <div *ngIf="!closed" class="ui label">{{VBALLCurrentCount}}</div>
+    <div *ngIf="!closed && VBALLCurrentCount >=0" class="ui label">{{VBALLCurrentCount}}</div>
     <div *ngIf="closed"  class="ui label">Closed</div>
+    <div *ngIf="VBALLCurrentCount == -1"  class="ui label">Opening</div>
+    <div *ngIf="VBALLCurrentCount == -2 && !closed"  class="ui label">IMS</div>
   </a>
   <a routerLink="Badminton" [routerLinkActive]="['active']" class="item">
     <span class="nav-text">Badminton</span>
-    <div *ngIf="!closed" class="ui label">{{BDMTCurrentCount}}</div>
+    <div *ngIf="!closed && BDMTCurrentCount >=0" class="ui label">{{BDMTCurrentCount}}</div>
     <div *ngIf="closed"  class="ui label">Closed</div>
+    <div *ngIf="BDMTCurrentCount == -1"  class="ui label">Opening</div>
+    <div *ngIf="BDMTCurrentCount == -2 && !closed"  class="ui label">IMS</div>
   </a>
   <a routerLink="Futsal" [routerLinkActive]="['active']" class="item">
     <span class="nav-text">Futsal</span>
-    <div *ngIf="!closed" class="ui label">{{FUTSCurrentCount}}</div>
+    <div *ngIf="!closed && FUTSCurrentCount >=0" class="ui label">{{FUTSCurrentCount}}</div>
     <div *ngIf="closed"  class="ui label">Closed</div>
+    <div *ngIf="FUTSCurrentCount == -1"  class="ui label">Opening</div>
+    <div *ngIf="FUTSCurrentCount == -2 && !closed"  class="ui label">IMS</div>
   </a>
 </div>

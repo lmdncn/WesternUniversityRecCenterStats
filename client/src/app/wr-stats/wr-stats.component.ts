@@ -27,6 +27,7 @@ export class WrStatsComponent implements OnInit {
   weekstartDate: Date;
   weekdata = null;
   weekoptions = null;
+  graphMax = 300;
 
   constructor(private statService: StatService) { }
 
@@ -103,7 +104,7 @@ export class WrStatsComponent implements OnInit {
         yAxes: [{
           ticks: {
             min: 0,
-            max: 300
+            max: this.graphMax
           },
           scaleLabel:
           {
@@ -127,14 +128,17 @@ export class WrStatsComponent implements OnInit {
       while (moment(this.thisWeekStats[i].date) > lastMoment.add(4, 'hours'))//Gym Probably Closed
       {
         console.log("Adding Close");
-        TW.push(new XY(new Date(moment(lastMoment).subtract(2, "hours").toDate()), -1));
-        TW.push(new XY(new Date(lastMoment.toDate()), -1));
+        TW.push(new XY(new Date(moment(lastMoment).subtract(2, "hours").toDate()), null));
       }
 
       lastMoment = moment(this.thisWeekStats[i].date);
 
-
+      if(this.thisWeekStats[i].count == -2)//IMS
+      {
+        var t = new XY(new Date(this.thisWeekStats[i].date), null);
+      }else{
       var t = new XY(new Date(this.thisWeekStats[i].date), this.thisWeekStats[i].count);
+    }
       TW.push(t);
     };
 
@@ -149,7 +153,7 @@ export class WrStatsComponent implements OnInit {
 
         while (moment(this.lastWeekStats[i].date) > lastMoment.add(1, 'hours'))   //Gym Probably Closed
         {
-          LW.push(new XY(new Date(lastMoment.toDate()), -1));
+          LW.push(new XY(new Date(lastMoment.toDate()), null));
           lastMoment.add(1, "hours");
         }
       }
@@ -224,7 +228,7 @@ export class WrStatsComponent implements OnInit {
         yAxes: [{
           ticks: {
             min: 0,
-            max: 300
+            max: this.graphMax
           },
           scaleLabel:
           {

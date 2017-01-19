@@ -1,7 +1,12 @@
 //This file handles all things storage into db
 
 var Stat = require('../models/stat');
-
+// Set Reasonable maxs here
+var BBmax = 100;
+var WRmax = 300;
+var VBmax = 100;
+var BDMTmax = 50;
+var FUTSmax = 50;
 // SAVE Fucntion -------------------------------------------------------
 module.exports = {
 

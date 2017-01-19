@@ -15,7 +15,10 @@ moment().format();
 router.get('/count', function (req, res, next) {
 
     Stat.findOne({
-            loc: req.query.loc
+            loc: req.query.loc,
+            date: { //Find from start of today
+            $gte: moment().startOf("day").toDate()
+        }
         }).sort([
         ['date', -1]
     ]).exec(
