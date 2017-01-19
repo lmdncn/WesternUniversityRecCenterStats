@@ -40,7 +40,7 @@ export class NavBarComponent implements OnInit {
                     if (stat == null) { this.CMCurrentCount = -1; }
                     else {
                         this.CMCurrentCount = stat.count;
-                    });
+                }});
             this.statService.getCurrentCount("BBALL")
                 .subscribe(
                 stat => {
@@ -71,7 +71,7 @@ export class NavBarComponent implements OnInit {
                     if (stat == null) { this.FUTSCurrentCount = -1; }
                     else {
                         this.FUTSCurrentCount = stat.count;
-                    });
+                }});
         }
     }
 
