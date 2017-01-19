@@ -95,29 +95,70 @@ module.exports = {
 	pullRC: function (tweetText, d) {
 		var fullText = tweetText.toUpperCase();
 
-		//Divide to 4 strings
-		var BBALLi = fullText.indexOf("BBALL");
-		if (BBALLi == -1) {
-			BBALLi = fullText.indexOf("BASKETBALL");
-		}
-		var VBALLi = fullText.indexOf("VBALL");
-		if (VBALLi == -1) {
-			VBALLi = fullText.indexOf("VOLLEYBALL");
-		}
-		var BDMTi = fullText.indexOf("BDMT");
-		if (BDMTi == -1) {
-			BDMTi = fullText.indexOf("BADMINTON");
-			//sometimes called BADM
-		}
-		var FUTSi = fullText.indexOf("FUTS");
-		if (FUTSi == -1) {
-			FUTSi = fullText.indexOf("FUTSAL");
-		}
+	//Divide to 4 strings
+	var BBALLi = fullText.indexOf("BBALL");
+	if (BBALLi == -1) {
+		BBALLi = fullText.indexOf("BASKETBALL");
+	}
+	var VBALLi = fullText.indexOf("VBALL");
+	if (VBALLi == -1) {
+		VBALLi = fullText.indexOf("VOLLEYBALL");
+	}
+	var BDMTi = fullText.indexOf("BDMT");
+	if (BDMTi == -1) {
+		BDMTi = fullText.indexOf("BADMINTON");
+		//sometimes called BADM
+	}
+	var FUTSi = fullText.indexOf("FUTS");
+	if (FUTSi == -1) {
+		FUTSi = fullText.indexOf("FUTSAL");
+	}
 
-		console.log("BBALL Index:", BBALLi, " VBALL Index:", VBALLi, " BDMT Index:", BDMTi, " FUTS Index:", FUTSi);
 
-		if(BBALLi == -1 || VBALLi == -1 || BDMTi == -1 || FUTSi == -1){
-			return;
+
+	console.log("BBALL Index:", BBALLi, " VBALL Index:", VBALLi, " BDMT Index:", BDMTi, " FUTS Index:", FUTSi);
+
+
+	// No Data Catch
+	if (BBALLi == -1 && VBALLi == -1 && BDMTi == -1 && FUTSi == -1) {
+
+		console.log("Tweet: ", tweetText);
+		console.log("******* NO DATA TWEET ************************************");
+		console.log("-------------------------------------------------");
+		return;
+	}
+
+	//Variables for sections of tweet that have data
+	var BDMTtext;
+	var FUTStext;
+	var FUTStext;
+	var BDMTtext;
+
+
+	var o = 0; // So Can Break Out
+	while (o == 0) {
+		o = 1;
+
+		// --- Only 1 ---
+		//Only BBALL
+		if (BBALLi != -1 && VBALLi == -1 && BDMTi == -1 && FUTSi == -1) {
+			BBALLtext = fullText.slice(0, BBALLi + 14); //BBall Only
+			break;
+		}
+		//Only VBALL
+		if (BBALLi == -1 && VBALLi != -1 && BDMTi == -1 && FUTSi == -1) {
+			VBALLtext = fullText.slice(0, VBALLi + 14); //BBall Only
+			break;
+		}
+		//Only BDMT
+		if (BBALLi == -1 && VBALLi == -1 && BDMTi != -1 && FUTSi == -1) {
+			BDMTtext = fullText.slice(0, BDMTi + 14); //BBall Only
+			break;
+		}
+		//Only FUTS
+		if (BBALLi == -1 && VBALLi == -1 && BDMTi == -1 && FUTSi != -1) {
+			FUTStext = fullText.slice(0, FUTSi + 14); //BBall Only
+			break;
 		}
 		
 		var curI;
@@ -137,6 +178,8 @@ module.exports = {
 						var FUTStext = fullText.slice(VBALLi, FUTSi); //FUTS Third
 						var BDMTtext = fullText.slice(FUTSi, BDMTi); //BDMT Fourth
 					}
+
+
 				} else {
 					if (BDMTi < FUTSi) {
 						var BDMTtext = fullText.slice(BBALLi, BDMTi); //BDMT Second
@@ -144,6 +187,9 @@ module.exports = {
 						var BDMTtext = fullText.slice(BBALLi, FUTSi); //FUTS Second
 					}
 				}
+
+
+
 			} else {
 
 				if (VBALLi < BDMTi && VBALLi < FUTSi) //VBall First
@@ -171,6 +217,12 @@ module.exports = {
 							var FUTStext = fullText.slice(0, FUTSi);
 							curI = FUTSi;
 						}
+
+
+
+
+
+
 					}
 				}
 			}
@@ -250,10 +302,24 @@ module.exports = {
 									var FUTStext = fullText.slice(FUTSi, VBALLi); //FUTS Third
 									var BDMTtext = fullText.slice(VBALLi, fullText.length); //VBALL Fourth
 								}
+
+
+
+
+
+
+
+
+
+
+
+
 							} else { //FUTS First
 								var FUTStext = fullText.slice(0, FUTSi);
 								curI = FUTSi;
 							}
+
+
 						}
 					}
 				}
@@ -262,25 +328,95 @@ module.exports = {
 
 
 		}
+	}
 
-
-		//***********************************
-
-		//Parse String to numbers
+	//Parse String to numbers
+	if (BBALLtext != null) {
 		var BBALLnum = takeNum(BBALLtext);
+		//Save
+	} else {
+		console.log("Null Text BBALL");
+	}
+	if (VBALLtext != null) {
 		var VBALLnum = takeNum(VBALLtext);
+		//Save
+	} else {
+		console.log("Null Text VBALL");
+	}
+	if (BDMTtext != null) {
 		var BDMTnum = takeNum(BDMTtext);
+		//Save
+	} else {
+		console.log("Null Text BDMT");
+	}
+	if (FUTStext != null) {
 		var FUTSnum = takeNum(FUTStext);
+		//Save
+	} else {
+		console.log("Null Text FUTS");
+	}
 
-		console.log(" ");
-		console.log("BBALL:", BBALLnum, " VBALL:", VBALLnum, " BDMT:", BDMTnum, " FUTS:", FUTSnum);
-		console.log("-------------------------------------------------");
 
 
+	// ------------------------------------------------------------------- IMS Checks ---------------------------------------
+	// Here we assume that if no numbers.. then is was N/A or IMA
+	// IMS is count -2
+
+	if (BBALLnum < 0 || BBALLnum == null || BBALLnum == "") {
+		console.log("BBALL IMS");
+		BBALLnum = -2;
+	}
+	if (VBALLnum < 0 || VBALLnum == null || VBALLnum == "") {
+		console.log("VBALL IMS");
+		VBALLnum = -2;
+	}
+	if (BDMTnum < 0 || BDMTnum == null || BDMTnum == "") {
+		console.log("BMDT IMS");
+		BDMTnum = -2;
+	}
+	if (FUTSnum < 0 || FUTSnum == null || FUTSnum == "") {
+		console.log("FUTS IMS");
+		FUTSnum = -2;
+	}
+	//***********************************
+
+
+
+	console.log(" ");
+	console.log("Tweet: ", tweetText);
+	console.log("BBALL:", BBALLnum, " VBALL:", VBALLnum, " BDMT:", BDMTnum, " FUTS:", FUTSnum);
+
+
+	// If No Data, No Save
+	if ((BBALLi != -1 || BBALLnum == -2) && BBALLnum < BBmax) {
+		//Save
 		saveStat("BBALL", BBALLnum, d);
+	} else {
+		console.log("No Save BBALL");		
+	}
+	if ((VBALLi != -1 || VBALLnum == -2) && VBALLnum < VBmax) {
+		//Save
 		saveStat("VBALL", VBALLnum, d);
+	} else {
+		console.log("No Save VBALL");
+	}
+	if ((BDMTi != -1 || BDMTnum == -2) && BDMTnum < BDMTmax) {
+		//Save
 		saveStat("BDMT", BDMTnum, d);
+	} else {
+		console.log("No Save BDMT");
+	}
+	if ((FUTSi != -1 || FUTSnum == -2) && FUTSnum < FUTSmax) {
+		//Save
 		saveStat("FUTS", FUTSnum, d);
+	} else {
+		console.log("No Save FUTS");
+	}
+
+
+	console.log("-------------------------------------------------");
+	console.log("-------------------------------------------------");
+
 	},
 	
 	loadFromLast: function(query,callbk){
