@@ -133,6 +133,11 @@ i {
     font-size: 1.5rem;
 }
 
+.scrollX {
+    height: 480px;
+    overflow-y: scroll;
+}
+
 /* Chart */
 
 chart {
@@ -159,10 +164,7 @@ chart {
     background-color: #e4e4e4;
 }
 
-.scrollX {
-    height: 600px;
-    overflow-y: scroll;
-}
+
 
 /*Legend*/
 
