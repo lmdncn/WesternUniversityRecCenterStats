@@ -36,6 +36,24 @@
     padding-top: 3%;
 }
 
+@media only screen and (max-device-width: 500px) {
+    .ui div.ui.statistic.tiny .mysize {
+        font-size: 1rem;
+    }
+    .tiny .label {
+        font-size: 0.3rem;
+    }
+    .ui .ui.statistic.small .mysize {
+        font-size: 2rem;
+    }
+    .small .label {
+        font-size: 0.4rem;
+    }
+    #today-bar {
+        margin-top: 10px;
+    }
+}
+
 .today-util {
     display: block;
     width: 100%;
@@ -85,50 +103,66 @@ i {
 
 /* ---------------------------------- Today Section -------------------------------------------------- */
 
+
 /* Title */
- .title-bar{ 
-     font-size: 2rem;
-     text-align: center;
-     padding: 1%;
-     margin-left: 20px;
-     margin-right: 20px;
-     background-color: #4F2D82;
-     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.3);
-     color: white;
- }
 
- /* History */
- .topper {
-     text-align: center;    
-     background-color:  #4F2D82;
-     margin: 0;
-     padding: 10px;
-     color: white;
- }
+.title-bar {
+    font-size: 2rem;
+    text-align: center;
+    padding: 1%;
+    margin-left: 20px;
+    margin-right: 20px;
+    background-color: #4F2D82;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.3);
+    color: white;
+}
 
- .scrollX div div {
-      text-align: center;
-       border: 2pt solid rgba(81, 44, 115,0.1);
-       padding: 10px; 
- }
- .hbox{
-     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.3);
-     margin: 20px;
- }
- .count{
-     font-size: 2rem;
- }
- .count.under100{
-     margin-left: 16px;
- }
+@media only screen and (max-device-width: 767px) {
+    .title-bar {
+        margin-left: 34px;
+        margin-right: 34px;
+        margin-bottom: 0;
+    }
+}
 
- .at{
-     display: inline;
-     font-size: 2rem;
-     color: #4F2D82;
-     font-weight: bolder;
- }
-.date{
+
+/* History */
+
+.topper {
+    text-align: center;
+    background-color: #4F2D82;
+    margin: 0;
+    padding: 10px;
+    color: white;
+}
+
+.scrollX div div {
+    text-align: center;
+    border: 2pt solid rgba(81, 44, 115, 0.1);
+    padding: 10px;
+}
+
+.hbox {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.3);
+    margin: 20px;
+}
+
+.count {
+    font-size: 2rem;
+}
+
+.count.under100 {
+    margin-left: 16px;
+}
+
+.at {
+    display: inline;
+    font-size: 2rem;
+    color: #4F2D82;
+    font-weight: bolder;
+}
+
+.date {
     display: inline;
     font-size: 1.5rem;
 }
@@ -138,12 +172,27 @@ i {
     overflow-y: scroll;
 }
 
+
 /* Chart */
 
 chart {
     width: 100%;
     margin: auto;
     padding: 15px;
+}
+
+@media only screen and (max-device-width: 767px) {
+    chart {
+        width: 800px;
+        padding: 0;
+        margin: 0;
+    }
+    .mobChart {
+        display: block;
+        overflow-x: scroll;
+        
+    }
+
 }
 
 .graph-header {
@@ -154,7 +203,7 @@ chart {
     background-color: #f1f1f1;
     padding: 20px;
     margin-bottom: 2%;
-     border-style: solid;
+    border-style: solid;
     border-color: #e1e1e1;
     border-width: 10px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.3);
@@ -165,7 +214,6 @@ chart {
 }
 
 
-
 /*Legend*/
 
 .lBox {
@@ -174,12 +222,12 @@ chart {
     text-align: center;
 }
 
-.lBox div.lline{
+.lBox div.lline {
     padding: 10px;
     margin: auto;
 }
 
-.lline strong{
+.lline strong {
     font-size: 1.2rem;
 }
 
@@ -203,10 +251,7 @@ div.legend {
 }
 
 
-
 /* ---------------------------------- Week Section -------------------------------------------------- */
-
-
 
 #week-info {
     border-style: solid;
@@ -216,4 +261,10 @@ div.legend {
     padding: 20px;
     margin-bottom: 4%;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.3);
+}
+
+@media only screen and (max-device-width: 767px) {
+    .thisWeek{
+        margin-bottom: 30px;
+    }
 }
