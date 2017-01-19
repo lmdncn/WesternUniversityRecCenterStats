@@ -86,7 +86,6 @@ i {
 /* ---------------------------------- Today Section -------------------------------------------------- */
 
 
-/*
  .title-bar{
      width: 100%;
      font-size: 2rem;
@@ -94,7 +93,35 @@ i {
      padding: 1%;
      background-color: #E5E5E5;
  }
- */
+
+ /* History */
+ .history {
+     text-align: center;
+ }
+
+ .scrollX div div {
+      text-align: center;
+ }
+
+ .count{
+     font-size: 2rem;
+ }
+ .count.under100{
+     margin-left: 16px;
+ }
+
+ .at{
+     display: inline;
+     font-size: 2rem;
+     color: #4F2D82;
+     font-weight: bolder;
+ }
+.date{
+    display: inline;
+    font-size: 1.5rem;
+}
+
+/* Chart */
 
 chart {
     width: 100%;
@@ -124,10 +151,6 @@ chart {
 .scrollX {
     height: 600px;
     overflow-y: scroll;
-}
-
-.scrollX div {
-    display: block;
 }
 
 

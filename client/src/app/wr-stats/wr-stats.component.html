@@ -52,22 +52,25 @@
 <!-- Today Chart ========================================================================================= -->
 <div *ngIf="todayStats!=null && todayStats[0].count>=0" id="today-info">
   <div>
+    <h2 class="title-bar">Today</h2>
     <div class="ui two column row doubling stackable grid">
+      <!-- Histoty List -->
       <div class="three wide column">
-        <h1>Today's History</h1>
+        <h3 class="history">History</h3>
         <div id="today-info-text" class="scrollX">
           <div *ngFor="let s of todayStatsR" class="ui">
             <div>
-              <span>Headcount: </span>
-              <strong>{{s.count}}</strong>
-              <div class="date">
+              <strong [ngClass]="{under100: s.count<100}" class="count">{{s.count}}</strong>
+              <span class="at">@</span>
+              <span class="date">
                 {{s.date | dateFormat:"h:mm a"}}
-              </div>
+              </span>
             </div>
             <br/>
           </div>
         </div>
       </div>
+      <!-- Today Graph -->
       <div class="thirteen wide column">
         <h2 class="graph-header">Day View</h2>
         <chart *ngIf="thisTimeLastWeek!=null && todayStats!=null" [type]="type" [data]='daydata' [options]="dayoptions"></chart>
