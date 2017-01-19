@@ -15,7 +15,10 @@ moment().format();
 router.get('/count', function (req, res, next) {
 
     Stat.findOne({
-            loc: req.query.loc
+            loc: req.query.loc,
+            date: { //Find from start of today
+            $gte: moment().startOf("day").toDate()
+        }
         }).sort([
         ['date', -1]
     ]).exec(
@@ -28,6 +31,31 @@ router.get('/count', function (req, res, next) {
             // console.log(JSON.stringify(tabs));
 
             res.json(stat);
+
+        });
+
+});
+
+//Get next 2 projected -> querying loc=var
+router.get('/projected', function (req, res, next) {
+
+    Stat.find({
+            loc: req.query.loc,
+            date: { //Find from start of today
+            $gte: moment().subtract(7,"days").toDate()
+        }
+        }).sort([
+        ['date', 1]
+    ]).limit(2).exec(
+        function (err, stats) {
+
+            if (err) {
+                res.send(err);
+            }
+
+            // console.log(JSON.stringify(tabs));
+
+            res.json(stats);
 
         });
 
