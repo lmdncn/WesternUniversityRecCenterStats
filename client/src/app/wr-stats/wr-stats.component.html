@@ -56,42 +56,40 @@
     <div class="ui two column row doubling stackable grid">
       <!-- Histoty List -->
       <div class="three wide column">
-        <h3 class="history">History</h3>
-        <div id="today-info-text" class="scrollX">
-          <div *ngFor="let s of todayStatsR" class="ui">
-            <div>
-              <strong [ngClass]="{under100: s.count<100}" class="count">{{s.count}}</strong>
-              <span class="at">@</span>
-              <span class="date">
+        <div class="lBox">
+          <h3 class="topper">Legend</h3>
+          <div class="lline">
+            <strong>Current</strong>
+            <div id="box1" class="legend"></div>
+          </div>
+          <div class="lline">
+            <strong>Projected</strong>
+            <div id="box2" class="legend"></div>
+          </div>
+        </div>
+        <div class="hbox">
+          <h3 class="topper">History</h3>
+          <div id="today-info-text" class="scrollX">
+            <div *ngFor="let s of todayStatsR">
+              <div>
+                <strong [ngClass]="{under100: s.count<100}" class="count">{{s.count}}</strong>
+                <span class="at">@</span>
+                <span class="date">
                 {{s.date | dateFormat:"h:mm a"}}
               </span>
+              </div>
             </div>
-            <br/>
           </div>
         </div>
       </div>
       <!-- Today Graph -->
       <div class="thirteen wide column">
-        <h2 class="graph-header">Day View</h2>
         <chart *ngIf="thisTimeLastWeek!=null && todayStats!=null" [type]="type" [data]='daydata' [options]="dayoptions"></chart>
       </div>
     </div>
   </div>
 </div>
 <div id="week-info" *ngIf="thisWeekStats!=null && lastWeekStats!=null">
-
-    <div class="lBox">
-      <h3>
-        This Week 
-        
-      </h3>
-      <div id="box1" class="legend"></div>
-
-      <h5>
-         Projected 
-      
-      </h5>
-      <div id="box2" class="legend"></div>
-    </div>
+  <h2 class="title-bar">This Week</h2>
   <chart [type]="type" [data]='weekdata' [options]="weekoptions"></chart>
 </div>
