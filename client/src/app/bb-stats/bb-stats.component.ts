@@ -34,6 +34,7 @@ export class BbStatsComponent implements OnInit {
   constructor(private statService: StatService) { }
 
   buildDay() {
+    console.log("Building Day Chart");
     var TD = new Array<XY>();
     for (var i = 0; i < this.todayStats.length; i++) {
       // console.log("Today: ", this.todayStats[i]);
@@ -118,10 +119,13 @@ export class BbStatsComponent implements OnInit {
       },
       responsive: true,
     };
+    console.log("Day Chart Built");
   }
 
   // Once all data arrives build the week graph
   buildWeek() {
+
+    console.log("Building Week Chart");
     var TW = new Array<XY>();
     var lastMoment = moment(this.thisWeekStats[0].date);
 
@@ -242,6 +246,7 @@ export class BbStatsComponent implements OnInit {
       },
       responsive: true,
     };
+    console.log("Week Chart Built");
   }
 
   // ------------------------------------- Stat Service Get Calls --------------------------------
