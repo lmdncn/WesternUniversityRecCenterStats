@@ -1,7 +1,10 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # compiled output
+<<<<<<< HEAD
 /tmp
+=======
+>>>>>>> 2d4518a29f91df9e5091df6e6a9e1e120724ac90
 
 # dependencies
 /node_modules
