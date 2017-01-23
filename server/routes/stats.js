@@ -8,6 +8,7 @@ var express = require('express');
 var router = express.Router();
 var Stat = require('../models/stat');
 var moment = require('moment');
+var moment = require('moment-timezone');
 moment().format();
 
 
@@ -17,7 +18,7 @@ router.get('/count', function (req, res, next) {
     Stat.findOne({
         loc: req.query.loc,
         date: { //Find from start of today
-            $gte: moment().startOf("day").toDate()
+            $gte: moment().tz("America/Toronto").startOf("day").toDate()
         }
     }).sort([
         ['date', -1]
@@ -42,7 +43,7 @@ router.get('/projected', function (req, res, next) {
     Stat.find({
         loc: req.query.loc,
         date: { //Find from start of today
-            $gte: moment().subtract(7, "days").toDate()
+            $gte: moment().tz("America/Toronto").subtract(7, "days").toDate()
         }
     }).sort([
         ['date', 1]
@@ -56,7 +57,7 @@ router.get('/projected', function (req, res, next) {
                 Stat.find({
                     loc: req.query.loc,
                     date: { //Find from start of today
-                        $gte: moment().subtract(6, "days").startOf("day").toDate()
+                        $gte: moment().tz("America/Toronto").subtract(6, "days").startOf("day").toDate()
                     }
                 }).sort([
                     ['date', 1]
@@ -72,7 +73,7 @@ router.get('/projected', function (req, res, next) {
                 Stat.find({
                     loc: req.query.loc,
                     date: { //Find from start of today
-                        $gte: moment().subtract(6, "days").startOf("day").toDate()
+                        $gte: moment().tz("America/Toronto").subtract(6, "days").startOf("day").toDate()
                     }
                 }).sort([
                     ['date', 1]
@@ -91,7 +92,7 @@ router.get('/projected', function (req, res, next) {
 router.get('/ttlw', function (req, res, next) {
 
     //This uses moment.js
-    var ttlw = moment().subtract(7, "days");
+    var ttlw = moment().tz("America/Toronto").subtract(7, "days");
 
     Stat.find({
         loc: req.query.loc,
@@ -121,9 +122,9 @@ router.get('/ttlw', function (req, res, next) {
 router.get('/lastweek', function (req, res, next) {
 
     //This uses moment.js
-    var today = moment().endOf('day');
-    var lastWeek = moment(today).subtract(4, 'days');
-    var twolastWeek = moment(lastWeek).subtract(7, 'days');
+    var today = moment().tz("America/Toronto").endOf('day');
+    var lastWeek = moment(today).tz("America/Toronto").subtract(4, 'days');
+    var twolastWeek = moment(lastWeek).tz("America/Toronto").subtract(7, 'days');
 
     Stat.find({
         loc: req.query.loc,
@@ -152,8 +153,8 @@ router.get('/lastweek', function (req, res, next) {
 router.get('/thisweek', function (req, res, next) {
 
     //This uses moment.js
-    var today = moment().endOf('day');
-    var lastWeek = moment(today).subtract(4, 'days');
+    var today = moment().tz("America/Toronto").endOf('day');
+    var lastWeek = moment(today).tz("America/Toronto").subtract(4, 'days');
 
 
     Stat.find({
@@ -184,8 +185,8 @@ router.get('/thisweek', function (req, res, next) {
 router.get('/today', function (req, res, next) {
 
     //This uses moment.js
-    var today = moment().startOf('day');
-    var tomorrow = moment().endOf('day');
+    var today = moment().tz("America/Toronto").startOf('day');
+    var tomorrow = moment().tz("America/Toronto").endOf('day');
 
 
     Stat.find({
