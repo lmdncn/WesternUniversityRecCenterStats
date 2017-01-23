@@ -10,7 +10,7 @@ import { StatService } from '../services/stat.service';
 export class NavBarComponent implements OnInit {
 
 
-
+    lastData: Date;
     WRCurrentCount: number;
     CMCurrentCount: number;
     BBALLCurrentCount: number;
@@ -48,6 +48,7 @@ export class NavBarComponent implements OnInit {
                     if (stat == null) { this.BBALLCurrentCount = -1; }
                     else {
                         this.BBALLCurrentCount = stat.count;
+                        this.lastData = stat.date;
                     }
                 });
             this.statService.getCurrentCount("VBALL")
@@ -86,4 +87,12 @@ export class NavBarComponent implements OnInit {
         return true;
     }
 
+
+    reasonableTime() {
+        if (moment(this.lastData).add(2, "hours") < moment()) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 }
