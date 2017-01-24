@@ -67,10 +67,10 @@
         margin-top: 10px;
     }
     .fact .mysize {
-        font-size: 2.8rem;
+        font-size: 2.6rem;
     }
     .fact .label {
-        font-size: 0.8rem;
+        font-size: 0.7rem;
         margin-top: 10px;
     }
 }
@@ -178,7 +178,7 @@ i {
 }
 
 .scrollX {
-    height: 480px;
+    max-height: 480px;
     overflow-y: scroll;
 }
 

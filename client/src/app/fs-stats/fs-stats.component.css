@@ -178,7 +178,7 @@ i {
 }
 
 .scrollX {
-    height: 480px;
+    max-height: 480px;
     overflow-y: scroll;
 }
 
