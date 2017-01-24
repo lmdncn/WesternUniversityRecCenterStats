@@ -17,6 +17,8 @@ import { Component } from '@angular/core';
 export class AppComponent{
   title:String = 'Campus Rec';
 
+  mobile = window.matchMedia('(max-width: 767px)').matches;
+
   constructor(){
   }
 

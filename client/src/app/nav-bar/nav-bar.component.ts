@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import * as moment from 'moment';
 import { StatService } from '../services/stat.service';
 
@@ -20,7 +20,6 @@ export class NavBarComponent implements OnInit {
     closed: boolean;
     close: number = 24;
     open: number = 6;
-
     constructor(private statService: StatService) { }
 
     ngOnInit() {

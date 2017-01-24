@@ -12,6 +12,7 @@ import { ChartModule } from 'angular2-chartjs';
 //Tools Import
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { Ng2PageScrollModule } from 'ng2-page-scroll';
 
 //Component Import
 import { AppComponent } from './app.component';
@@ -70,7 +71,8 @@ const appRoutes: Routes = [
         ReactiveFormsModule,
         RouterModule.forRoot(appRoutes),
         SuiModule,
-        ChartModule
+        ChartModule,
+        Ng2PageScrollModule.forRoot()
     ],
 
     providers:
