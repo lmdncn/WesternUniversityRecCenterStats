@@ -275,4 +275,9 @@ div.legend {
     .thisWeek {
         margin-bottom: 30px;
     }
+    .mobChart{
+        border: solid 2pt rgba(0, 0, 0, 0.1);
+        border-right: solid 1pt rgba(0, 0, 0, 0.05);
+        padding: 15px;
+    }
 }

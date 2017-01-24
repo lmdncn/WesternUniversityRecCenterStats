@@ -119,11 +119,14 @@
     </div>
   </div>
   <!-- This Week Graph -->
+
   <div *ngIf="lastWeekStats != null"  class="thirteen wide column">
     <div class="mobChart">
     <chart [type]="type" [data]='weekdata' [options]="weekoptions"></chart>
     </div>
   </div>
+
+  
 </div>
 
 </div>

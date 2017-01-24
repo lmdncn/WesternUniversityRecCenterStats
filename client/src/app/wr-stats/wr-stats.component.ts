@@ -31,6 +31,8 @@ export class WrStatsComponent implements OnInit {
   weekoptions = null;
   graphMax = 300;
 
+   mobile = window.matchMedia('(max-width: 767px)').matches;
+
   constructor(private statService: StatService) { }
 
   buildDay() {
