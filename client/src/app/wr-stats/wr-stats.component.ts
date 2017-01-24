@@ -292,7 +292,11 @@ export class WrStatsComponent implements OnInit {
       stats => {
         this.thisTimeLastWeek = stats;
       }, null, () => {
+        if(this.todayStats[0].count==-1){
+          this.buildProtectedDay();
+        }else{
         this.buildDay(); //Can finally build chart since data will be there
+        }
       });
   }
 
@@ -307,6 +311,81 @@ export class WrStatsComponent implements OnInit {
           element.date = moment(element.date).add(7, "days").toDate();
         });
       });
+  }
+
+
+  buildProtectedDay() {
+
+    var LD = new Array<XY>();
+    for (var i = 0; i < this.thisTimeLastWeek.length; i++) {
+      // console.log("TTLW: ", this.thisTimeLastWeek[i]);
+      LD.push(new XY(new Date(moment(this.thisTimeLastWeek[i].date).add(7, "days").toDate()), this.thisTimeLastWeek[i].count));
+    };
+
+    // -------------------------------- Today Graph Data ---------------------------------------------
+    this.daydata = {
+      datasets: [
+      {
+        label: 'Last ' + moment().format("dddd"),
+        data: LD,
+        backgroundColor: "rgba(93, 90, 96,0.4)",
+        //lineTension:0.2,
+        radius: 2.5,
+        spanGaps: false,
+      }]
+    };
+
+    this.dayoptions = {
+      legend:{
+        display:false,
+        labels:{
+          boxWidth:100,
+          fontSize:30,
+          // fontStyle: ,
+          // fontColor: ,
+          // fontFamily: ,
+          padding:15,
+        },
+      },
+      title: {
+        display: false,
+      },
+      scales: {
+        xAxes: [{
+          type: 'time',
+          time: {
+            round: "minute",
+            displayFormats: {
+              hour: 'h a',
+            },
+            unitStepSize: 2,
+            isoWeekday: true,
+            max: moment().endOf("day"),
+            min: moment.min(moment(this.todayStats[0].date).startOf("hour"),moment(this.thisTimeLastWeek[0].date).add(7,"days").startOf("hour")),
+            tooltipFormat: "ddd, MMM D, h:mm a",
+            unit: "hour"
+          },
+          ticks: {
+            maxRotation: 0,
+          },
+          gridLines: {
+            lineWidth: 4,
+          }
+        }],
+        yAxes: [{
+          ticks: {
+            min: 0,
+            max: this.graphMax
+          },
+          scaleLabel:
+          {
+            display: false,
+            labelString: "HeadCount",
+          }
+        }]
+      },
+      responsive: true,
+    };
   }
 
 }

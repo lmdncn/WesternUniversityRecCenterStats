@@ -57,7 +57,7 @@
         margin-top: 2px;
     }
     .ui .ui.statistic.small .mysize {
-        font-size: 2rem;
+        font-size: 1.5rem;
     }
     .small .label {
         font-size: 0.4rem;
@@ -67,10 +67,10 @@
         margin-top: 10px;
     }
     .fact .mysize {
-        font-size: 2.6rem;
+        font-size: 2rem;
     }
     .fact .label {
-        font-size: 0.7rem;
+        font-size: 0.6rem;
         margin-top: 10px;
     }
 }
