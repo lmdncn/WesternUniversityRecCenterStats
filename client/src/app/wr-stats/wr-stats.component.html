@@ -98,9 +98,12 @@
   </div>
 </div>
 
-  <!-- Last Week Graph When Closed List -->
+  <!-- When Closed -->
+
+
+
 <div *ngIf="(todayStats==null || todayStats[0].count==-1) && thisWeekStats!=null && lastWeekStats!=null" id="week-info">
-  <h2 class="title-bar thisWeek">This Week</h2>
+  <h2 class="title-bar thisWeek">Projected Tomorrow</h2>
 
 
 
@@ -118,15 +121,21 @@
       </div>
     </div>
   </div>
-  <!-- This Week Graph -->
 
+  <!-- Projected Day Graph -->
   <div *ngIf="lastWeekStats != null"  class="thirteen wide column">
+    <div class="mobChart">
+    <chart [type]="type" [data]='daydata' [options]="dayoptions"></chart>
+    </div>
+  </div>
+
+   <!-- This Week Graph -->
+</div>
+  <h2 class="title-bar thisWeek">This Week</h2>
+  <div *ngIf="lastWeekStats != null"  class="sixteen wide column">
     <div class="mobChart">
     <chart [type]="type" [data]='weekdata' [options]="weekoptions"></chart>
     </div>
   </div>
-
-  
-</div>
 
 </div>
