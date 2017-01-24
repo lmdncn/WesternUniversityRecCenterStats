@@ -5,3 +5,13 @@
 }
 
 
+@media only screen and (max-device-width: 760px) {
+
+
+#main{
+
+    padding: 3%;
+
+}
+
+}
