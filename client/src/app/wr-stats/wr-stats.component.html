@@ -56,6 +56,17 @@
     <div class="ui two column row doubling stackable grid">
       <!-- Histoty List -->
       <div class="three wide column">
+        <div *ngIf="!mobile" class="lBox">
+          <h3 class="topper">Legend</h3>
+          <div class="lline">
+            <strong>Current</strong>
+            <div id="box1" class="legend"></div>
+          </div>
+          <div class="lline">
+            <strong>Projected</strong>
+            <div id="box2" class="legend"></div>
+          </div>
+        </div>
         <div class="hbox">
           <h3 class="topper">History</h3>
           <div id="today-info-text" class="scrollX">
@@ -70,7 +81,7 @@
             </div>
           </div>
         </div>
-        <div class="lBox">
+        <div *ngIf="mobile" class="lBox">
           <h3 class="topper">Legend</h3>
           <div class="lline">
             <strong>Current</strong>
@@ -103,8 +114,7 @@
 
 
 <div *ngIf="(todayStats==null || todayStats[0].count==-1) && thisWeekStats!=null && lastWeekStats!=null" id="week-info">
-  <h2 class="title-bar thisWeek">Projected Tomorrow</h2>
-
+  <h2 class="title-bar thisWeek">{{dayOfWeek}}</h2>
 
 
 <div class="ui two column row doubling stackable grid">

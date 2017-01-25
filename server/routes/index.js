@@ -3,9 +3,7 @@ var router = express.Router();
 var tweetupdater = require('../tools/tweetUpdater');
 var moment = require('moment');
 var lastUpdate = Date.now();
-
-
-
+var hoursaver = require('../tools/hoursSaver');
 
 
 
@@ -26,6 +24,7 @@ var updater = function(force = false)
 	lastUpdate = td;
 	tweetupdater.updateData();
 	console.log("** Server Data Updated! **");
+	hoursaver.saveHours();
 	}
 
 }

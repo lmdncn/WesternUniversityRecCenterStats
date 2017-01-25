@@ -31,6 +31,8 @@ export class WrStatsComponent implements OnInit {
   weekoptions = null;
   graphMax = 300;
 
+
+dayOfWeek = moment().add(2,"hours").format("dddd");
    mobile = window.matchMedia('(max-width: 767px)').matches;
 
   constructor(private statService: StatService) { }
@@ -293,7 +295,7 @@ export class WrStatsComponent implements OnInit {
         this.thisTimeLastWeek = stats;
       }, null, () => {
         if(this.todayStats[0].count==-1){
-          this.buildProtectedDay();
+          this.buildProjectedDay();
         }else{
         this.buildDay(); //Can finally build chart since data will be there
         }
@@ -314,7 +316,7 @@ export class WrStatsComponent implements OnInit {
   }
 
 
-  buildProtectedDay() {
+  buildProjectedDay() {
 
     var LD = new Array<XY>();
     for (var i = 0; i < this.thisTimeLastWeek.length; i++) {
@@ -360,8 +362,8 @@ export class WrStatsComponent implements OnInit {
             },
             unitStepSize: 2,
             isoWeekday: true,
-            max: moment().endOf("day"),
-            min: moment.min(moment(this.todayStats[0].date).startOf("hour"),moment(this.thisTimeLastWeek[0].date).add(7,"days").startOf("hour")),
+            max: moment().add(2,"hours").endOf("day"),
+            min: moment().add(2,"hours").startOf("day").add(6,"hours"),
             tooltipFormat: "ddd, MMM D, h:mm a",
             unit: "hour"
           },

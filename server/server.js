@@ -23,7 +23,6 @@ app.use(bodyParser.json());
 // }));
 app.use(cookieParser());
 
-
 //View Engine
 app.set('views', path.join(__dirname, '/../client/dist'));
 app.set('view engine', 'ejs');
@@ -41,12 +40,17 @@ mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://main:mainpass@ds163758.mlab.com:63758/reccenterstats'); //connect to the db
 var Stat = require('./models/stat');
 
+
+
 // Route file imports
 var index = require('./routes/index');
 var stats = require('./routes/stats');
+var hours = require('./routes/hours-route');
+
 //Set routes
 app.use('/', index);
 app.use('/api/stats', stats);
+app.use('/api/hours',hours);
 
 
 // Function to handle client errors(404)
