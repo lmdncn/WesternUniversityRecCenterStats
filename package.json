@@ -21,7 +21,9 @@
     "mongoose": "^4.7.6",
     "morgan": "^1.7.0",
     "node-restful": "^0.2.5",
-    "twitter": "^1.7.0"
+    "twitter": "^1.7.0",
+	"request": "^2.79.0",
+	"cheerio": "^0.22.0"
   },
   "author": "",
   "license": "ISC",
