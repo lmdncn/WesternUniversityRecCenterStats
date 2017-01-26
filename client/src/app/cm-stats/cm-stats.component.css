@@ -47,7 +47,7 @@
     color: darkslateblue;
 }
 
-@media only screen and (max-device-width: 650px) {
+@media only screen and (max-device-width: 640px) {
     .ui div.ui.statistic.tiny .mysize {
         font-size: 1rem;
     }
@@ -158,7 +158,7 @@ i {
 }
 
 .count {
-    font-size: 2rem;
+    font-size: 1.5rem;
 }
 
 .count.under100 {
@@ -167,18 +167,18 @@ i {
 
 .at {
     display: inline;
-    font-size: 2rem;
+    font-size: 1.5rem;
     color: #4F2D82;
     font-weight: bolder;
 }
 
 .date {
     display: inline;
-    font-size: 1.5rem;
+    font-size: 1rem;
 }
 
 .scrollX {
-    max-height: 480px;
+    max-height: 320px;
     overflow-y: scroll;
 }
 
@@ -275,9 +275,11 @@ div.legend {
     .thisWeek {
         margin-bottom: 30px;
     }
+
     .mobChart{
         border: solid 2pt rgba(0, 0, 0, 0.1);
         border-right: solid 1pt rgba(0, 0, 0, 0.05);
         padding: 15px;
     }
+
 }

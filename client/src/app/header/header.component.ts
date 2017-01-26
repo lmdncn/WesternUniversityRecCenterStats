@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import {Hours} from "../models/hours";
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-header',
@@ -7,9 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
+  @Input() hours:Hours;
+  @Input() mobile;
+  DOW = moment().format("dddd");
+  load = false;
   constructor() { }
 
   ngOnInit() {
   }
 
+  DOWCheck(str){
+
+    return str == this.DOW;
+  }
 }

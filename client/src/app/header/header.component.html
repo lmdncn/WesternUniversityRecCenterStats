@@ -4,7 +4,17 @@
 </div>
 <a class="typeform-share button" href="https://lmdncn.typeform.com/to/dOsqmR" data-mode="1" target="_blank">
     <div class="ui label" id="feedback">
-        Provide Feedback!
+       <p>Provide Feedback!</p>
         <script>(function(){var qs,js,q,s,d=document,gi=d.getElementById,ce=d.createElement,gt=d.getElementsByTagName,id='typef_orm',b='https://s3-eu-west-1.amazonaws.com/share.typeform.com/';if(!gi.call(d,id)){js=ce.call(d,'script');js.id=id;js.src=b+'share.js';q=gt.call(d,'script')[0];q.parentNode.insertBefore(js,q)}id=id+'_';if(!gi.call(d,id)){qs=ce.call(d,'link');qs.rel='stylesheet';qs.id=id;qs.href=b+'share-button.css';s=gt.call(d,'head')[0];s.appendChild(qs,s)}})()</script>
     </div>
 </a>
+
+<a href="http://www.uwo.ca/campusrec/" target="_0" id="hoursToday" class="ui label"  *ngIf="hours!=null">
+        <p *ngIf="DOWCheck('Monday')"  >Monday Hours: {{hours.monO.hour}} {{hours.monO.f}} - {{hours.monC.hour}} {{hours.monC.f}}</p>
+        <p *ngIf="DOWCheck('Tuesday')">Tuesday Hours: {{hours.tueO.hour}} {{hours.tueO.f}} - {{hours.tuesC.hour}} {{hours.tuesC.f}}</p>
+        <p *ngIf="DOWCheck('Wednesday')">Wednesday Hours: {{hours.wedO.hour}} {{hours.wedO.f}} - {{hours.wedC.hour}} {{hours.wedC.f}}</p>
+        <p *ngIf="DOWCheck('mon')">Thursday Hours: {{hours.thuO.hour}} {{hours.thuO.f}} - {{hours.thuC.hour}} {{hours.thuC.f}}</p>
+        <p *ngIf="DOWCheck('mon')">Friday Hours: {{hours.friO.hour}} {{hours.friO.f}} - {{hours.friC.hour}} {{hours.friC.f}}</p>
+        <p *ngIf="DOWCheck('mon')">Saturday Hours: {{hours.satO.hour}} {{hours.satO.f}} - {{hours.satC.hour}} {{hours.satC.f}}</p>
+        <p *ngIf="DOWCheck('mon')">Sunday Hours: {{hours.sunO.hour}} {{hours.sunO.f}} - {{hours.sunC.hour}} {{hours.sunC.f}}</p>
+    </a>

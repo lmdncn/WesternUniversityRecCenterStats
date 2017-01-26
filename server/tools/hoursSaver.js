@@ -10,7 +10,7 @@ module.exports = {
 
         var clbk = function (data) {
             var hoursData = JSON.parse(data[1].hours);
-            console.log("***************DATA**************\n");
+            console.log("***************DATA**************\n",hoursData[0][0]);
 
             console.log('Hours -> saving to db');
 
@@ -21,7 +21,7 @@ module.exports = {
 
                 monO: {
                     hour: hoursData[0][0].openH,
-                    f: hoursData[0][0].openf,
+                    f: hoursData[0][0].openF,
                 },
                 monC: {
                    hour: hoursData[0][0].closeH,
@@ -29,7 +29,7 @@ module.exports = {
                 },
                 tueO: {
                     hour: hoursData[1][0].openH,
-                    f: hoursData[1][0].openf,
+                    f: hoursData[1][0].openF,
                 },
                 tuesC: {
                     hour: hoursData[1][0].closeH,
@@ -37,7 +37,7 @@ module.exports = {
                 },
                 wedO: {
                    hour: hoursData[2][0].openH,
-                    f: hoursData[2][0].openf,
+                    f: hoursData[2][0].openF,
                 },
                 wedC: {
                    hour: hoursData[2][0].closeH,
@@ -45,7 +45,7 @@ module.exports = {
                 },
                 thuO: {
                    hour: hoursData[3][0].openH,
-                    f: hoursData[3][0].openf,
+                    f: hoursData[3][0].openF,
                 },
                 thuC: {
                         hour: hoursData[3][0].closeH,
@@ -53,7 +53,7 @@ module.exports = {
                 },
                 friO: {
                     hour: hoursData[4][0].openH,
-                    f: hoursData[4][0].openf,
+                    f: hoursData[4][0].openF,
                 },
                 friC: {
                      hour: hoursData[4][0].closeH,
@@ -61,7 +61,7 @@ module.exports = {
                 },
                 satO: {
                      hour: hoursData[5][0].openH,
-                    f: hoursData[5][0].openf,
+                    f: hoursData[5][0].openF,
                 },
                 satC: {
                      hour: hoursData[5][0].closeH,

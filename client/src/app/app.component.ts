@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-
+import { Component,OnInit } from '@angular/core';
+import {Hours} from "./models/hours";
+import { StatService } from './services/stat.service';
 //Import Services for singleton init
 // import{______} from "./services/_______";
 
@@ -14,12 +15,26 @@ import { Component } from '@angular/core';
   styleUrls: ["./app.component.css"],
 })
 
-export class AppComponent{
+export class AppComponent implements OnInit{
+
+  hours:Hours;
   title:String = 'Campus Rec';
 
   mobile = window.matchMedia('(max-width: 767px)').matches;
 
-  constructor(){
+  constructor(private statService: StatService){
   }
+
+  ngOnInit() {
+   this.statService.getHours().subscribe(
+      hours => {
+        this.hours = hours[0];
+      }, null, () => {   
+        });
+
+
+
+}
+
 
 }

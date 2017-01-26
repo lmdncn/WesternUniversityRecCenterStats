@@ -12,7 +12,8 @@ import { XY } from '../models/xy'
 })
 export class BbStatsComponent implements OnInit {
 
-  //Stat Data
+  //Stat 
+  tgapspan = true;
   todayStats: Stat[];
   todayStatsR: Stat[];
   thisWeekStats: Stat[];
@@ -31,21 +32,41 @@ export class BbStatsComponent implements OnInit {
   weekoptions = null;
   graphMax = 100;
 
+
+  dayOfWeek = moment().add(2, "hours").format("dddd");
+  mobile = window.matchMedia('(max-width: 767px)').matches;
+
   constructor(private statService: StatService) { }
 
   buildDay() {
-    console.log("Building Day Chart");
     var TD = new Array<XY>();
     for (var i = 0; i < this.todayStats.length; i++) {
       // console.log("Today: ", this.todayStats[i]);
-      TD.push(new XY(new Date(this.todayStats[i].date), this.todayStats[i].count));
+
+
+      if (this.todayStats[i].count == -2)//IMS
+      {
+        var t = new XY(new Date(this.todayStats[i].date), null);
+      } else {
+        var t = new XY(new Date(this.todayStats[i].date), this.todayStats[i].count);
+      }
+      TD.push(t);
     };
 
     var LD = new Array<XY>();
     for (var i = 0; i < this.thisTimeLastWeek.length; i++) {
       // console.log("TTLW: ", this.thisTimeLastWeek[i]);
-      LD.push(new XY(new Date(moment(this.thisTimeLastWeek[i].date).add(7, "days").toDate()), this.thisTimeLastWeek[i].count));
+
+      if (this.thisTimeLastWeek[i].count == -2)//IMS
+      {
+        var t = new XY(new Date(moment(this.thisTimeLastWeek[i].date).add(7, "days").toDate()), null);
+      } else {
+        var t = new XY(new Date(moment(this.thisTimeLastWeek[i].date).add(7, "days").toDate()), this.thisTimeLastWeek[i].count);
+      }
+
+      LD.push(t);
     };
+
 
     // -------------------------------- Today Graph Data ---------------------------------------------
     this.daydata = {
@@ -55,28 +76,28 @@ export class BbStatsComponent implements OnInit {
         backgroundColor: "rgba(81, 44, 115,0.6)",
         lineTension: 0,
         radius: 2.5,
-        spanGaps: false,
+        spanGaps: this.tgapspan,
       },
       {
-        label: 'Last ' + moment().format("dddd"),
+        label: 'Projected',
         data: LD,
         backgroundColor: "rgba(93, 90, 96,0.4)",
         //lineTension:0.2,
         radius: 2.5,
-        spanGaps: false,
+        spanGaps: this.tgapspan,
       }]
     };
 
     this.dayoptions = {
-      legend:{
-        display:false,
-        labels:{
-          boxWidth:100,
-          fontSize:30,
+      legend: {
+        display: false,
+        labels: {
+          boxWidth: 100,
+          fontSize: 30,
           // fontStyle: ,
           // fontColor: ,
           // fontFamily: ,
-          padding:15,
+          padding: 15,
         },
       },
       title: {
@@ -93,8 +114,7 @@ export class BbStatsComponent implements OnInit {
             unitStepSize: 2,
             isoWeekday: true,
             max: moment().endOf("day"),
-            //min: moment.min(moment(this.todayStats[0].date).startOf("hour"),moment(this.thisTimeLastWeek[0].date).add(7,"days").startOf("hour")),
-            min: moment().startOf("day").add(6,"hours"),
+            min: moment.min(moment(this.todayStats[0].date).startOf("hour"), moment(this.thisTimeLastWeek[0].date).add(7, "days").startOf("hour")),
             tooltipFormat: "ddd, MMM D, h:mm a",
             unit: "hour"
           },
@@ -119,13 +139,10 @@ export class BbStatsComponent implements OnInit {
       },
       responsive: true,
     };
-    console.log("Day Chart Built");
   }
 
   // Once all data arrives build the week graph
   buildWeek() {
-
-    console.log("Building Week Chart");
     var TW = new Array<XY>();
     var lastMoment = moment(this.thisWeekStats[0].date);
 
@@ -134,18 +151,18 @@ export class BbStatsComponent implements OnInit {
 
       while (moment(this.thisWeekStats[i].date) > lastMoment.add(4, 'hours'))//Gym Probably Closed
       {
-        console.log("Adding Close");
+        // console.log("Adding Close");
         TW.push(new XY(new Date(moment(lastMoment).subtract(2, "hours").toDate()), null));
       }
 
       lastMoment = moment(this.thisWeekStats[i].date);
 
-      if(this.thisWeekStats[i].count == -2)//IMS
+      if (this.thisWeekStats[i].count == -2)//IMS
       {
         var t = new XY(new Date(this.thisWeekStats[i].date), null);
-      }else{
-      var t = new XY(new Date(this.thisWeekStats[i].date), this.thisWeekStats[i].count);
-    }
+      } else {
+        var t = new XY(new Date(this.thisWeekStats[i].date), this.thisWeekStats[i].count);
+      }
       TW.push(t);
     };
 
@@ -155,7 +172,7 @@ export class BbStatsComponent implements OnInit {
 
     for (var i = 0; i < this.lastWeekStats.length; i++) {
 
-     // console.log("Last Week: ", this.lastWeekStats[i]);
+      // console.log("Last Week: ", this.lastWeekStats[i]);
       if (moment(this.lastWeekStats[i].date) > moment(lastMoment).add(4, 'hours')) {
 
         while (moment(this.lastWeekStats[i].date) > lastMoment.add(1, 'hours'))   //Gym Probably Closed
@@ -163,11 +180,21 @@ export class BbStatsComponent implements OnInit {
           LW.push(new XY(new Date(lastMoment.toDate()), null));
           lastMoment.add(1, "hours");
         }
+
       }
 
       lastMoment = moment(this.lastWeekStats[i].date);
 
-      LW.push(new XY(new Date(moment(this.lastWeekStats[i].date).toDate()), this.lastWeekStats[i].count));
+
+
+      if (this.lastWeekStats[i].count == -2)//IMS
+      {
+        var t = new XY(new Date(this.lastWeekStats[i].date), null);
+      } else {
+        var t = new XY(new Date(this.lastWeekStats[i].date), this.lastWeekStats[i].count);
+      }
+
+      LW.push(t);
 
     };
 
@@ -182,7 +209,7 @@ export class BbStatsComponent implements OnInit {
         spanGaps: false,
       },
       {
-        label: 'Last Week',
+        label: 'Projected',
         data: LW,
         backgroundColor: "rgba(93, 90, 96,0.4)",
         //lineTension:0.2,
@@ -194,16 +221,16 @@ export class BbStatsComponent implements OnInit {
     };
 
     this.weekoptions = {
-      legend:{
-        
-        display:false,
-        labels:{
-          boxWidth:100,
-          fontSize:30,
+      legend: {
+
+        display: false,
+        labels: {
+          boxWidth: 100,
+          fontSize: 30,
           // fontStyle: ,
           // fontColor: ,
           // fontFamily: ,
-          padding:15,
+          padding: 15,
         },
       },
       title: {
@@ -246,7 +273,6 @@ export class BbStatsComponent implements OnInit {
       },
       responsive: true,
     };
-    console.log("Week Chart Built");
   }
 
   // ------------------------------------- Stat Service Get Calls --------------------------------
@@ -260,10 +286,10 @@ export class BbStatsComponent implements OnInit {
         this.todayStatsR.reverse();
       }, null, () => {
         if (this.todayStats != null && this.todayStats.length < 1) {
-          console.log("Morning Of = Closed");
+          // console.log("Morning Of = Closed");
           this.todayStats.push(new Stat(null, this.nameTag, -1, new Date(Date.now())));
         }
-        
+
         this.getTTLW();
       });
     this.statService.getThisWeek(this.nameTag)
@@ -281,7 +307,7 @@ export class BbStatsComponent implements OnInit {
       .subscribe(
       stats => {
         this.lastWeekStats = stats;
-       // console.log("Set Data");
+        // console.log("Set Data");
       }, null, () => {
 
         this.lastWeekStats.forEach(element => {
@@ -296,21 +322,107 @@ export class BbStatsComponent implements OnInit {
       stats => {
         this.thisTimeLastWeek = stats;
       }, null, () => {
-        this.buildDay(); //Can finally build chart since data will be there
+        if (this.todayStats[0].count == -1) {
+          this.buildProjectedDay();
+        } else {
+          this.buildDay(); //Can finally build chart since data will be there
+        }
       });
   }
 
-  getProject(){
+  getProject() {
     this.statService.getProjected(this.nameTag)
       .subscribe(
       stats => {
         this.nxtProject = stats;
-        console.log("Projected! : ",stats);
+        // console.log("Projected! : ", stats);
       }, null, () => {
         this.nxtProject.forEach(element => {
           element.date = moment(element.date).add(7, "days").toDate();
         });
       });
+  }
+
+
+  buildProjectedDay() {
+
+    var LD = new Array<XY>();
+    for (var i = 0; i < this.thisTimeLastWeek.length; i++) {
+      // console.log("TTLW: ", this.thisTimeLastWeek[i]);
+     if (this.thisTimeLastWeek[i].count == -2)//IMS
+      {
+        var t = new XY(new Date(moment(this.thisTimeLastWeek[i].date).add(7, "days").toDate()), null);
+      } else {
+        var t = new XY(new Date(moment(this.thisTimeLastWeek[i].date).add(7, "days").toDate()), this.thisTimeLastWeek[i].count);
+      }
+
+      LD.push(t);
+    };
+
+    // -------------------------------- Today Graph Data ---------------------------------------------
+    this.daydata = {
+      datasets: [
+        {
+          label: 'Projected',
+          data: LD,
+          backgroundColor: "rgba(93, 90, 96,0.4)",
+          //lineTension:0.2,
+          radius: 2.5,
+          spanGaps: this.tgapspan,
+        }]
+    };
+
+    this.dayoptions = {
+      legend: {
+        display: false,
+        labels: {
+          boxWidth: 100,
+          fontSize: 30,
+          // fontStyle: ,
+          // fontColor: ,
+          // fontFamily: ,
+          padding: 15,
+        },
+      },
+      title: {
+        display: false,
+      },
+      scales: {
+        xAxes: [{
+          type: 'time',
+          time: {
+            round: "minute",
+            displayFormats: {
+              hour: 'h a',
+            },
+            unitStepSize: 2,
+            isoWeekday: true,
+            max: moment().add(2, "hours").endOf("day"),
+            min: moment().add(2, "hours").startOf("day").add(6, "hours"),
+            tooltipFormat: "ddd, MMM D, h:mm a",
+            unit: "hour"
+          },
+          ticks: {
+            maxRotation: 0,
+          },
+          gridLines: {
+            lineWidth: 4,
+          }
+        }],
+        yAxes: [{
+          ticks: {
+            min: 0,
+            max: this.graphMax
+          },
+          scaleLabel:
+          {
+            display: false,
+            labelString: "HeadCount",
+          }
+        }]
+      },
+      responsive: true,
+    };
   }
 
 }

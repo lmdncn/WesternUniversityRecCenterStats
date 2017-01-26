@@ -1,7 +1,24 @@
 <div id="footer" class="ui stackable grid">
-    <p id="feedbk" class="five wide column">Any feedback? Need a spot? Hmu on Linked<a href="https://ca.linkedin.com/in/liam-duncan-782211120" target="0"><i class="linkedin square icon"></i></a></p>
-    <p class="six wide column">
-        All data collected from <a class="link-text" href="https://twitter.com/WesternWeightRm" target="0">@WesternWeightRM</a>        and <a class="link-text" href="https://twitter.com/Western_Rec" target="0">@Western_Rec</a>
-    </p>
-    <p id="by" class="five wide column">Created by <a href="http://www.lmdncn.me" target="0"><strong>Liam Duncan</strong></a>,<a href="http://brandonassing.me" target="0"><strong> Brandon Assing</strong></a>, and <a href="http://henrytran.me" target="0"><strong>Henry Tran</strong></a></p>
+    <div class="five wide column">
+        <p id="feedbk">Any feedback? Need a spot? Hmu on Linked<a href="https://ca.linkedin.com/in/liam-duncan-782211120" target="0"><i class="linkedin square icon"></i></a></p>
+        <p id="by">Created by <a href="http://www.lmdncn.me" target="0"><strong>Liam Duncan</strong></a>,
+            <a href="http://brandonassing.me" target="0"><strong> Brandon Assing</strong></a>, and
+            <a href="http://henrytran.me"
+                target="0"><strong>Henry Tran</strong></a>
+        </p>
+    </div>
+    <div class="six wide column">
+        <p>All data collected from <a class="link-text" href="https://twitter.com/WesternWeightRm" target="0">@WesternWeightRM</a>            and <a class="link-text" href="https://twitter.com/Western_Rec" target="0">@Western_Rec</a>
+        </p>
+    </div>
+    <a class="five wide column" id="hoursbox" *ngIf="hours!=null">
+        <h5>Hours</h5>
+        <p>Monday: {{hours.monO.hour}} {{hours.monO.f}} - {{hours.monC.hour}} {{hours.monC.f}}</p>
+        <p>Tuesday: {{hours.tueO.hour}} {{hours.tueO.f}} - {{hours.tuesC.hour}} {{hours.tuesC.f}}</p>
+        <p>Wednesday: {{hours.wedO.hour}} {{hours.wedO.f}} - {{hours.wedC.hour}} {{hours.wedC.f}}</p>
+        <p>Thursday: {{hours.thuO.hour}} {{hours.thuO.f}} - {{hours.thuC.hour}} {{hours.thuC.f}}</p>
+        <p>Friday: {{hours.friO.hour}} {{hours.friO.f}} - {{hours.friC.hour}} {{hours.friC.f}}</p>
+        <p>Saturday: {{hours.satO.hour}} {{hours.satO.f}} - {{hours.satC.hour}} {{hours.satC.f}}</p>
+        <p>Sunday: {{hours.sunO.hour}} {{hours.sunO.f}} - {{hours.sunC.hour}} {{hours.sunC.f}}</p>
+    </a>
 </div>

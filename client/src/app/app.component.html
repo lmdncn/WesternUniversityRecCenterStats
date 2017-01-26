@@ -1,9 +1,9 @@
 <div class="container-fluid">
-  <app-header></app-header>
+  <app-header [hours]="hours" [mobile]="mobile"></app-header>
   <app-nav-bar></app-nav-bar>
   <div id="main">
     <router-outlet></router-outlet>
   </div>
 
-  <app-footer></app-footer>
+  <app-footer [hours]="hours"></app-footer>
 </div>
