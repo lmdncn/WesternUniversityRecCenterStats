@@ -14,13 +14,13 @@ module.exports = {
 
 	// PARSE Function --------------------------------------------------------
 	pullWRCM: function (tweetText, d) {
-		if (tweetText.includes("WR") && tweetText.includes("CM")) {
-			var fullText = tweetText;
+		if (tweetText.includes("WR") && tweetText.includes("CM")|| fullText.includes("CARDIO") && fullText.includes("WEIGHTROOM")) {
+			var fullText = tweetText.toUpperCase();
 
 			//Find Indexes
 			var WRi = fullText.indexOf("WR");
 			var CMi = fullText.indexOf("CM");
-
+	if(CMi>=0 && WRi >=0){
 			console.log("WR Index:", WRi, " CM Index:", CMi);
 
 			if (WRi < CMi) // (## WR ## CM), (WR ## CM ##), (WR ## ## CM), (## WR CM ##), 
@@ -83,6 +83,54 @@ module.exports = {
 					}
 				}
 			}
+			}else{
+		console.log("Cardio Weightroom");
+		var WRi = fullText.indexOf("WEIGHTROOM");
+		var CMi = fullText.indexOf("CARDIO");
+		
+		console.log("WR Index:", WRi, " CM Index:", CMi);
+		
+		//find first number
+		
+		var firstNumi = 0;
+		while (!isNum(fullText[firstNumi])){
+			firstNumi++;			
+		}
+		console.log("Frist number is at: ",firstNumi);
+		if(firstNumi<WRi && WRi < CMi){ //### Weightroom
+			var WRtext = fullText.slice(firstNumi, WRi);
+		}
+		if(firstNumi > WRi && WRi < CMi){ //Weightroom ###
+			var WRtext = fullText.slice(firstNumi, firstNumi+3);
+		}
+		if(firstNumi > CMi && WRi > CMi){ //Cardio ###
+			var CMtext = fullText.slice(firstNumi, firstNumi+3);
+		}
+		if(firstNumi < CMi && WRi > CMi){ //Cardio ###
+			var CMtext = fullText.slice(firstNumi, CMi);
+		}
+		//First Number Covered
+		
+		
+		//First second number
+		var secondNumi = firstNumi+3;
+		while (!isNum(fullText[secondNumi])){
+			secondNumi++;			
+		}
+		if(secondNumi<CMi && WRi < CMi){ //### Cardio
+			var CMtext = fullText.slice(secondNumi, CMi);
+		}
+		if(secondNumi > CMi && WRi < CMi){ //Cardio ###
+			var CMtext = fullText.slice(secondNumi, secondNumi+3);
+		}
+		if(secondNumi > WRi && WRi > CMi){ //Weightroom ###
+			var WRtext = fullText.slice(secondNumi, secondNumi+3);
+		}
+		if(secondNumi < WRi && WRi > CMi){ //### Weightroom 
+			var WRtext = fullText.slice(secondNumi, WRi);
+		}		
+		
+	}
 
 			//Parse String to numbers
 			var WRnum = takeNum(WRtext);
@@ -90,10 +138,12 @@ module.exports = {
 
 
 			console.log("WR:", WRnum, " CM:", CMnum);
+			
+			saveStat("WR", WRnum, d);
+			saveStat("CM", CMnum, d);
 		}
 
-		saveStat("WR", WRnum, d);
-		saveStat("CM", CMnum, d);
+		
 	},
 
 	// PARSE Function DROPINS --------------------------------------------------------

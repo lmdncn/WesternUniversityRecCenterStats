@@ -22,28 +22,35 @@ WR 113 CM 76
 //pullWRCM("WR: 108 CM 634 Come join us for Cardio Kickbox at 1:05 until 1:55");
 //pullWRCM("WR 113 & 76 CM");
 //pullWRCM("CM 133 & 46 WR");
-pullRC("Bball 28 Vball: 0 Badminton 6 Futsal: 10");
-pullRC("Bball:31 Vball:0 Futsal:0 Badminton: 7");
-pullRC("6 Bball 0 Vball 2 Badminton 0 futsal");
+//pullRC("Bball 28 Vball: 0 Badminton 6 Futsal: 10");
+//pullRC("Bball:31 Vball:0 Futsal:0 Badminton: 7");
+//pullRC("6 Bball 0 Vball 2 Badminton 0 futsal");
 
-pullRC("BBALL: 27 All other gyms are IMS and as of 8PM all gyms are IMS for the duration of the night!");
-pullRC("Bball: IMS Vball:0 Badminton:9 Futsal: IMS *INTRAMURALS ARE HAPPENING*");
+//pullRC("BBALL: 27 All other gyms are IMS and as of 8PM all gyms are IMS for the duration of the night!");
+//pullRC("Bball: IMS Vball:0 Badminton:9 Futsal: IMS *INTRAMURALS ARE HAPPENING*");
 
-pullRC("Remember to lock up all your belongings including shoes, boots and jackets in the changerooms!");
-pullRC("Bball: 21 Vball: 2 Badminton:8 Futsal:7");
-pullRC("Basketball: N/A (IMS) Volleyball: N/A (IMS) Badminton: 0 Futsal: N/A (IMS)");
-pullRC("Basketball: 14 Volleyball: 0 Badminton: IMS Futsal: IMS");
+//pullRC("Remember to lock up all your belongings including shoes, boots and jackets in the changerooms!");
+//pullRC("Bball: 21 Vball: 2 Badminton:8 Futsal:7");
+//pullRC("Basketball: N/A (IMS) Volleyball: N/A (IMS) Badminton: 0 Futsal: N/A (IMS)");
+//pullRC("Basketball: 14 Volleyball: 0 Badminton: IMS Futsal: IMS");
 
+console.log("Starting up!");
+pullWRCM("Weightroom 56 Cardio 30!");
+pullWRCM("Weightroom 36 Cardio mez 20");
+pullWRCM("Weightroom 20 and Cardio MEZ 15!");
 
 
 function pullWRCM(tweetText) {
-	if (tweetText.includes("WR") && tweetText.includes("CM")) {
-		var fullText = tweetText;
+	
+	var fullText = tweetText.toUpperCase();
+	
+	if (fullText.includes("WR") && fullText.includes("CM") || fullText.includes("CARDIO") && fullText.includes("WEIGHTROOM") ) {
+		
 
 		//Find Indexes
 		var WRi = fullText.indexOf("WR");
 		var CMi = fullText.indexOf("CM");
-
+	if(CMi>=0 && WRi >=0){
 		console.log("WR Index:", WRi, " CM Index:", CMi);
 
 		if (WRi < CMi) // (## WR ## CM), (WR ## CM ##), (WR ## ## CM), (## WR CM ##), 
@@ -106,7 +113,54 @@ function pullWRCM(tweetText) {
 				}
 			}
 		}
-
+	}else{
+		console.log("Cardio Weightroom");
+		var WRi = fullText.indexOf("WEIGHTROOM");
+		var CMi = fullText.indexOf("CARDIO");
+		
+		console.log("WR Index:", WRi, " CM Index:", CMi);
+		
+		//find first number
+		
+		var firstNumi = 0;
+		while (!isNum(fullText[firstNumi])){
+			firstNumi++;			
+		}
+		console.log("Frist number is at: ",firstNumi);
+		if(firstNumi<WRi && WRi < CMi){ //### Weightroom
+			var WRtext = fullText.slice(firstNumi, WRi);
+		}
+		if(firstNumi > WRi && WRi < CMi){ //Weightroom ###
+			var WRtext = fullText.slice(firstNumi, firstNumi+3);
+		}
+		if(firstNumi > CMi && WRi > CMi){ //Cardio ###
+			var CMtext = fullText.slice(firstNumi, firstNumi+3);
+		}
+		if(firstNumi < CMi && WRi > CMi){ //Cardio ###
+			var CMtext = fullText.slice(firstNumi, CMi);
+		}
+		//First Number Covered
+		
+		
+		//First second number
+		var secondNumi = firstNumi+3;
+		while (!isNum(fullText[secondNumi])){
+			secondNumi++;			
+		}
+		if(secondNumi<CMi && WRi < CMi){ //### Cardio
+			var CMtext = fullText.slice(secondNumi, CMi);
+		}
+		if(secondNumi > CMi && WRi < CMi){ //Cardio ###
+			var CMtext = fullText.slice(secondNumi, secondNumi+3);
+		}
+		if(secondNumi > WRi && WRi > CMi){ //Weightroom ###
+			var WRtext = fullText.slice(secondNumi, secondNumi+3);
+		}
+		if(secondNumi < WRi && WRi > CMi){ //### Weightroom 
+			var WRtext = fullText.slice(secondNumi, WRi);
+		}		
+		
+	}
 		//Parse String to numbers
 		var WRnum = takeNum(WRtext);
 		var CMnum = takeNum(CMtext);
