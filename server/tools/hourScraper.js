@@ -32,7 +32,7 @@ module.exports = {
                     range = data.children().first().next().text(); //range
 
                     if(range == lastrange){
-                        console.log("Already Loader Hours!", range);
+                        // console.log("Already Loader Hours!", range);
                         skip = true;
                         return;
                     }else{
@@ -75,6 +75,7 @@ module.exports = {
                                 i--;
                             }
                             var AMtime = temp.slice(i, iold);
+                            // console.log(AMtime);
                         }
 
                         var j = temp.indexOf("PM");
@@ -88,7 +89,7 @@ module.exports = {
                         }
 
                         if (PMtime == null) { //Must Close in AM
-                            var i = temp.indexOf("AM", iold + 1);
+                            var i = temp.indexOf("AM", iold + 2);
                             if (i >= 0) { //Exists
                                 var iold = i;
                                 i--;
@@ -141,14 +142,18 @@ module.exports = {
 
                 })
                 if(skip){
-                    console.log("Skipping Save Hours");
+                    // console.log("Skipping Save Hours");
                     return;
                 }
 
                 sendBk.push({
                     hours: JSON.stringify(hoursjson)
                 });
+                
+                // console.log("SEND BK", sendBk);
+
                 callbkfunct(sendBk);
+                
             }
 
             // console.log(sendBk);

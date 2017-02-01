@@ -22,16 +22,22 @@ import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
 import { CmStatsComponent } from './cm-stats/cm-stats.component';
 import { BbStatsComponent } from './bb-stats/bb-stats.component'
-
-//Service Import
-import { StatService } from './services/stat.service';
-
-
-//Pipe Import
-import { DateFormatPipe } from './pipes/date-format.pipe';
 import { VbStatsComponent } from './vb-stats/vb-stats.component';
 import { BmStatsComponent } from './bm-stats/bm-stats.component';
 import { FsStatsComponent } from './fs-stats/fs-stats.component';
+
+
+//Service Import
+import { StatService } from './services/stat.service';
+import { HoursService } from './services//hours.service';
+
+//Pipe Import
+import { DateFormatPipe } from './pipes/date-format.pipe';
+import { ReverseNgForPipe } from './pipes/reverse-ng-for.pipe';
+
+//Directives Import
+import { SameheightDirective } from './directives/sameheight.directive';
+
 
 //Set Routes
 const appRoutes: Routes = [
@@ -61,6 +67,8 @@ const appRoutes: Routes = [
         VbStatsComponent,
         BmStatsComponent,
         FsStatsComponent,
+        SameheightDirective,
+        ReverseNgForPipe,
     ],
 
     imports: [
@@ -78,7 +86,8 @@ const appRoutes: Routes = [
     providers:
     //Services go here
     [
-        StatService
+        StatService,
+        HoursService
     ],
 
     bootstrap: [AppComponent],

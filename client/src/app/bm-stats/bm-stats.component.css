@@ -1,3 +1,29 @@
+
+
+#maintitle {
+    margin-top: 25px;
+    margin-bottom: 1.5%;
+    color: #4F2D82;
+    font-size: 2.5rem;
+    text-align: center;
+    padding: 0.5%;
+    background-color: #F1F1F1;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.3);
+}
+
+
+@media only screen and (max-device-width: 767px) {
+
+
+#maintitle {
+    margin-top: 1%;
+    font-size: 1.8rem;
+}
+
+}
+
+
+
 /*  --------------------------------- Top Today Details Bar -------------------------------------------------------------- */
 
 .afterFact .value,
@@ -84,24 +110,17 @@
     text-align: center;
 }
 
+
+/* ----------------------------- Closed Sign ---------------------------------- */
+
 #closed {
-    padding-top: 2%;
-    padding-bottom: 1.5%;
-}
-
-#closed div {
+    text-align: center;
     color: #4E2583;
-    border-style: solid;
-    border-color: #e1e1e1;
-    border-width: 5px;
-    background-color: #f4f4f4;
-    padding: 10px;
-    margin-bottom: 10px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.3);
+    margin-top: 20px;
 }
 
-#closed div h2 {
-    margin: 0;
+#closed h2 {
+    margin-top: 0;
 }
 
 i {
@@ -109,6 +128,8 @@ i {
     position: relative;
     top: 20px;
 }
+
+
 
 
 /* ---------------------------------- Today Section -------------------------------------------------- */
@@ -129,10 +150,12 @@ i {
 
 @media only screen and (max-device-width: 767px) {
     .title-bar {
-        margin-left: 34px;
-        margin-right: 34px;
-        margin-bottom: 0;
+        margin: 1rem;
+        margin-bottom: 1rem;
+        font-size: 1.2rem;
+        padding: 10px;
     }
+
 }
 
 
@@ -178,7 +201,7 @@ i {
 }
 
 .scrollX {
-    max-height: 320px;
+    max-height: 230px;
     overflow-y: scroll;
 }
 
@@ -210,7 +233,7 @@ chart {
 #today-info {
     background-color: #f1f1f1;
     padding: 20px;
-    margin-bottom: 2%;
+    margin-bottom: 1.5%;
     border-style: solid;
     border-color: #e1e1e1;
     border-width: 10px;
@@ -233,6 +256,18 @@ chart {
 .lBox div.lline {
     padding: 10px;
     margin: auto;
+}
+
+@media only screen and (max-device-width: 767px) {
+ 
+    .lBox{
+        margin: 0;
+    }
+    #today-info{
+        padding: 0;
+    }
+  
+    
 }
 
 .lline strong {
@@ -261,25 +296,53 @@ div.legend {
 
 /* ---------------------------------- Week Section -------------------------------------------------- */
 
-#week-info {
+.week-info {
     border-style: solid;
     border-color: #e1e1e1;
     border-width: 10px;
     background-color: #f4f4f4;
     padding: 20px;
-    margin-bottom: 4%;
+    margin-bottom: 1.5%;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.3);
 }
 
 @media only screen and (max-device-width: 767px) {
-    .thisWeek {
-        margin-bottom: 30px;
-    }
-
-    .mobChart{
+    
+    .mobChart {
         border: solid 2pt rgba(0, 0, 0, 0.1);
-        border-right: solid 1pt rgba(0, 0, 0, 0.05);
-        padding: 15px;
+        padding: 1rem;
+        margin-bottom: 1rem;
+    }
+    .mobChartmargin{
+        margin-right: 1rem;
+        margin-left: 1rem;
+    }
+      .week-info{
+        padding: 0;
+        margin-top: 1rem;
+    }
+    #threewide{
+        padding-bottom: 0.2rem !important;
+    }
+    #today-info{
+        margin-top: 1rem;
     }
 
+
+}
+ /* Closed Mobile */
+@media only screen and (max-device-width: 767px) {
+
+#closed {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    margin-top: 1rem;
+}
+#closed h2 {
+    font-size: 1.3rem;
+}
+i{
+    font-size: 3rem;
+    top: 15px;
+}
 }

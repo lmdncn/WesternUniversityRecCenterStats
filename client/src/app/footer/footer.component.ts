@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 
+import { HoursService } from "../services/hours.service";
+
 @Component({
   selector: 'app-footer',
   templateUrl: './footer.component.html',
@@ -7,9 +9,9 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class FooterComponent implements OnInit {
 
-  @Input() hours;
-  
-  constructor() { }
+
+  constructor(private hoursService: HoursService) { 
+  }
 
   ngOnInit() {
   }

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, trigger, state, style, transition, animate } from '@angular/core';
+import { HoursService } from '../services/hours.service';
 import { StatService } from '../services/stat.service';
 import { Stat } from '../models/stat';
 import * as moment from 'moment';
@@ -8,18 +9,35 @@ import { XY } from '../models/xy'
 @Component({
   selector: 'app-bm-stats',
   templateUrl: './bm-stats.component.html',
-  styleUrls: ['./bm-stats.component.css']
+  styleUrls: ['./bm-stats.component.css'],
+    animations: [
+    trigger(
+      'enterAnimation', [
+        transition(':enter', [
+          style({ opacity: 0 }),
+          animate('500ms', style({ opacity: 1 }))
+        ]),
+        transition(':leave', [
+          style({ opacity: 1 }),
+          animate('500ms', style({ opacity: 0 }))
+        ])
+      ]
+    )
+  ]
 })
 export class BmStatsComponent implements OnInit {
 
+  // hours data
+  morningOf;
+  title = "Drop-In Badminton";
   //Stat 
   tgapspan = true;
   todayStats: Stat[];
   todayStatsR: Stat[];
   thisWeekStats: Stat[];
   lastWeekStats: Stat[];
-  thisTimeLastWeek: Stat[];
-
+  thisTimeLastWeek: Stat[];  
+  projectedTomorrowStats: Stat[];
   nxtProject: Stat[];
 
   //Graph Data
@@ -30,15 +48,110 @@ export class BmStatsComponent implements OnInit {
   weekstartDate: Date;
   weekdata = null;
   weekoptions = null;
+  tomorrowdata = null;
+  tomorrowoptions = null;
   graphMax = 50;
 
 
-  dayOfWeek = moment().add(2, "hours").format("dddd");
+  dayOfWeek = moment().format("dddd");
+  dayOfWeekT = moment().add(1, "day").format("dddd");
+  thisweekstr = moment().subtract(4, "day").format("MMM D") + " to " + moment().add(3, "day").format("MMM D");
   mobile = window.matchMedia('(max-width: 767px)').matches;
 
-  constructor(private statService: StatService) { }
+  constructor(private statService: StatService, private hoursService: HoursService) { }
 
-  buildDay() {
+  // ------------------------------------- Stat Service Get Calls --------------------------------
+  ngOnInit() {
+
+    this.setupProjectedBarData();
+
+    //Setsup day data and builds graph when done
+    this.setupTodayData();
+
+    //Both On Open and Close
+    this.setupThisWeekData(); //Setsup week data and builds graph when done
+
+    //Set tomorrow graph
+    this.setupTomorrowProjectedData();
+
+  }
+
+
+
+  setupThisWeekData() {
+
+    this.statService.getThisWeek(this.nameTag)
+      .subscribe(
+      stats => {
+        this.thisWeekStats = stats;
+        this.weekstartDate = stats[0].date;
+      }, null, () => {
+        this.setupLastWeekData();
+      });
+  }
+
+  setupTodayData() {
+    // console.log("Setting up today data");
+    this.statService.getToday(this.nameTag)
+      .subscribe(
+      stats => {
+        // console.log("Today data in");
+        this.todayStats = stats;
+        this.todayStatsR = stats.slice();
+        this.todayStatsR.reverse();
+      }, null, () => {
+        if (this.todayStats != null && this.todayStats.length < 1) {
+          // console.log("Morning Of = Closed");
+          this.todayStats.push(new Stat(null, this.nameTag, null, new Date(Date.now())));
+        }
+        // console.log("Today when done");
+        this.setupTtlwData()
+      });
+
+  }
+
+  setupLastWeekData() {
+    this.statService.getLastWeek(this.nameTag)
+      .subscribe(
+      stats => {
+        this.lastWeekStats = stats;
+        // console.log("Set Data");
+      }, null, () => {
+        this.lastWeekStats.forEach(element => {
+          element.date = moment(element.date).add(7, "days").toDate();
+        });
+        this.buildWeekGraph();
+      });
+  }
+
+  setupTtlwData() {
+
+    // console.log("Setting ttlw data");
+    this.statService.getTTLW(this.nameTag)
+      .subscribe(
+      stats => {
+        this.thisTimeLastWeek = stats;
+      }, null, () => {
+        this.buildDayGraph()
+      });
+  }
+
+  setupProjectedBarData() {
+    // console.log("setup bar data proj");
+    this.statService.getProjected(this.nameTag)
+      .subscribe(
+      stats => {
+        this.nxtProject = stats;
+        // console.log("Projected! : ", stats);
+      }, null, () => {
+        this.nxtProject.forEach(element => {
+          element.date = moment(element.date).add(7, "days").toDate();
+        });
+      });
+  }
+
+  buildDayGraph() {
+    // console.log("Building Day Graph:", this.todayStats);
     var TD = new Array<XY>();
     for (var i = 0; i < this.todayStats.length; i++) {
       // console.log("Today: ", this.todayStats[i]);
@@ -75,7 +188,7 @@ export class BmStatsComponent implements OnInit {
         data: TD,
         backgroundColor: "rgba(81, 44, 115,0.6)",
         lineTension: 0,
-        radius: 2.5,
+        radius: 3,
         spanGaps: this.tgapspan,
       },
       {
@@ -113,8 +226,8 @@ export class BmStatsComponent implements OnInit {
             },
             unitStepSize: 2,
             isoWeekday: true,
-            max: moment().endOf("day"),
-            min: moment.min(moment(this.todayStats[0].date).startOf("hour"), moment(this.thisTimeLastWeek[0].date).add(7, "days").startOf("hour")),
+            max: this.hoursService.closeMoment,
+            min: this.hoursService.openMoment,
             tooltipFormat: "ddd, MMM D, h:mm a",
             unit: "hour"
           },
@@ -142,20 +255,22 @@ export class BmStatsComponent implements OnInit {
   }
 
   // Once all data arrives build the week graph
-  buildWeek() {
+  buildWeekGraph() {
     var TW = new Array<XY>();
-    var lastMoment = moment(this.thisWeekStats[0].date);
+
+    var lastMoment = moment(this.thisWeekStats[0].date)
 
     for (var i = 0; i < this.thisWeekStats.length; i++) {
       //console.log("This Week: ", this.thisWeekStats[i]);
 
-      while (moment(this.thisWeekStats[i].date) > lastMoment.add(4, 'hours'))//Gym Probably Closed
-      {
-        // console.log("Adding Close");
-        TW.push(new XY(new Date(moment(lastMoment).subtract(2, "hours").toDate()), null));
+      if (moment(this.thisWeekStats[i].date) > moment(lastMoment).add(4, 'hours')) {
+        TW.push(new XY(new Date(lastMoment.toDate()), null));
       }
 
       lastMoment = moment(this.thisWeekStats[i].date);
+
+
+
 
       if (this.thisWeekStats[i].count == -2)//IMS
       {
@@ -172,15 +287,8 @@ export class BmStatsComponent implements OnInit {
 
     for (var i = 0; i < this.lastWeekStats.length; i++) {
 
-      // console.log("Last Week: ", this.lastWeekStats[i]);
       if (moment(this.lastWeekStats[i].date) > moment(lastMoment).add(4, 'hours')) {
-
-        while (moment(this.lastWeekStats[i].date) > lastMoment.add(1, 'hours'))   //Gym Probably Closed
-        {
-          LW.push(new XY(new Date(lastMoment.toDate()), null));
-          lastMoment.add(1, "hours");
-        }
-
+        LW.push(new XY(new Date(lastMoment.toDate()), null));
       }
 
       lastMoment = moment(this.lastWeekStats[i].date);
@@ -205,7 +313,7 @@ export class BmStatsComponent implements OnInit {
         data: TW,
         backgroundColor: "rgba(81, 44, 115,0.6)",
         lineTension: 0,
-        radius: 2,
+        radius: 1.5,
         spanGaps: false,
       },
       {
@@ -275,104 +383,49 @@ export class BmStatsComponent implements OnInit {
     };
   }
 
-  // ------------------------------------- Stat Service Get Calls --------------------------------
-  ngOnInit() {
-    this.getProject();
-    this.statService.getToday(this.nameTag)
+  setupTomorrowProjectedData() {
+    this.statService.getProjectedTomorrow(this.nameTag)
       .subscribe(
       stats => {
-        this.todayStats = stats;
-        this.todayStatsR = stats.slice();
-        this.todayStatsR.reverse();
+        this.projectedTomorrowStats = stats;
       }, null, () => {
-        if (this.todayStats != null && this.todayStats.length < 1) {
-          // console.log("Morning Of = Closed");
-          this.todayStats.push(new Stat(null, this.nameTag, -1, new Date(Date.now())));
-        }
-
-        this.getTTLW();
-      });
-    this.statService.getThisWeek(this.nameTag)
-      .subscribe(
-      stats => {
-        this.thisWeekStats = stats;
-        this.weekstartDate = stats[0].date;
-      }, null, () => {
-        this.getLastWeekNext();
-      });
-  }
-  //Called after getThisWeek
-  getLastWeekNext() {
-    this.statService.getLastWeek(this.nameTag)
-      .subscribe(
-      stats => {
-        this.lastWeekStats = stats;
-        // console.log("Set Data");
-      }, null, () => {
-
-        this.lastWeekStats.forEach(element => {
+        this.projectedTomorrowStats.forEach(element => {
           element.date = moment(element.date).add(7, "days").toDate();
         });
-        this.buildWeek(); //Can finally build chart since data will be there
-      });
-  }
-  getTTLW() {
-    this.statService.getTTLW(this.nameTag)
-      .subscribe(
-      stats => {
-        this.thisTimeLastWeek = stats;
-      }, null, () => {
-        if (this.todayStats[0].count == -1) {
-          this.buildProjectedDay();
-        } else {
-          this.buildDay(); //Can finally build chart since data will be there
-        }
+        this.buildProjectedTomorrowGraph();
+        // console.log("PROJECTED: ", this.projectedTomorrowStats);
       });
   }
 
-  getProject() {
-    this.statService.getProjected(this.nameTag)
-      .subscribe(
-      stats => {
-        this.nxtProject = stats;
-        // console.log("Projected! : ", stats);
-      }, null, () => {
-        this.nxtProject.forEach(element => {
-          element.date = moment(element.date).add(7, "days").toDate();
-        });
-      });
-  }
-
-
-  buildProjectedDay() {
+  buildProjectedTomorrowGraph() {
 
     var LD = new Array<XY>();
-    for (var i = 0; i < this.thisTimeLastWeek.length; i++) {
-      // console.log("TTLW: ", this.thisTimeLastWeek[i]);
-     if (this.thisTimeLastWeek[i].count == -2)//IMS
+    for (var i = 0; i < this.projectedTomorrowStats.length; i++) {
+      // console.log("TTLW: ", this.projectedTomorrowStats[i]);
+      if (this.projectedTomorrowStats[i].count == -2)//IMS
       {
-        var t = new XY(new Date(moment(this.thisTimeLastWeek[i].date).add(7, "days").toDate()), null);
+        var t = new XY(new Date(moment(this.projectedTomorrowStats[i].date).toDate()), null);
       } else {
-        var t = new XY(new Date(moment(this.thisTimeLastWeek[i].date).add(7, "days").toDate()), this.thisTimeLastWeek[i].count);
+        var t = new XY(new Date(moment(this.projectedTomorrowStats[i].date).toDate()), this.projectedTomorrowStats[i].count);
       }
 
       LD.push(t);
     };
 
-    // -------------------------------- Today Graph Data ---------------------------------------------
-    this.daydata = {
+    // -------------------------------- Tomorrow Graph Data ---------------------------------------------
+    this.tomorrowdata = {
       datasets: [
         {
           label: 'Projected',
           data: LD,
           backgroundColor: "rgba(93, 90, 96,0.4)",
           //lineTension:0.2,
-          radius: 2.5,
+          radius: 3,
           spanGaps: this.tgapspan,
         }]
     };
 
-    this.dayoptions = {
+    this.tomorrowoptions = {
       legend: {
         display: false,
         labels: {
@@ -397,8 +450,8 @@ export class BmStatsComponent implements OnInit {
             },
             unitStepSize: 2,
             isoWeekday: true,
-            max: moment().add(2, "hours").endOf("day"),
-            min: moment().add(2, "hours").startOf("day").add(6, "hours"),
+            max: this.hoursService.tomorrowCloseMoment,
+            min: this.hoursService.tomorrowOpenMoment,
             tooltipFormat: "ddd, MMM D, h:mm a",
             unit: "hour"
           },
@@ -424,5 +477,4 @@ export class BmStatsComponent implements OnInit {
       responsive: true,
     };
   }
-
 }

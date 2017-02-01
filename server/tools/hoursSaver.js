@@ -10,9 +10,9 @@ module.exports = {
 
         var clbk = function (data) {
             var hoursData = JSON.parse(data[1].hours);
-            console.log("***************DATA**************\n", hoursData[0][0]);
+            // console.log("***************DATA**************\n", hoursData[0][0]);
 
-            console.log('Hours -> saving to db');
+            // console.log('Hours -> saving to db');
 
             var hours = new Hours({
 
@@ -68,8 +68,8 @@ module.exports = {
                     f: hoursData[5][0].closeF,
                 },
                 sunO: {
-                    hour: hoursData[6][0].closeH,
-                    f: hoursData[6][0].closeF,
+                    hour: hoursData[6][0].openH,
+                    f: hoursData[6][0].openF,
                 },
                 sunC: {
                     hour: hoursData[6][0].closeH,
@@ -77,14 +77,14 @@ module.exports = {
                 }
             });
 
-            console.log('made hours -> ' + JSON.stringify(hours));
+            console.log('saving hours to db -> ' + JSON.stringify(hours));
 
             hours.save(function (err) {
                 if (err) {
 
                     console.log(err);
                 } else {
-                    console.log("Hours succ saved");
+                    // console.log("Hours succ saved");
                 }
             });
         }

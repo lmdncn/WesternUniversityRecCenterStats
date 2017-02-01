@@ -1,20 +1,43 @@
-<div id="header-text">
-    <h1>Western University</h1>
-    <h2>Recreation Center Statistics</h2>
-</div>
-<a class="typeform-share button" href="https://lmdncn.typeform.com/to/dOsqmR" data-mode="1" target="_blank">
-    <div class="ui label" id="feedback">
-       <p>Provide Feedback!</p>
-        <script>(function(){var qs,js,q,s,d=document,gi=d.getElementById,ce=d.createElement,gt=d.getElementsByTagName,id='typef_orm',b='https://s3-eu-west-1.amazonaws.com/share.typeform.com/';if(!gi.call(d,id)){js=ce.call(d,'script');js.id=id;js.src=b+'share.js';q=gt.call(d,'script')[0];q.parentNode.insertBefore(js,q)}id=id+'_';if(!gi.call(d,id)){qs=ce.call(d,'link');qs.rel='stylesheet';qs.id=id;qs.href=b+'share-button.css';s=gt.call(d,'head')[0];s.appendChild(qs,s)}})()</script>
+<div id="bkgrnd">
+    <div id="header-text">
+        <h1>Western University</h1>
+        <h2>Recreation Center Statistics</h2>
     </div>
-</a>
-
-<a href="http://www.uwo.ca/campusrec/" target="_0" id="hoursToday" class="ui label"  *ngIf="hours!=null">
-        <p *ngIf="DOWCheck('Monday')"  >Monday Hours: {{hours.monO.hour}} {{hours.monO.f}} - {{hours.monC.hour}} {{hours.monC.f}}</p>
-        <p *ngIf="DOWCheck('Tuesday')">Tuesday Hours: {{hours.tueO.hour}} {{hours.tueO.f}} - {{hours.tuesC.hour}} {{hours.tuesC.f}}</p>
-        <p *ngIf="DOWCheck('Wednesday')">Wednesday Hours: {{hours.wedO.hour}} {{hours.wedO.f}} - {{hours.wedC.hour}} {{hours.wedC.f}}</p>
-        <p *ngIf="DOWCheck('Thursday')">Thursday Hours: {{hours.thuO.hour}} {{hours.thuO.f}} - {{hours.thuC.hour}} {{hours.thuC.f}}</p>
-        <p *ngIf="DOWCheck('Friday')">Friday Hours: {{hours.friO.hour}} {{hours.friO.f}} - {{hours.friC.hour}} {{hours.friC.f}}</p>
-        <p *ngIf="DOWCheck('Saturday')">Saturday Hours: {{hours.satO.hour}} {{hours.satO.f}} - {{hours.satC.hour}} {{hours.satC.f}}</p>
-        <p *ngIf="DOWCheck('Sunday')">Sunday Hours: {{hours.sunO.hour}} {{hours.sunO.f}} - {{hours.sunC.hour}} {{hours.sunC.f}}</p>
+    <div (click)="helpme()" class="ui label" id="feedback">
+        <p>What does this all mean? Help!</p>
+    </div>
+    <a href="http://www.uwo.ca/campusrec/" target="_0" id="hoursToday" class="ui label">
+        <p>{{DOW}} Hours: {{hoursService.open}} - {{hoursService.close}}</p>
     </a>
+    <div *ngIf="help" [@enterAnimation]="show" id="helptext">
+        <p><b>Lost in all the data?</b><br> Simply select the tab on the navigation bar that you are interested in. Then view
+            all the attendance stats of that room/activity!
+        </p>
+        <p>
+            <b>
+            What is the "Projected" gray graph?
+        </b><br> The projected graph is an estimate of how busy it is going to be. Projections are made daily
+            using the past recorded data.<br>
+            <b>*Note*</b> That if the purple graph (today's real time data) is trending slightly below the projected line,
+            it will probably slightly quieter than the projection suggests!
+        </p>
+         <p>
+            <b>
+            What's with the futuristic gray numbers?
+        </b><br> These are also estimates of how busy it is going to be.<br>
+            <b>*Note*</b> Refer to note above^
+        </p>
+        <p>
+            <b>IMS :</b> Stands for Intramural Sport, suggesting that gym is probably unavailable for drop in sport.
+        </p>
+        <div (click)="helpme()" class="ui animated button" tabindex="0">
+            <div class="visible content">Got it!</div>
+            <div class="hidden content">
+                <i class="check icon"></i>
+            </div>
+        </div>
+        <p>
+            <b>Mobile version of site coming soon!</b>
+        </p>
+    </div>
+</div>

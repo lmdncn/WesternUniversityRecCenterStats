@@ -47,7 +47,7 @@ router.get('/projected', function (req, res, next) {
         }
     }).sort([
         ['date', 1]
-    ]).limit(2).exec(
+    ]).limit(3).exec(
         function (err, stats1) {
             if (err) {
                 res.send(err);
@@ -61,7 +61,7 @@ router.get('/projected', function (req, res, next) {
                     }
                 }).sort([
                     ['date', 1]
-                ]).limit(2).exec(
+                ]).limit(3).exec(
                     function (err, stats2) {
                         if (err) {
                             res.send(err);
@@ -69,7 +69,27 @@ router.get('/projected', function (req, res, next) {
                         res.json(stats2);
                     });
             }
+
+
+
             if (stats1.length == 1) {
+                Stat.find({
+                    loc: req.query.loc,
+                    date: { //Find from start of today
+                        $gte: moment().tz("America/Toronto").subtract(6, "days").startOf("day").toDate()
+                    }
+                }).sort([
+                    ['date', 1]
+                ]).limit(2).exec(
+                    function (err, stat3) {
+                        if (err) {
+                            res.send(err);
+                        }
+                        stats1.push(stat3);
+                    });
+            }
+
+             if (stats1.length == 2) {
                 Stat.find({
                     loc: req.query.loc,
                     date: { //Find from start of today
@@ -85,6 +105,8 @@ router.get('/projected', function (req, res, next) {
                         stats1.push(stat3);
                     });
             }
+
+
             res.json(stats1);
         });
 });
@@ -116,6 +138,29 @@ router.get('/ttlw', function (req, res, next) {
 
 });
 
+router.get('/projectedTomorrow', function (req, res, next) {
+
+    //This uses moment.js
+    var thistimetomorrow = moment().tz("America/Toronto");
+
+    Stat.find({
+        loc: req.query.loc,
+        date: { //Find from last week till today
+            $gte: moment(thistimetomorrow).startOf("day").subtract(6,"days").toDate(),
+            $lt: moment(thistimetomorrow).endOf("day").subtract(6,"days").toDate()
+        }
+    }).sort([
+        ['date', 1]
+    ]).exec(function (err, stats) {
+
+        if (err) {
+            res.send(err);
+        }
+        res.json(stats);
+
+    });
+
+});
 
 //Get lastweek data -> querying loc=var
 //Last week is (range of 7 days) ending with today-4

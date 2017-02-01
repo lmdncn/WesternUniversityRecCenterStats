@@ -21,7 +21,7 @@ module.exports = {
 			var WRi = fullText.indexOf("WR");
 			var CMi = fullText.indexOf("CM");
 	if(CMi>=0 && WRi >=0){
-			console.log("WR Index:", WRi, " CM Index:", CMi);
+			// console.log("WR Index:", WRi, " CM Index:", CMi);
 
 			if (WRi < CMi) // (## WR ## CM), (WR ## CM ##), (WR ## ## CM), (## WR CM ##), 
 			{
@@ -31,7 +31,7 @@ module.exports = {
 
 					var i = WRi + 2; //lets find next number
 					while (i < fullText.length && !isNum(fullText[i])) {
-						console.log("Not Num: ", fullText[i]);
+						// console.log("Not Num: ", fullText[i]);
 						i++;
 					}
 					if (i > CMi) {
@@ -61,7 +61,7 @@ module.exports = {
 
 					var i = CMi + 2; //lets find next number
 					while (i < fullText.length && !isNum(fullText[i])) {
-						console.log("Not Num: ", fullText[i]);
+						// console.log("Not Num: ", fullText[i]);
 						i++;
 					}
 					if (i > WRi) {
@@ -84,11 +84,11 @@ module.exports = {
 				}
 			}
 			}else{
-		console.log("Cardio Weightroom");
+		// console.log("Cardio Weightroom");
 		var WRi = fullText.indexOf("WEIGHTROOM");
 		var CMi = fullText.indexOf("CARDIO");
 		
-		console.log("WR Index:", WRi, " CM Index:", CMi);
+		// console.log("WR Index:", WRi, " CM Index:", CMi);
 		
 		//find first number
 		
@@ -96,7 +96,7 @@ module.exports = {
 		while (!isNum(fullText[firstNumi])){
 			firstNumi++;			
 		}
-		console.log("Frist number is at: ",firstNumi);
+		// console.log("Frist number is at: ",firstNumi);
 		if(firstNumi<WRi && WRi < CMi){ //### Weightroom
 			var WRtext = fullText.slice(firstNumi, WRi);
 		}
@@ -178,10 +178,22 @@ module.exports = {
 	if (BBALLi == -1 && VBALLi == -1 && BDMTi == -1 && FUTSi == -1) {
 
 		console.log("Tweet: ", tweetText);
-		console.log("******* NO DATA TWEET ************************************");
+		
+		// Checkout for all gyms closed for IMS for rest of the night
+
+		if((fullText.includes("IMS") || fullText.includes("INTRAMURALS")||fullText.includes("DROP"))&&fullText.includes("ALL")&&fullText.includes("GYMS")||fullText.includes("CLOSED")&&fullText.includes("NIGHT"))
+		{
+			// Save everything IMS
+			console.log(" ALL GYMS IMS!");
+	var BBALLnum = -2;var VBALLnum= -2; var BDMTnum = -2; var FUTSnum = -2;
+		}else{
+			console.log("******* NO DATA TWEET ************************************");
 		console.log("-------------------------------------------------");
 		return;
-	}
+		}
+		
+	
+	}else{
 
 	//Variables for sections of tweet that have data
 	var BDMTtext;
@@ -216,8 +228,81 @@ module.exports = {
 			break;
 		}
 		
-		var curI;
+		
+		if (BBALLi != -1 && VBALLi != -1 && BDMTi == -1 && FUTSi != -1) {
+			var num1index = nextNumberIndex(0,fullText);
+			var num2index = nextNumberIndex(num1index+3,fullText);
+			var num3index = nextNumberIndex(num2index+3,fullText);
 
+			// Order of words
+			if(BBALLi<VBALLi && VBALLi<FUTSi){
+				BBALLtext = fullText.slice(num1index, num1index+3);
+				VBALLtext = fullText.slice(num2index,num2index+3);
+				FUTStext = fullText.slice(num3index,num3index+3);
+			}
+			if(VBALLi<BBALLi && BBALLi<FUTSi){
+				VBALLtext = fullText.slice(num1index, num1index+3);
+				BBALLtext = fullText.slice(num2index,num2index+3);
+				FUTStext = fullText.slice(num3index,num3index+3);
+			}
+			if(BBALLi<FUTSi && FUTSi<VBALLi){
+				BBALLtext = fullText.slice(num1index, num1index+3);
+				FUTStext = fullText.slice(num2index,num2index+3);
+				VBALLtext = fullText.slice(num3index,num3index+3);
+			}
+			break;
+
+		}
+
+		if (BBALLi != -1 && VBALLi != -1 && BDMTi != -1 && FUTSi == -1) {
+			console.log("Theres Three!");
+			var num1index = nextNumberIndex(0,fullText);
+			var num2index = nextNumberIndex(num1index+3,fullText);
+			var num3index = nextNumberIndex(num2index+3,fullText);
+			console.log("INDEXES OF NUMS: ", num1index,num2index,num3index);
+
+			// Order of words
+			if(BBALLi<VBALLi && VBALLi<BDMTi){
+				BBALLtext = fullText.slice(num1index, num1index+3);
+				VBALLtext = fullText.slice(num2index,num2index+3);
+				BDMTtext = fullText.slice(num3index,num3index+3);
+			}
+			if(VBALLi<BBALLi && BBALLi<BDMTi){
+				VBALLtext = fullText.slice(num1index, num1index+3);
+				BBALLtext = fullText.slice(num2index,num2index+3);
+				BDMTtext = fullText.slice(num3index,num3index+3);
+			}
+			if(BBALLi<BDMTi && BDMTi<VBALLi){
+				BBALLtext = fullText.slice(num1index, num1index+3);
+				BDMTtext = fullText.slice(num2index,num2index+3);
+				VBALLtext = fullText.slice(num3index,num3index+3);
+			}
+			break;
+		}
+
+		if (BBALLi != -1 && VBALLi == -1 && BDMTi != -1 && FUTSi != -1) {
+			console.log("Theres Three!");
+			var num1index = nextNumberIndex(0,fullText);
+			var num2index = nextNumberIndex(num1index+3,fullText);
+			var num3index = nextNumberIndex(num2index+3,fullText);
+			console.log("INDEXES OF NUMS: ", num1index,num2index,num3index);
+
+			// Order of words
+			if(BBALLi<BDMTi && BDMTi<FUTSi){
+				BBALLtext = fullText.slice(num1index, num1index+3);
+				BDMTtext = fullText.slice(num2index,num2index+3);
+				FUTStext = fullText.slice(num3index,num3index+3);
+			}
+			if(BBALLi<FUTSi && FUTSi<BDMTi){
+				BBALLtext = fullText.slice(num1index, num1index+3);
+				FUTStext = fullText.slice(num2index,num2index+3);
+				BDMTtext = fullText.slice(num3index,num3index+3);
+			}
+			break;
+		}
+
+
+		var curI;
 		//Oder ## BBall etc...
 		if (isNum(fullText[0]) || isNum(fullText[1])) {
 			if (BBALLi < VBALLi && BBALLi < BDMTi && BBALLi < FUTSi) {
@@ -272,11 +357,6 @@ module.exports = {
 							var FUTStext = fullText.slice(0, FUTSi);
 							curI = FUTSi;
 						}
-
-
-
-
-
 
 					}
 				}
@@ -435,11 +515,12 @@ module.exports = {
 	}
 	//***********************************
 
+}
 
 
-	console.log(" ");
-	console.log("Tweet: ", tweetText);
-	console.log("BBALL:", BBALLnum, " VBALL:", VBALLnum, " BDMT:", BDMTnum, " FUTS:", FUTSnum);
+	// console.log(" ");
+	// console.log("Tweet: ", tweetText);
+	// console.log("BBALL:", BBALLnum, " VBALL:", VBALLnum, " BDMT:", BDMTnum, " FUTS:", FUTSnum);
 
 
 	// If No Data, No Save
@@ -447,36 +528,36 @@ module.exports = {
 		//Save
 		saveStat("BBALL", BBALLnum, d);
 	} else {
-		console.log("No Save BBALL");		
+		// console.log("No Save BBALL");		
 	}
 	if ((VBALLi != -1 || VBALLnum == -2) && VBALLnum < VBmax) {
 		//Save
 		saveStat("VBALL", VBALLnum, d);
 	} else {
-		console.log("No Save VBALL");
+		// console.log("No Save VBALL");
 	}
 	if ((BDMTi != -1 || BDMTnum == -2) && BDMTnum < BDMTmax) {
 		//Save
 		saveStat("BDMT", BDMTnum, d);
 	} else {
-		console.log("No Save BDMT");
+		// console.log("No Save BDMT");
 	}
 	if ((FUTSi != -1 || FUTSnum == -2) && FUTSnum < FUTSmax) {
 		//Save
 		saveStat("FUTS", FUTSnum, d);
 	} else {
-		console.log("No Save FUTS");
+		// console.log("No Save FUTS");
 	}
 
 
-	console.log("-------------------------------------------------");
+	// console.log("-------------------------------------------------");
 	console.log("-------------------------------------------------");
 
 	},
 	
 	loadFromLast: function(query,callbk){
 		
-	console.log("Finding Last Tweet");
+	// console.log("Finding Last Tweet");
 	
     Stat.findOne({
             loc: query,
@@ -488,7 +569,7 @@ module.exports = {
             if (err) {
 				return null;
             }
-			console.log("FindOne finds last date to be: ", stat.date);
+			// console.log("FindOne finds last date to be: ", stat.date);
 			
             callbk(stat.date);
 	
@@ -501,7 +582,7 @@ module.exports = {
 function saveStat(str, num, d) {
 
 	//Save to db
-	console.log('saving to db');
+	// console.log('saving to db');
 
 	var stat = new Stat({
 		loc: str,
@@ -510,7 +591,7 @@ function saveStat(str, num, d) {
 	});
 
 
-	console.log('made stat' + JSON.stringify(stat));
+	// console.log('made stat' + JSON.stringify(stat));
 
 	stat.save(function (err) {
 		if (err) {
@@ -568,5 +649,4 @@ function nextIndex(cur, opt1 = 9999, opt2 = 9999, opt3 = 9999) {
 		}
 	}
 
-	return null; //ERR
 };

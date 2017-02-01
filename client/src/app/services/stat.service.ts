@@ -4,11 +4,10 @@ import { Http, Response, Headers, RequestOptions } from '@angular/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import { Stat } from '../models/stat';
-import { Hours } from '../models/hours';
+
+
 @Injectable()
 export class StatService {
-
- 
 
   constructor(private http: Http) { }
 
@@ -48,11 +47,13 @@ export class StatService {
 
   }
 
-  getHours(): Observable<Hours> {
-
-    return this.http.get("api/hours").map((res) => res.json()).catch(this.handleError);
+  getProjectedTomorrow(loc: string){
+ 
+  return this.http.get("api/stats/projectedTomorrow?loc=" + loc).map((res) => res.json()).catch(this.handleError);
 
   }
+
+  projectedTomorrow
 
 
   private handleError(error: Response | any) {

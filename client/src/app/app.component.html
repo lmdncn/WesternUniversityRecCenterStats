@@ -1,9 +1,11 @@
 <div class="container-fluid">
-  <app-header [hours]="hours" [mobile]="mobile"></app-header>
+  <!-- TODO: Header doesnt necessarily need all this info-->
+  <app-header [mobile]="mobile"></app-header>
   <app-nav-bar></app-nav-bar>
   <div id="main">
     <router-outlet></router-outlet>
   </div>
 
-  <app-footer [hours]="hours"></app-footer>
+  <!-- Footer displays all hours needs akk info-->
+  <app-footer></app-footer> 
 </div>

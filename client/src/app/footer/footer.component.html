@@ -11,14 +11,14 @@
         <p>All data collected from <a class="link-text" href="https://twitter.com/WesternWeightRm" target="0">@WesternWeightRM</a>            and <a class="link-text" href="https://twitter.com/Western_Rec" target="0">@Western_Rec</a>
         </p>
     </div>
-    <a class="five wide column" id="hoursbox" *ngIf="hours!=null">
+    <a href="http://www.uwo.ca/campusrec/" target="_0" class="five wide column" id="hoursbox" *ngIf="hoursService.hours!=null" >
         <h5>Hours</h5>
-        <p>Monday: {{hours.monO.hour}} {{hours.monO.f}} - {{hours.monC.hour}} {{hours.monC.f}}</p>
-        <p>Tuesday: {{hours.tueO.hour}} {{hours.tueO.f}} - {{hours.tuesC.hour}} {{hours.tuesC.f}}</p>
-        <p>Wednesday: {{hours.wedO.hour}} {{hours.wedO.f}} - {{hours.wedC.hour}} {{hours.wedC.f}}</p>
-        <p>Thursday: {{hours.thuO.hour}} {{hours.thuO.f}} - {{hours.thuC.hour}} {{hours.thuC.f}}</p>
-        <p>Friday: {{hours.friO.hour}} {{hours.friO.f}} - {{hours.friC.hour}} {{hours.friC.f}}</p>
-        <p>Saturday: {{hours.satO.hour}} {{hours.satO.f}} - {{hours.satC.hour}} {{hours.satC.f}}</p>
-        <p>Sunday: {{hours.sunO.hour}} {{hours.sunO.f}} - {{hours.sunC.hour}} {{hours.sunC.f}}</p>
+        <p>Monday: {{hoursService.hours.monO.hour}} {{hoursService.hours.monO.f}} - {{hoursService.hours.monC.hour}} {{hoursService.hours.monC.f}}</p>
+        <p>Tuesday: {{hoursService.hours.tueO.hour}} {{hoursService.hours.tueO.f}} - {{hoursService.hours.tuesC.hour}} {{hoursService.hours.tuesC.f}}</p>
+        <p>Wednesday: {{hoursService.hours.wedO.hour}} {{hoursService.hours.wedO.f}} - {{hoursService.hours.wedC.hour}} {{hoursService.hours.wedC.f}}</p>
+        <p>Thursday: {{hoursService.hours.thuO.hour}} {{hoursService.hours.thuO.f}} - {{hoursService.hours.thuC.hour}} {{hoursService.hours.thuC.f}}</p>
+        <p>Friday: {{hoursService.hours.friO.hour}} {{hoursService.hours.friO.f}} - {{hoursService.hours.friC.hour}} {{hoursService.hours.friC.f}}</p>
+        <p>Saturday: {{hoursService.hours.satO.hour}} {{hoursService.hours.satO.f}} - {{hoursService.hours.satC.hour}} {{hoursService.hours.satC.f}}</p>
+        <p>Sunday: {{hoursService.hours.sunO.hour}} {{hoursService.hours.sunO.f}} - {{hoursService.hours.sunC.hour}} {{hoursService.hours.sunC.f}}</p>
     </a>
 </div>

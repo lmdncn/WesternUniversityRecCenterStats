@@ -17,7 +17,7 @@ export class Hours {
         hour: Number,
         f: String
     };
-    tueC: {
+    tuesC: {
         hour: Number,
         f: String
     };
@@ -128,7 +128,7 @@ export class Hours {
         this.monO.hour = monO.hour;
         this.monC.f = monC.f;
         this.tueO.hour = tueO.hour;
-        this.tueC.f = tueC.f;
+        this.tuesC.f = tueC.f;
 
         this.wedO.hour = wedO.hour;
         this.wedC.f = wedC.f;

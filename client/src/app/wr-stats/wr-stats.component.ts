@@ -1,428 +1,518 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, trigger, state, style, transition, animate } from '@angular/core';
+import { HoursService } from '../services/hours.service';
 import { StatService } from '../services/stat.service';
 import { Stat } from '../models/stat';
 import * as moment from 'moment';
-import { XY } from '../models/xy'
-
+import { XY } from '../models/xy';
 
 @Component({
-  selector: 'app-wr-stats',
-  templateUrl: './wr-stats.component.html',
-  styleUrls: ['./wr-stats.component.css']
+    selector: 'app-wr-stats',
+    templateUrl: './wr-stats.component.html',
+    styleUrls: ['./wr-stats.component.css'],
+    animations: [
+        trigger(
+            'enterAnimation', [
+                transition(':enter', [
+                    style({ opacity: 0 }),
+                    animate('500ms', style({ opacity: 1 }))
+                ]),
+                transition(':leave', [
+                    style({ opacity: 1 }),
+                    animate('500ms', style({ opacity: 0 }))
+                ])
+            ]
+        )
+    ]
 })
 export class WrStatsComponent implements OnInit {
 
-  //Stat 
-  tgapspan = false;
-  todayStats: Stat[];
-  todayStatsR: Stat[];
-  thisWeekStats: Stat[];
-  lastWeekStats: Stat[];
-  thisTimeLastWeek: Stat[];
+    // hours data
+    morningOf;
+    title = "Weight Room";
+    //Stat 
+    tgapspan = false;
+    todayStats: Stat[];
+    todayStatsR: Stat[];
+    thisWeekStats: Stat[];
+    lastWeekStats: Stat[];
+    thisTimeLastWeek: Stat[];
+    nxtProject: Stat[];
+    projectedTomorrowStats: Stat[];
 
-  nxtProject: Stat[];
+    //Graph Data
+    nameTag = "WR"
+    daydata = null;
+    dayoptions = null;
+    type = 'line';
+    weekstartDate: Date;
+    weekdata = null;
+    weekoptions = null;
+    tomorrowdata = null;
+    tomorrowoptions = null;
+    graphMax = 300;
+    TD1R: Array<XY>;
+    TD1 = new Array<XY>();
+    
+    dayOfWeek = moment().format("dddd");
+    dayOfWeekT = moment().add(1, "day").format("dddd");
+    thisweekstr = moment().subtract(4, "day").format("MMM D") + " to " + moment().add(3, "day").format("MMM D");
+    mobile = window.matchMedia('(max-width: 767px)').matches;
 
-  //Graph Data
-  nameTag = "WR"
-  daydata = null;
-  dayoptions = null;
-  type = 'line';
-  weekstartDate: Date;
-  weekdata = null;
-  weekoptions = null;
-  graphMax = 300;
+    constructor(private statService: StatService, private hoursService: HoursService) { }
 
+    // ------------------------------------- Stat Service Get Calls --------------------------------
+    ngOnInit() {
 
-  dayOfWeek = moment().add(2, "hours").format("dddd");
-  mobile = window.matchMedia('(max-width: 767px)').matches;
+        this.setupProjectedBarData();
 
-  constructor(private statService: StatService) { }
+        //Setsup day data and builds graph when done
+        this.setupTodayData();
 
-  buildDay() {
-    var TD = new Array<XY>();
-    for (var i = 0; i < this.todayStats.length; i++) {
-      // console.log("Today: ", this.todayStats[i]);
+        //Both On Open and Close
+        this.setupThisWeekData(); //Setsup week data and builds graph when done
 
+        //Set tomorrow graph
+        this.setupTomorrowProjectedData();
 
-      if (this.todayStats[i].count == -2)//IMS
-      {
-        var t = new XY(new Date(this.todayStats[i].date), null);
-      } else {
-        var t = new XY(new Date(this.todayStats[i].date), this.todayStats[i].count);
-      }
-      TD.push(t);
-    };
-
-    var LD = new Array<XY>();
-    for (var i = 0; i < this.thisTimeLastWeek.length; i++) {
-      // console.log("TTLW: ", this.thisTimeLastWeek[i]);
-
-      if (this.thisTimeLastWeek[i].count == -2)//IMS
-      {
-        var t = new XY(new Date(moment(this.thisTimeLastWeek[i].date).add(7, "days").toDate()), null);
-      } else {
-        var t = new XY(new Date(moment(this.thisTimeLastWeek[i].date).add(7, "days").toDate()), this.thisTimeLastWeek[i].count);
-      }
-
-      LD.push(t);
-    };
+    }
 
 
-    // -------------------------------- Today Graph Data ---------------------------------------------
-    this.daydata = {
-      datasets: [{
-        label: 'Today',
-        data: TD,
-        backgroundColor: "rgba(81, 44, 115,0.6)",
-        lineTension: 0,
-        radius: 2.5,
-        spanGaps: this.tgapspan,
-      },
-      {
-        label: 'Projected',
-        data: LD,
-        backgroundColor: "rgba(93, 90, 96,0.4)",
-        //lineTension:0.2,
-        radius: 2.5,
-        spanGaps: this.tgapspan,
-      }]
-    };
 
-    this.dayoptions = {
-      legend: {
-        display: false,
-        labels: {
-          boxWidth: 100,
-          fontSize: 30,
-          // fontStyle: ,
-          // fontColor: ,
-          // fontFamily: ,
-          padding: 15,
-        },
-      },
-      title: {
-        display: false,
-      },
-      scales: {
-        xAxes: [{
-          type: 'time',
-          time: {
-            round: "minute",
-            displayFormats: {
-              hour: 'h a',
-            },
-            unitStepSize: 2,
-            isoWeekday: true,
-            max: moment().endOf("day"),
-            min: moment.min(moment(this.todayStats[0].date).startOf("hour"), moment(this.thisTimeLastWeek[0].date).add(7, "days").startOf("hour")),
-            tooltipFormat: "ddd, MMM D, h:mm a",
-            unit: "hour"
-          },
-          ticks: {
-            maxRotation: 0,
-          },
-          gridLines: {
-            lineWidth: 4,
-          }
-        }],
-        yAxes: [{
-          ticks: {
-            min: 0,
-            max: this.graphMax
-          },
-          scaleLabel:
-          {
-            display: false,
-            labelString: "HeadCount",
-          }
-        }]
-      },
-      responsive: true,
-    };
-  }
+    setupThisWeekData() {
 
-  // Once all data arrives build the week graph
-  buildWeek() {
-    var TW = new Array<XY>();
-    var lastMoment = moment(this.thisWeekStats[0].date);
+        this.statService.getThisWeek(this.nameTag)
+            .subscribe(
+            stats => {
+                this.thisWeekStats = stats;
+                this.weekstartDate = stats[0].date;
+            }, null, () => {
+                this.setupLastWeekData();
+            });
+    }
 
-    for (var i = 0; i < this.thisWeekStats.length; i++) {
-      //console.log("This Week: ", this.thisWeekStats[i]);
+    setupTodayData() {
+        // console.log("Setting up today data");
+        this.statService.getToday(this.nameTag)
+            .subscribe(
+            stats => {
+                // console.log("Today data in");
+                this.todayStats = stats;
+                this.todayStatsR = stats.slice();
+                this.todayStatsR.reverse();
+            }, null, () => {
+                // console.log("Today when done");
+                this.setupTtlwData()
+            });
 
-      while (moment(this.thisWeekStats[i].date) > lastMoment.add(4, 'hours'))//Gym Probably Closed
-      {
-        // console.log("Adding Close");
-        TW.push(new XY(new Date(moment(lastMoment).subtract(2, "hours").toDate()), null));
-      }
+    }
 
-      lastMoment = moment(this.thisWeekStats[i].date);
+    setupLastWeekData() {
+        this.statService.getLastWeek(this.nameTag)
+            .subscribe(
+            stats => {
+                this.lastWeekStats = stats;
+                // console.log("Set Data");
+            }, null, () => {
+                this.lastWeekStats.forEach(element => {
+                    element.date = moment(element.date).add(7, "days").toDate();
+                });
+                this.buildWeekGraph();
+            });
+    }
 
-      if (this.thisWeekStats[i].count == -2)//IMS
-      {
-        var t = new XY(new Date(this.thisWeekStats[i].date), null);
-      } else {
-        var t = new XY(new Date(this.thisWeekStats[i].date), this.thisWeekStats[i].count);
-      }
-      TW.push(t);
-    };
+    setupTtlwData() {
+
+        // console.log("Setting ttlw data");
+        this.statService.getTTLW(this.nameTag)
+            .subscribe(
+            stats => {
+                this.thisTimeLastWeek = stats;
+            }, null, () => {
+                this.buildDayGraph()
+            });
+    }
+
+    setupProjectedBarData() {
+        // console.log("setup bar data proj");
+        this.statService.getProjected(this.nameTag)
+            .subscribe(
+            stats => {
+                this.nxtProject = stats;
+                // console.log("Projected! : ", stats);
+            }, null, () => {
+                this.nxtProject.forEach(element => {
+                    element.date = moment(element.date).add(7, "days").toDate();
+                });
+            });
+    }
+
+    buildDayGraph() {
+
+     
+
+        var LD = new Array<XY>();
+
+        var t = new XY(new Date(moment().startOf("day").add(this.hoursService.open24, "hours").toDate()), 0);
+        if (this.hoursService.isOpen) {
+            this.TD1.push(t);
+        }
+        // console.log("pushing1 TD1: ", t);
+        LD.push(t);
 
 
-    var LW = new Array<XY>();
-    var lastMoment = moment(this.lastWeekStats[0].date)
+        // console.log("Building Day Graph:", this.todayStats);
+        if(this.todayStats != null){
+        for (var i = 0; i < this.todayStats.length; i++) {
+            // console.log("Today: ", this.todayStats[i]);
 
-    for (var i = 0; i < this.lastWeekStats.length; i++) {
 
-      // console.log("Last Week: ", this.lastWeekStats[i]);
-      if (moment(this.lastWeekStats[i].date) > moment(lastMoment).add(4, 'hours')) {
-
-        while (moment(this.lastWeekStats[i].date) > lastMoment.add(1, 'hours'))   //Gym Probably Closed
-        {
-          LW.push(new XY(new Date(lastMoment.toDate()), null));
-          lastMoment.add(1, "hours");
+            if (this.todayStats[i].count == -2)//IMS
+            {
+                var t = new XY(new Date(this.todayStats[i].date), null);
+            } else {
+                var t = new XY(new Date(this.todayStats[i].date), this.todayStats[i].count);
+            }
+            // console.log("pushing2 TD1: ", t);
+            this.TD1.push(t);
+        };
         }
 
-      }
+        for (var i = 0; i < this.thisTimeLastWeek.length; i++) {
+            // console.log("TTLW: ", this.thisTimeLastWeek[i]);
 
-      lastMoment = moment(this.lastWeekStats[i].date);
+            if (this.thisTimeLastWeek[i].count == -2)//IMS
+            {
+                var t = new XY(new Date(moment(this.thisTimeLastWeek[i].date).add(7, "days").toDate()), null);
+            } else {
+                var t = new XY(new Date(moment(this.thisTimeLastWeek[i].date).add(7, "days").toDate()), this.thisTimeLastWeek[i].count);
+            }
+
+            LD.push(t);
+        };
 
 
-
-      if (this.lastWeekStats[i].count == -2)//IMS
-      {
-        var t = new XY(new Date(this.lastWeekStats[i].date), null);
-      } else {
-        var t = new XY(new Date(this.lastWeekStats[i].date), this.lastWeekStats[i].count);
-      }
-
-      LW.push(t);
-
-    };
-
-    // --------------------------------- Week Graph Building ---------------------------------------------------
-    this.weekdata = {
-      datasets: [{
-        label: "This Week",
-        data: TW,
-        backgroundColor: "rgba(81, 44, 115,0.6)",
-        lineTension: 0,
-        radius: 2,
-        spanGaps: false,
-      },
-      {
-        label: 'Projected',
-        data: LW,
-        backgroundColor: "rgba(93, 90, 96,0.4)",
-        //lineTension:0.2,
-        radius: 2,
-        spanGaps: false,
-      }
-
-      ]
-    };
-
-    this.weekoptions = {
-      legend: {
-
-        display: false,
-        labels: {
-          boxWidth: 100,
-          fontSize: 30,
-          // fontStyle: ,
-          // fontColor: ,
-          // fontFamily: ,
-          padding: 15,
-        },
-      },
-      title: {
-        display: false,
-      },
-      scales: {
-        xAxes: [{
-          type: 'time',
-          time: {
-            round: "minute",
-            displayFormats: {
-              day: 'dddd, MMM D',
-            },
-            isoWeekday: true,
-            max: moment().endOf("day").add(3, "days"),
-            min: moment().startOf("day").subtract(3, "days"),
-            tooltipFormat: "ddd, MMM D, h:mm a",
-            unit: "day"
-          },
-          ticks: {
-            labelOffset: 80,
-            maxRotation: 0,
-
-          },
-          gridLines: {
-            lineWidth: 4,
-          }
-        }],
-        yAxes: [{
-          ticks: {
-            min: 0,
-            max: this.graphMax
-          },
-          scaleLabel:
-          {
-            display: false,
-            labelString: "HeadCount",
-          }
-        }]
-      },
-      responsive: true,
-    };
-  }
-
-  // ------------------------------------- Stat Service Get Calls --------------------------------
-  ngOnInit() {
-    this.getProject();
-    this.statService.getToday(this.nameTag)
-      .subscribe(
-      stats => {
-        this.todayStats = stats;
-        this.todayStatsR = stats.slice();
-        this.todayStatsR.reverse();
-      }, null, () => {
-        if (this.todayStats != null && this.todayStats.length < 1) {
-          // console.log("Morning Of = Closed");
-          this.todayStats.push(new Stat(null, this.nameTag, -1, new Date(Date.now())));
-        }
-
-        this.getTTLW();
-      });
-    this.statService.getThisWeek(this.nameTag)
-      .subscribe(
-      stats => {
-        this.thisWeekStats = stats;
-        this.weekstartDate = stats[0].date;
-      }, null, () => {
-        this.getLastWeekNext();
-      });
-  }
-  //Called after getThisWeek
-  getLastWeekNext() {
-    this.statService.getLastWeek(this.nameTag)
-      .subscribe(
-      stats => {
-        this.lastWeekStats = stats;
-        // console.log("Set Data");
-      }, null, () => {
-
-        this.lastWeekStats.forEach(element => {
-          element.date = moment(element.date).add(7, "days").toDate();
-        });
-        this.buildWeek(); //Can finally build chart since data will be there
-      });
-  }
-  getTTLW() {
-    this.statService.getTTLW(this.nameTag)
-      .subscribe(
-      stats => {
-        this.thisTimeLastWeek = stats;
-      }, null, () => {
-        if (this.todayStats[0].count == -1) {
-          this.buildProjectedDay();
+        if (this.hoursService.close24 == 24) {
+            var t = new XY(new Date(moment().startOf("day").add(1, "day").toDate()), 0);
         } else {
-          this.buildDay(); //Can finally build chart since data will be there
+            var t = new XY(new Date(moment().startOf("day").add(this.hoursService.close24, "hours").toDate()), 0);
         }
-      });
-  }
+        if (this.hoursService.realtionToClose == "after") {
+          // console.log("pushing3 TD1: ", t);
+            this.TD1.push(t);
+        }
+        LD.push(t);
 
-  getProject() {
-    this.statService.getProjected(this.nameTag)
-      .subscribe(
-      stats => {
-        this.nxtProject = stats;
-        // console.log("Projected! : ", stats);
-      }, null, () => {
-        this.nxtProject.forEach(element => {
-          element.date = moment(element.date).add(7, "days").toDate();
-        });
-      });
-  }
+        this.TD1R = this.TD1.slice().reverse();
 
-
-  buildProjectedDay() {
-
-    var LD = new Array<XY>();
-    for (var i = 0; i < this.thisTimeLastWeek.length; i++) {
-      // console.log("TTLW: ", this.thisTimeLastWeek[i]);
-     if (this.thisTimeLastWeek[i].count == -2)//IMS
-      {
-        var t = new XY(new Date(moment(this.thisTimeLastWeek[i].date).add(7, "days").toDate()), null);
-      } else {
-        var t = new XY(new Date(moment(this.thisTimeLastWeek[i].date).add(7, "days").toDate()), this.thisTimeLastWeek[i].count);
-      }
-
-      LD.push(t);
-    };
-
-    // -------------------------------- Today Graph Data ---------------------------------------------
-    this.daydata = {
-      datasets: [
-        {
-          label: 'Projected',
-          data: LD,
-          backgroundColor: "rgba(93, 90, 96,0.4)",
-          //lineTension:0.2,
-          radius: 2.5,
-          spanGaps: this.tgapspan,
-        }]
-    };
-
-    this.dayoptions = {
-      legend: {
-        display: false,
-        labels: {
-          boxWidth: 100,
-          fontSize: 30,
-          // fontStyle: ,
-          // fontColor: ,
-          // fontFamily: ,
-          padding: 15,
-        },
-      },
-      title: {
-        display: false,
-      },
-      scales: {
-        xAxes: [{
-          type: 'time',
-          time: {
-            round: "minute",
-            displayFormats: {
-              hour: 'h a',
+        // -------------------------------- Today Graph Data ---------------------------------------------
+        this.daydata = {
+            datasets: [{
+                label: 'Today',
+                data: this.TD1,
+                backgroundColor: "rgba(81, 44, 115,0.6)",
+                lineTension: 0,
+                radius: 3,
+                spanGaps: this.tgapspan,
             },
-            unitStepSize: 2,
-            isoWeekday: true,
-            max: moment().add(2, "hours").endOf("day"),
-            min: moment().add(2, "hours").startOf("day").add(6, "hours"),
-            tooltipFormat: "ddd, MMM D, h:mm a",
-            unit: "hour"
-          },
-          ticks: {
-            maxRotation: 0,
-          },
-          gridLines: {
-            lineWidth: 4,
-          }
-        }],
-        yAxes: [{
-          ticks: {
-            min: 0,
-            max: this.graphMax
-          },
-          scaleLabel:
-          {
-            display: false,
-            labelString: "HeadCount",
-          }
-        }]
-      },
-      responsive: true,
-    };
-  }
+            {
+                label: 'Projected',
+                data: LD,
+                backgroundColor: "rgba(93, 90, 96,0.4)",
+                //lineTension:0.2,
+                radius: 2.5,
+                spanGaps: this.tgapspan,
+            }]
+        };
+
+        this.dayoptions = {
+            legend: {
+                display: false,
+                labels: {
+                    boxWidth: 100,
+                    fontSize: 30,
+                    // fontStyle: ,
+                    // fontColor: ,
+                    // fontFamily: ,
+                    padding: 15,
+                },
+            },
+            title: {
+                display: false,
+            },
+            scales: {
+                xAxes: [{
+                    type: 'time',
+                    time: {
+                        round: "minute",
+                        displayFormats: {
+                            hour: 'h a',
+                        },
+                        unitStepSize: 2,
+                        isoWeekday: true,
+                        max: this.hoursService.closeMoment,
+                        min: this.hoursService.openMoment,
+                        tooltipFormat: "ddd, MMM D, h:mm a",
+                        unit: "hour"
+                    },
+                    ticks: {
+                        maxRotation: 0,
+                    },
+                    gridLines: {
+                        lineWidth: 4,
+                    }
+                }],
+                yAxes: [{
+                    ticks: {
+                        min: 0,
+                        max: this.graphMax
+                    },
+                    scaleLabel:
+                    {
+                        display: false,
+                        labelString: "HeadCount",
+                    }
+                }]
+            },
+            responsive: true,
+        };
+    }
+
+    // Once all data arrives build the week graph
+    buildWeekGraph() {
+        var TW = new Array<XY>();
+
+        var lastMoment = moment(this.thisWeekStats[0].date)
+
+        for (var i = 0; i < this.thisWeekStats.length; i++) {
+            //console.log("This Week: ", this.thisWeekStats[i]);
+
+            if (moment(this.thisWeekStats[i].date) > moment(lastMoment).add(4, 'hours')) {
+                TW.push(new XY(new Date(lastMoment.toDate()), null));
+            }
+
+            lastMoment = moment(this.thisWeekStats[i].date);
+
+
+
+
+            if (this.thisWeekStats[i].count == -2)//IMS
+            {
+                var t = new XY(new Date(this.thisWeekStats[i].date), null);
+            } else {
+                var t = new XY(new Date(this.thisWeekStats[i].date), this.thisWeekStats[i].count);
+            }
+            TW.push(t);
+        };
+
+
+        var LW = new Array<XY>();
+        var lastMoment = moment(this.lastWeekStats[0].date)
+
+        for (var i = 0; i < this.lastWeekStats.length; i++) {
+
+            if (moment(this.lastWeekStats[i].date) > moment(lastMoment).add(4, 'hours')) {
+                LW.push(new XY(new Date(lastMoment.toDate()), null));
+            }
+
+            lastMoment = moment(this.lastWeekStats[i].date);
+
+
+
+            if (this.lastWeekStats[i].count == -2)//IMS
+            {
+                var t = new XY(new Date(this.lastWeekStats[i].date), null);
+            } else {
+                var t = new XY(new Date(this.lastWeekStats[i].date), this.lastWeekStats[i].count);
+            }
+
+            LW.push(t);
+
+        };
+
+        // --------------------------------- Week Graph Building ---------------------------------------------------
+        this.weekdata = {
+            datasets: [{
+                label: "This Week",
+                data: TW,
+                backgroundColor: "rgba(81, 44, 115,0.6)",
+                lineTension: 0,
+                radius: 1.5,
+                spanGaps: false,
+            },
+            {
+                label: 'Projected',
+                data: LW,
+                backgroundColor: "rgba(93, 90, 96,0.4)",
+                //lineTension:0.2,
+                radius: 2,
+                spanGaps: false,
+            }
+
+            ]
+        };
+
+        this.weekoptions = {
+            legend: {
+
+                display: false,
+                labels: {
+                    boxWidth: 100,
+                    fontSize: 30,
+                    // fontStyle: ,
+                    // fontColor: ,
+                    // fontFamily: ,
+                    padding: 15,
+                },
+            },
+            title: {
+                display: false,
+            },
+            scales: {
+                xAxes: [{
+                    type: 'time',
+                    time: {
+                        round: "minute",
+                        displayFormats: {
+                            day: 'dddd, MMM D',
+                        },
+                        isoWeekday: true,
+                        max: moment().endOf("day").add(3, "days"),
+                        min: moment().startOf("day").subtract(3, "days"),
+                        tooltipFormat: "ddd, MMM D, h:mm a",
+                        unit: "day"
+                    },
+                    ticks: {
+                        labelOffset: 80,
+                        maxRotation: 0,
+
+                    },
+                    gridLines: {
+                        lineWidth: 4,
+                    }
+                }],
+                yAxes: [{
+                    ticks: {
+                        min: 0,
+                        max: this.graphMax
+                    },
+                    scaleLabel:
+                    {
+                        display: false,
+                        labelString: "HeadCount",
+                    }
+                }]
+            },
+            responsive: true,
+        };
+    }
+
+    setupTomorrowProjectedData() {
+        this.statService.getProjectedTomorrow(this.nameTag)
+            .subscribe(
+            stats => {
+                this.projectedTomorrowStats = stats;
+            }, null, () => {
+                this.projectedTomorrowStats.forEach(element => {
+                    element.date = moment(element.date).add(7, "days").toDate();
+                });
+                this.buildProjectedTomorrowGraph();
+                // console.log("PROJECTED: ", this.projectedTomorrowStats);
+            });
+    }
+
+    buildProjectedTomorrowGraph() {
+
+        var LD = new Array<XY>();
+
+        var t = new XY(new Date(moment().startOf("day").add(1, "day").add(this.hoursService.tomorrowOpen24, "hours").toDate()), 0);
+        LD.push(t);
+
+
+
+        for (var i = 0; i < this.projectedTomorrowStats.length; i++) {
+            // console.log("TTLW: ", this.projectedTomorrowStats[i]);
+            if (this.projectedTomorrowStats[i].count == -2)//IMS
+            {
+                var t = new XY(new Date(moment(this.projectedTomorrowStats[i].date).toDate()), null);
+            } else {
+                var t = new XY(new Date(moment(this.projectedTomorrowStats[i].date).toDate()), this.projectedTomorrowStats[i].count);
+            }
+
+            LD.push(t);
+        };
+
+        if (this.hoursService.tomorrowClose24 == 24) {
+            var t = new XY(new Date(moment().startOf("day").add(2, "day").toDate()), 0);
+        } else {
+            var t = new XY(new Date(moment().startOf("day").add(1, "day").add(this.hoursService.tomorrowClose24, "hours").toDate()), 0);
+        }
+        LD.push(t);
+
+
+        // -------------------------------- Tomorrow Graph Data ---------------------------------------------
+        this.tomorrowdata = {
+            datasets: [
+                {
+                    label: 'Projected',
+                    data: LD,
+                    backgroundColor: "rgba(93, 90, 96,0.4)",
+                    //lineTension:0.2,
+                    radius: 3,
+                    spanGaps: this.tgapspan,
+                }]
+        };
+
+        this.tomorrowoptions = {
+            legend: {
+                display: false,
+                labels: {
+                    boxWidth: 100,
+                    fontSize: 30,
+                    // fontStyle: ,
+                    // fontColor: ,
+                    // fontFamily: ,
+                    padding: 15,
+                },
+            },
+            title: {
+                display: false,
+            },
+            scales: {
+                xAxes: [{
+                    type: 'time',
+                    time: {
+                        round: "minute",
+                        displayFormats: {
+                            hour: 'h a',
+                        },
+                        unitStepSize: 2,
+                        isoWeekday: true,
+                        max: this.hoursService.tomorrowCloseMoment,
+                        min: this.hoursService.tomorrowOpenMoment,
+                        tooltipFormat: "ddd, MMM D, h:mm a",
+                        unit: "hour"
+                    },
+                    ticks: {
+                        maxRotation: 0,
+                    },
+                    gridLines: {
+                        lineWidth: 4,
+                    }
+                }],
+                yAxes: [{
+                    ticks: {
+                        min: 0,
+                        max: this.graphMax
+                    },
+                    scaleLabel:
+                    {
+                        display: false,
+                        labelString: "HeadCount",
+                    }
+                }]
+            },
+            responsive: true,
+        };
+    }
 
 }

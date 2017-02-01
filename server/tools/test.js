@@ -1,3 +1,4 @@
+console.log("Starting up!");
 
 // Set Reasonable maxs here
 var BBmax = 100;
@@ -22,22 +23,27 @@ WR 113 CM 76
 //pullWRCM("WR: 108 CM 634 Come join us for Cardio Kickbox at 1:05 until 1:55");
 //pullWRCM("WR 113 & 76 CM");
 //pullWRCM("CM 133 & 46 WR");
+// pullWRCM("Weightroom 56 Cardio 30!");
+// pullWRCM("Weightroom 36 Cardio mez 20");
+// pullWRCM("Weightroom 20 and Cardio MEZ 15!");
+
 //pullRC("Bball 28 Vball: 0 Badminton 6 Futsal: 10");
 //pullRC("Bball:31 Vball:0 Futsal:0 Badminton: 7");
 //pullRC("6 Bball 0 Vball 2 Badminton 0 futsal");
-
 //pullRC("BBALL: 27 All other gyms are IMS and as of 8PM all gyms are IMS for the duration of the night!");
 //pullRC("Bball: IMS Vball:0 Badminton:9 Futsal: IMS *INTRAMURALS ARE HAPPENING*");
-
 //pullRC("Remember to lock up all your belongings including shoes, boots and jackets in the changerooms!");
 //pullRC("Bball: 21 Vball: 2 Badminton:8 Futsal:7");
-//pullRC("Basketball: N/A (IMS) Volleyball: N/A (IMS) Badminton: 0 Futsal: N/A (IMS)");
-//pullRC("Basketball: 14 Volleyball: 0 Badminton: IMS Futsal: IMS");
 
-console.log("Starting up!");
-pullWRCM("Weightroom 56 Cardio 30!");
-pullWRCM("Weightroom 36 Cardio mez 20");
-pullWRCM("Weightroom 20 and Cardio MEZ 15!");
+pullRC("Basketball: N/A (IMS) Volleyball: N/A (IMS) Badminton: 0 Futsal: N/A (IMS)");
+pullRC("Basketball: 14 Volleyball: 0 Badminton: IMS Futsal: IMS");
+pullRC("Basketball: 45 Volleyball: 2 Badminton: N/A Futsal: N/A");
+pullRC("Basketball: red gym is closed until 3:00pm! Volleyball: 12 Badminton: 10 Futsal: N/A");
+pullRC("Basketball: 2 Volleyball: 15 Badminton: 11 Futsal: 4 Red gym is closed until 3:00pm!");
+pullRC("All drop-in gyms are IMS for the rest of the night!");
+pullRC("BBall: 20 VBall: 1 Badminton: 2");
+
+
 
 
 function pullWRCM(tweetText) {
@@ -202,10 +208,22 @@ function pullRC(tweetText) {
 	if (BBALLi == -1 && VBALLi == -1 && BDMTi == -1 && FUTSi == -1) {
 
 		console.log("Tweet: ", tweetText);
-		console.log("******* NO DATA TWEET ************************************");
+		
+		// Checkout for all gyms closed for IMS for rest of the night
+
+		if((fullText.includes("IMS") || fullText.includes("INTRAMURALS")||fullText.includes("DROP"))&&fullText.includes("ALL")&&fullText.includes("GYMS")||fullText.includes("CLOSED")&&fullText.includes("NIGHT"))
+		{
+			// Save everything IMS
+			console.log(" ALL GYMS IMS!");
+	var BBALLnum = -2;var VBALLnum= -2; var BDMTnum = -2; var FUTSnum = -2;
+		}else{
+			console.log("******* NO DATA TWEET ************************************");
 		console.log("-------------------------------------------------");
 		return;
-	}
+		}
+		
+	
+	}else{
 
 	//Variables for sections of tweet that have data
 	var BDMTtext;
@@ -240,8 +258,81 @@ function pullRC(tweetText) {
 			break;
 		}
 		
-		var curI;
+		
+		if (BBALLi != -1 && VBALLi != -1 && BDMTi == -1 && FUTSi != -1) {
+			var num1index = nextNumberIndex(0,fullText);
+			var num2index = nextNumberIndex(num1index+3,fullText);
+			var num3index = nextNumberIndex(num2index+3,fullText);
 
+			// Order of words
+			if(BBALLi<VBALLi && VBALLi<FUTSi){
+				BBALLtext = fullText.slice(num1index, num1index+3);
+				VBALLtext = fullText.slice(num2index,num2index+3);
+				FUTStext = fullText.slice(num3index,num3index+3);
+			}
+			if(VBALLi<BBALLi && BBALLi<FUTSi){
+				VBALLtext = fullText.slice(num1index, num1index+3);
+				BBALLtext = fullText.slice(num2index,num2index+3);
+				FUTStext = fullText.slice(num3index,num3index+3);
+			}
+			if(BBALLi<FUTSi && FUTSi<VBALLi){
+				BBALLtext = fullText.slice(num1index, num1index+3);
+				FUTStext = fullText.slice(num2index,num2index+3);
+				VBALLtext = fullText.slice(num3index,num3index+3);
+			}
+			break;
+
+		}
+
+		if (BBALLi != -1 && VBALLi != -1 && BDMTi != -1 && FUTSi == -1) {
+			console.log("Theres Three!");
+			var num1index = nextNumberIndex(0,fullText);
+			var num2index = nextNumberIndex(num1index+3,fullText);
+			var num3index = nextNumberIndex(num2index+3,fullText);
+			console.log("INDEXES OF NUMS: ", num1index,num2index,num3index);
+
+			// Order of words
+			if(BBALLi<VBALLi && VBALLi<BDMTi){
+				BBALLtext = fullText.slice(num1index, num1index+3);
+				VBALLtext = fullText.slice(num2index,num2index+3);
+				BDMTtext = fullText.slice(num3index,num3index+3);
+			}
+			if(VBALLi<BBALLi && BBALLi<BDMTi){
+				VBALLtext = fullText.slice(num1index, num1index+3);
+				BBALLtext = fullText.slice(num2index,num2index+3);
+				BDMTtext = fullText.slice(num3index,num3index+3);
+			}
+			if(BBALLi<BDMTi && BDMTi<VBALLi){
+				BBALLtext = fullText.slice(num1index, num1index+3);
+				BDMTtext = fullText.slice(num2index,num2index+3);
+				VBALLtext = fullText.slice(num3index,num3index+3);
+			}
+			break;
+		}
+
+		if (BBALLi != -1 && VBALLi == -1 && BDMTi != -1 && FUTSi != -1) {
+			console.log("Theres Three!");
+			var num1index = nextNumberIndex(0,fullText);
+			var num2index = nextNumberIndex(num1index+3,fullText);
+			var num3index = nextNumberIndex(num2index+3,fullText);
+			console.log("INDEXES OF NUMS: ", num1index,num2index,num3index);
+
+			// Order of words
+			if(BBALLi<BDMTi && BDMTi<FUTSi){
+				BBALLtext = fullText.slice(num1index, num1index+3);
+				BDMTtext = fullText.slice(num2index,num2index+3);
+				FUTStext = fullText.slice(num3index,num3index+3);
+			}
+			if(BBALLi<FUTSi && FUTSi<BDMTi){
+				BBALLtext = fullText.slice(num1index, num1index+3);
+				FUTStext = fullText.slice(num2index,num2index+3);
+				BDMTtext = fullText.slice(num3index,num3index+3);
+			}
+			break;
+		}
+
+
+		var curI;
 		//Oder ## BBall etc...
 		if (isNum(fullText[0]) || isNum(fullText[1])) {
 			if (BBALLi < VBALLi && BBALLi < BDMTi && BBALLi < FUTSi) {
@@ -296,11 +387,6 @@ function pullRC(tweetText) {
 							var FUTStext = fullText.slice(0, FUTSi);
 							curI = FUTSi;
 						}
-
-
-
-
-
 
 					}
 				}
@@ -459,8 +545,7 @@ function pullRC(tweetText) {
 	}
 	//***********************************
 
-
-
+}
 	console.log(" ");
 	console.log("Tweet: ", tweetText);
 	console.log("BBALL:", BBALLnum, " VBALL:", VBALLnum, " BDMT:", BDMTnum, " FUTS:", FUTSnum);
@@ -494,6 +579,17 @@ function pullRC(tweetText) {
 }
 
 
+function nextNumberIndex(index, str){
+	var i = index;
+	while(!isNum(str[i])){
+		i++
+		if(i>=str.length){
+			i=-1;
+			break;
+		}
+	}
+	return i;
+}
 
 function takeNum(str) {
 	var num = str.replace(/[^0-9]/g, '');

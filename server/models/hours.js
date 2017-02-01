@@ -59,7 +59,7 @@ var HoursSchema = new Schema({
     sunC: {
         hour: Number,
         f: String
-    }
+    },
 });
 
 module.exports = mongoose.model('Hours', HoursSchema);

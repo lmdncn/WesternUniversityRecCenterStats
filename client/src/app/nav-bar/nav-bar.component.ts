@@ -1,6 +1,7 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit, Input} from '@angular/core';
 import * as moment from 'moment';
 import { StatService } from '../services/stat.service';
+import { HoursService } from "../services/hours.service";
 
 @Component({
     selector: 'app-nav-bar',
@@ -17,14 +18,10 @@ export class NavBarComponent implements OnInit {
     VBALLCurrentCount: number;
     BDMTCurrentCount: number;
     FUTSCurrentCount: number;
-    closed: boolean;
-    close: number = 24;
-    open: number = 6;
-    constructor(private statService: StatService) { }
+    
+    constructor(private statService: StatService, private hoursService: HoursService) { }
 
     ngOnInit() {
-        this.closed = this.closedCheck();
-        if (!this.closed) {
             this.statService.getCurrentCount("WR")
                 .subscribe(
                 stat => {
@@ -74,18 +71,8 @@ export class NavBarComponent implements OnInit {
                         this.FUTSCurrentCount = stat.count;
                     }
                 });
-        }
+        
     }
-
-    closedCheck() {
-        if (moment().isBetween(moment().startOf("day").add(this.open, "hours"), moment().startOf("day").add(this.close, "hours"))) {
-            //rec center is open
-            return false;
-        }
-        //rec center closed
-        return true;
-    }
-
 
     reasonableTime() {
         if (moment(this.lastData).add(2, "hours") < moment()) {
@@ -94,4 +81,9 @@ export class NavBarComponent implements OnInit {
             return true;
         }
     }
+
+
+
+
+
 }
