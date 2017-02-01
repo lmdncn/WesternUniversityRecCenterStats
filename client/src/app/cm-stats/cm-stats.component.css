@@ -180,6 +180,8 @@ i {
     margin: 20px;
 }
 
+
+
 .count {
     font-size: 1.5rem;
 }
@@ -223,6 +225,11 @@ chart {
     .mobChart {
         display: block;
         overflow-x: scroll;
+    }
+
+    .hbox{
+        margin: 0;
+        margin-bottom: 1rem;
     }
 }
 
@@ -324,8 +331,9 @@ div.legend {
     #threewide{
         padding-bottom: 0.2rem !important;
     }
+    /* TODO: CHANGE FOR CLOSE*/
     #today-info{
-        margin-top: 1rem;
+        margin-top: 0rem;
     }
 
 

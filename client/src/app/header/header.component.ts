@@ -1,11 +1,4 @@
-import {
-  Component, OnInit, Input, Input,
-  trigger,
-  state,
-  style,
-  transition,
-  animate
-} from '@angular/core';
+import { Component, OnInit, Input, trigger, state, style, transition, animate } from '@angular/core';
 import { Hours } from "../models/hours";
 import * as moment from 'moment';
 
