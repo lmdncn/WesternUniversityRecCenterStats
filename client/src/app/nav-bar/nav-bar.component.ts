@@ -75,7 +75,7 @@ export class NavBarComponent implements OnInit {
     }
 
     reasonableTime() {
-        if (moment(this.lastData).add(2, "hours") < moment()) {
+        if (moment(this.lastData).add(4, "hours") < moment()) {
             return false;
         } else {
             return true;
