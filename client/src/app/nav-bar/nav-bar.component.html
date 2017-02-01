@@ -16,28 +16,28 @@
     <span class="nav-text">Basketball</span>
     <div *ngIf="hoursService.isOpen && BBALLCurrentCount >= 0 && reasonableTime()" class="ui label">{{BBALLCurrentCount}}</div>
     <div *ngIf="!hoursService.isOpen" class="ui label">Closed</div>
-    <div *ngIf="hoursService.isOpen && BBALLCurrentCount < 0" class="ui label">Open</div>
+    <div *ngIf="hoursService.isOpen && BBALLCurrentCount == null" class="ui label">Open</div>
     <div *ngIf="(BBALLCurrentCount == -2 || !reasonableTime()) && hoursService.isOpen" class="ui label">Intramurals/Event</div>
   </a>
   <a routerLink="Volleyball" [routerLinkActive]="['active']" class="item">
     <span class="nav-text">Volleyball</span>
     <div *ngIf="hoursService.isOpen && VBALLCurrentCount >=0 && reasonableTime()" class="ui label">{{VBALLCurrentCount}}</div>
     <div *ngIf="!hoursService.isOpen" class="ui label">Closed</div>
-    <div *ngIf="hoursService.isOpen && VBALLCurrentCount < 0" class="ui label">Open</div>
+    <div *ngIf="hoursService.isOpen && VBALLCurrentCount == null" class="ui label">Open</div>
     <div *ngIf="(VBALLCurrentCount == -2 || !reasonableTime()) && hoursService.isOpen" class="ui label">Intramurals/Event</div>
   </a>
   <a routerLink="Badminton" [routerLinkActive]="['active']" class="item">
     <span class="nav-text">Badminton</span>
     <div *ngIf="hoursService.isOpen && BDMTCurrentCount >=0 && reasonableTime()" class="ui label">{{BDMTCurrentCount}}</div>
     <div *ngIf="!hoursService.isOpen" class="ui label">Closed</div>
-    <div *ngIf="hoursService.isOpen && BDMTCurrentCount < 0" class="ui label">Open</div>
+    <div *ngIf="hoursService.isOpen && BDMTCurrentCount == null" class="ui label">Open</div>
     <div *ngIf="(BDMTCurrentCount == -2 || !reasonableTime()) && hoursService.isOpen" class="ui label">Intramurals/Event</div>
   </a>
   <a routerLink="Futsal" [routerLinkActive]="['active']" class="item">
     <span class="nav-text">Futsal</span>
     <div *ngIf="hoursService.isOpen && FUTSCurrentCount >=0 && reasonableTime()" class="ui label">{{FUTSCurrentCount}}</div>
     <div *ngIf="!hoursService.isOpen" class="ui label">Closed</div>
-    <div *ngIf="hoursService.isOpen && FUTSCurrentCount < 0" class="ui label">Open</div>
+    <div *ngIf="hoursService.isOpen && FUTSCurrentCount == null" class="ui label">Open</div>
     <div *ngIf="(FUTSCurrentCount == -2 || !reasonableTime()) && hoursService.isOpen" class="ui label">Intramurals/Event</div>
   </a>
 </div>
