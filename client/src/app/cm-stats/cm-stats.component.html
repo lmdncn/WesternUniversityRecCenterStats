@@ -1,7 +1,7 @@
 <h2 id="maintitle">{{title}}</h2>
 
 <!-- Today Bar ===============================================================================-->
-<div *ngIf="todayStats!=null && hoursService.isOpen" class="today-util">
+<div *ngIf="todayStats!=null && hoursService.isOpen && todayStats.length>0" class="today-util">
   <div id="today-bar" [@enterAnimation]="show" *ngIf="todayStats[0].count>=0" class="ui">
     <div *ngIf="TD1.length > 2" class="ui tiny statistic beforeFact">
       <div *ngIf="TD1[TD1.length-3].y>=0" class="mysize">
